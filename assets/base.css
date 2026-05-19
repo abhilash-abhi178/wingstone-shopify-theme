@@ -138,7 +138,7 @@ button.shopify-payment-button__button {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  min-height: 80px;
+  min-height: 58px;
   gap: 1rem;
 }
 
@@ -162,7 +162,7 @@ button.shopify-payment-button__button {
 }
 
 .site-header__logo {
-  max-width: min(155px, 34vw);
+  max-width: min(112px, 30vw);
 }
 
 .site-nav {
@@ -189,7 +189,7 @@ button.shopify-payment-button__button {
 }
 
 .main {
-  padding-top: 80px;
+  padding-top: 58px;
 }
 
 .menu-toggle {
@@ -211,14 +211,14 @@ button.shopify-payment-button__button {
 }
 
 .hero {
-  min-height: calc(100svh - 80px);
+  min-height: calc(100svh - 58px);
   display: grid;
   align-items: center;
   overflow: hidden;
 }
 
 .featured-products {
-  scroll-margin-top: 92px;
+  scroll-margin-top: 70px;
 }
 
 .hero__inner {
@@ -547,7 +547,7 @@ button.shopify-payment-button__button {
 
   .site-nav {
     position: fixed;
-    inset: 80px 0 auto;
+    inset: 58px 0 auto;
     display: none;
     flex-direction: column;
     align-items: stretch;

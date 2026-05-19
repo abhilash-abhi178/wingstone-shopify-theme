@@ -775,15 +775,18 @@ button.shopify-payment-button__button {
 
 .product__media,
 .cart-table {
-  background: color-mix(in srgb, var(--color-paper), transparent 9%);
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
+  background: var(--color-paper);
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 88%);
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .product__info {
   position: sticky;
   top: 104px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 88%);
+  background: color-mix(in srgb, var(--color-paper), var(--color-frost) 42%);
 }
 
 .product__title {
@@ -795,15 +798,36 @@ button.shopify-payment-button__button {
 }
 
 .price {
-  color: var(--color-steel);
+  color: color-mix(in srgb, var(--color-accent), var(--color-ink) 30%);
   font-size: 1.25rem;
   font-weight: 900;
+}
+
+.product__description {
+  margin-top: 1.4rem;
+  color: var(--color-steel);
+  line-height: 1.75;
+}
+
+.product__description p {
+  margin: 0 0 .85rem;
 }
 
 .product-form {
   display: grid;
   gap: 1rem;
   margin-top: 1.5rem;
+}
+
+.product-form label {
+  display: grid;
+  gap: .45rem;
+}
+
+.product-form .button[disabled] {
+  opacity: .72;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .cart-table {

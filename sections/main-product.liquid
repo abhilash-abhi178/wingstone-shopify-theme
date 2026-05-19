@@ -14,7 +14,20 @@
       <div class="price">{{ product.price | money }}</div>
 
       {% if product.description != blank %}
-        <div class="product__description">{{ product.description }}</div>
+        {% capture cleaned_description %}
+          {% assign description_blocks = product.description | split: '</p>' %}
+          {% for block in description_blocks %}
+            {% assign block_text = block | strip_html | strip | downcase %}
+            {% unless block_text contains 'product weight' or block_text contains 'ship weight' or block_text contains 'length (cm)' or block_text contains 'breadth (cm)' or block_text contains 'height (cm)' %}
+              {{ block }}{% if block != blank %}</p>{% endif %}
+            {% endunless %}
+          {% endfor %}
+        {% endcapture %}
+
+        {% assign cleaned_description_text = cleaned_description | strip_html | strip %}
+        {% if cleaned_description_text != blank %}
+          <div class="product__description">{{ cleaned_description }}</div>
+        {% endif %}
       {% endif %}
 
       {% form 'product', product, class: 'product-form' %}
@@ -39,7 +52,9 @@
         <button class="button" type="submit" {% unless product.available %}disabled{% endunless %}>
           {% if product.available %}Add to cart{% else %}Sold out{% endif %}
         </button>
-        {{ form | payment_button }}
+        {% if product.available %}
+          {{ form | payment_button }}
+        {% endif %}
         <script type="application/json" data-product-variants>{{ product.variants | json }}</script>
       {% endform %}
     </div>

@@ -1,32 +1,47 @@
 <header class="site-header">
-  <div class="page-width site-header__inner">
-    <div class="site-header__left">
-      <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" data-menu-toggle>
-        <span class="menu-toggle__line" aria-hidden="true"></span>
-        <span class="menu-toggle__line" aria-hidden="true"></span>
-        <span class="menu-toggle__line" aria-hidden="true"></span>
-      </button>
-
-      <nav class="site-nav" data-site-nav>
-        <a href="{{ routes.root_url }}">Home</a>
-        <a href="{{ routes.root_url }}#featured-products">Products</a>
-        <a href="{{ routes.root_url }}#contact">Contact</a>
-      </nav>
+  {% if section.settings.promo_text != blank %}
+    <div class="site-header__promo" aria-label="{{ section.settings.promo_text | escape }}">
+      <div class="site-header__promo-track">
+        {% for i in (1..2) %}
+          <span>{{ section.settings.promo_text }}</span>
+          <span>{{ section.settings.promo_text }}</span>
+          <span>{{ section.settings.promo_text }}</span>
+        {% endfor %}
+      </div>
     </div>
+  {% endif %}
 
-    <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-      {% if section.settings.logo != blank %}
-        {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
-      {% else %}
-        <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
-      {% endif %}
-    </a>
+  <div class="page-width site-header__shell">
+    <div class="site-header__inner">
+      <div class="site-header__left">
+        <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" data-menu-toggle>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+        </button>
 
-    <div class="site-header__actions">
-      {% if shop.customer_accounts_enabled %}
-        <a class="site-header__action site-header__action--account" href="{{ routes.account_url }}">Account</a>
-      {% endif %}
-      <a class="site-header__action" href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+        <nav class="site-nav" data-site-nav>
+          <a href="{{ routes.root_url }}">Home</a>
+          <a href="{{ routes.root_url }}#featured-products">Products</a>
+          <a href="{{ routes.root_url }}#trust">Trust</a>
+          <a href="{{ routes.root_url }}#contact">Contact</a>
+        </nav>
+      </div>
+
+      <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
+        {% else %}
+          <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
+        {% endif %}
+      </a>
+
+      <div class="site-header__actions">
+        {% if shop.customer_accounts_enabled %}
+          <a class="site-header__action site-header__action--account" href="{{ routes.account_url }}">Account</a>
+        {% endif %}
+        <a class="site-header__action site-header__action--cart" href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+      </div>
     </div>
   </div>
 </header>
@@ -39,6 +54,12 @@
       "type": "image_picker",
       "id": "logo",
       "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "promo_text",
+      "label": "Moving promo text",
+      "default": "Extra 10% off with TFV10 / Free shipping on prepaid orders / New Wingstone drops live now"
     }
   ]
 }

@@ -15,24 +15,48 @@
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Featured",
-        "heading": "Built in navy",
-        "products_to_show": 4
+        "eyebrow": "New drop",
+        "heading": "Premium picks",
+        "products_to_show": 8
       }
     },
     "values": {
       "type": "brand-values",
       "settings": {
-        "eyebrow": "Wingstone standard",
-        "heading": "Sharp, calm, exact"
-      }
+        "eyebrow": "Why customers trust Wingstone",
+        "heading": "Made to feel certain"
+      },
+      "blocks": {
+        "quality": {
+          "type": "value",
+          "settings": {
+            "title": "Quality checked",
+            "text": "Every piece is presented with clean details, reliable sizing, and a premium finish before it reaches the customer."
+          }
+        },
+        "shipping": {
+          "type": "value",
+          "settings": {
+            "title": "Easy support",
+            "text": "Clear contact paths, quick order help, and a shopping flow that keeps the customer confident from browse to checkout."
+          }
+        },
+        "offers": {
+          "type": "value",
+          "settings": {
+            "title": "Honest offers",
+            "text": "Discount codes, launch offers, and announcements stay visible so shoppers never miss the best active deal."
+          }
+        }
+      },
+      "block_order": ["quality", "shipping", "offers"]
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "eyebrow": "Private list",
-        "heading": "Join Wingstone",
-        "text": "<p>New drops, restocks, and early access notes.</p>",
+        "eyebrow": "Stay close",
+        "heading": "Get early access",
+        "text": "<p>New drops, restocks, discount codes, and important announcements first.</p>",
         "button_label": "Subscribe"
       }
     }

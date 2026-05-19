@@ -4,7 +4,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Wingstone theme built around the supplied logo colors: frosted blue and deep ink navy."
+        "content": "Wingstone theme built around a premium navy, ice, and muted gold palette."
       }
     ]
   },
@@ -15,19 +15,19 @@
         "type": "color",
         "id": "color_ink",
         "label": "Ink navy",
-        "default": "#1D2C43"
+        "default": "#1A2545"
       },
       {
         "type": "color",
         "id": "color_frost",
-        "label": "Frost blue",
-        "default": "#D5DFF5"
+        "label": "Ice pale",
+        "default": "#F4F7FD"
       },
       {
         "type": "color",
         "id": "color_steel",
-        "label": "Steel blue",
-        "default": "#5E789B"
+        "label": "Muted text",
+        "default": "#5A6A8A"
       },
       {
         "type": "color",
@@ -39,13 +39,13 @@
         "type": "color",
         "id": "color_line",
         "label": "Soft border",
-        "default": "#B9C7DE"
+        "default": "#D5DDEA"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent",
-        "default": "#8EA4C6"
+        "default": "#C8A96E"
       }
     ]
   },

@@ -3,20 +3,29 @@
     "hero": {
       "type": "hero-wingstone",
       "settings": {
-        "eyebrow": "Under 999",
+        "badge": "Premium essentials, trusted by style-first shoppers",
+        "eyebrow": "Elevate every fit",
         "heading": "Wingstone",
-        "text": "<p>Explore curated pieces<br>Extra 10% OFF &bull; Use Code: TFV10</p>",
-        "announcement_text": "Discount codes / Offers / Announcements / New drops / Limited pieces",
-        "primary_label": "",
+        "text": "<p>Refined pieces with sharp silhouettes, premium finishes, and offers that make confident shopping effortless.</p>",
+        "announcement_text": "Premium Experience / Trusted Quality / Limited Drops / Discount Codes / Fast Support",
+        "primary_label": "Shop collection",
         "primary_link": "#featured-products",
-        "secondary_label": ""
+        "secondary_label": "Why trust us",
+        "secondary_link": "#trust",
+        "stat_one_number": "4.9",
+        "stat_one_label": "Store rating",
+        "stat_two_number": "10%",
+        "stat_two_label": "Active offer",
+        "stat_three_number": "24/7",
+        "stat_three_label": "Order support"
       }
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
         "eyebrow": "New drop",
-        "heading": "Premium picks",
+        "heading": "Built different. By design.",
+        "subtext": "Every piece is crafted into the shopping flow with strong presentation, clean details, and a premium first impression.",
         "products_to_show": 8
       }
     },

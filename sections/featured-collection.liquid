@@ -4,6 +4,9 @@
       <p class="eyebrow">{{ section.settings.eyebrow }}</p>
     {% endif %}
     <h2 class="section-title">{{ section.settings.heading }}</h2>
+    {% if section.settings.subtext != blank %}
+      <p class="section-subtext">{{ section.settings.subtext }}</p>
+    {% endif %}
 
     <div class="product-grid">
       {% assign collection = collections[section.settings.collection] %}
@@ -46,6 +49,12 @@
       "id": "heading",
       "label": "Heading",
       "default": "Built in navy"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Every product is presented with a premium rhythm, clear details, and confident shopping paths."
     },
     {
       "type": "collection",

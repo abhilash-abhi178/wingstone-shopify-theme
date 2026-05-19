@@ -1,11 +1,11 @@
 {
   "current": {
-    "color_ink": "#151724",
-    "color_frost": "#EEF2FA",
-    "color_steel": "#6C718A",
+    "color_ink": "#1A2545",
+    "color_frost": "#F4F7FD",
+    "color_steel": "#5A6A8A",
     "color_paper": "#FFFFFF",
-    "color_line": "#D9DFEA",
-    "color_accent": "#C3A35F",
+    "color_line": "#D5DDEA",
+    "color_accent": "#C8A96E",
     "heading_font": "assistant_n7",
     "body_font": "assistant_n4"
   }

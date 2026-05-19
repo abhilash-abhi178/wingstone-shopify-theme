@@ -1,9 +1,13 @@
 <section class="hero hero--tones">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__pattern" aria-hidden="true"></div>
   <div class="page-width hero__inner">
     <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
 
     <div class="hero__content">
-      <span class="hero__rule" aria-hidden="true"></span>
+      {% if section.settings.badge != blank %}
+        <div class="hero__badge"><span aria-hidden="true">*</span>{{ section.settings.badge }}</div>
+      {% endif %}
       {% if section.settings.eyebrow != blank %}
         <h1 class="hero__offer">{{ section.settings.eyebrow }}</h1>
       {% endif %}
@@ -20,7 +24,6 @@
           {% endif %}
         </div>
       {% endif %}
-      <span class="hero__rule" aria-hidden="true"></span>
       {% if section.settings.announcement_text != blank %}
         <div class="hero__ticker" aria-label="{{ section.settings.announcement_text | strip_html | escape }}">
           <div class="hero__ticker-track">
@@ -32,6 +35,22 @@
           </div>
         </div>
       {% endif %}
+      <div class="hero__stats" aria-label="Store highlights">
+        <div class="hero__stat">
+          <strong>{{ section.settings.stat_one_number }}</strong>
+          <span>{{ section.settings.stat_one_label }}</span>
+        </div>
+        <span class="hero__stat-divider" aria-hidden="true"></span>
+        <div class="hero__stat">
+          <strong>{{ section.settings.stat_two_number }}</strong>
+          <span>{{ section.settings.stat_two_label }}</span>
+        </div>
+        <span class="hero__stat-divider" aria-hidden="true"></span>
+        <div class="hero__stat">
+          <strong>{{ section.settings.stat_three_number }}</strong>
+          <span>{{ section.settings.stat_three_label }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -42,9 +61,15 @@
   "settings": [
     {
       "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "Premium essentials, trusted by style-first shoppers"
+    },
+    {
+      "type": "text",
       "id": "eyebrow",
-      "label": "Offer heading",
-      "default": "Under 999"
+      "label": "Hero heading",
+      "default": "Elevate every fit"
     },
     {
       "type": "text",
@@ -56,7 +81,7 @@
       "type": "richtext",
       "id": "text",
       "label": "Text",
-      "default": "<p>Explore curated pieces<br>Extra 10% OFF &bull; Use Code: TFV10</p>"
+      "default": "<p>Refined pieces with sharp silhouettes, premium finishes, and offers that make confident shopping effortless.</p>"
     },
     {
       "type": "text",
@@ -90,6 +115,42 @@
       "type": "image_picker",
       "id": "image",
       "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "stat_one_number",
+      "label": "Stat one number",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "stat_one_label",
+      "label": "Stat one label",
+      "default": "Store rating"
+    },
+    {
+      "type": "text",
+      "id": "stat_two_number",
+      "label": "Stat two number",
+      "default": "10%"
+    },
+    {
+      "type": "text",
+      "id": "stat_two_label",
+      "label": "Stat two label",
+      "default": "Active offer"
+    },
+    {
+      "type": "text",
+      "id": "stat_three_number",
+      "label": "Stat three number",
+      "default": "24/7"
+    },
+    {
+      "type": "text",
+      "id": "stat_three_label",
+      "label": "Stat three label",
+      "default": "Order support"
     }
   ],
   "presets": [

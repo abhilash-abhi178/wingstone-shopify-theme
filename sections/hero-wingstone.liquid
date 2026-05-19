@@ -21,6 +21,17 @@
         </div>
       {% endif %}
       <span class="hero__rule" aria-hidden="true"></span>
+      {% if section.settings.announcement_text != blank %}
+        <div class="hero__ticker" aria-label="{{ section.settings.announcement_text | strip_html | escape }}">
+          <div class="hero__ticker-track">
+            {% for i in (1..2) %}
+              <span>{{ section.settings.announcement_text }}</span>
+              <span>{{ section.settings.announcement_text }}</span>
+              <span>{{ section.settings.announcement_text }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -46,6 +57,12 @@
       "id": "text",
       "label": "Text",
       "default": "<p>Explore curated pieces<br>Extra 10% OFF &bull; Use Code: TFV10</p>"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Moving announcement text",
+      "default": "Discount codes / Offers / Announcements / New drops / Limited pieces"
     },
     {
       "type": "text",

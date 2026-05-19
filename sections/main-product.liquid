@@ -1,10 +1,41 @@
 <section class="section">
   <div class="page-width product">
     <div class="product__media">
-      {% if product.featured_media %}
-        {{ product.featured_media | image_url: width: 1200 | image_tag: loading: 'eager', alt: product.title }}
+      {% assign product_images = product.images %}
+
+      {% if product_images.size > 1 %}
+        <div class="product-gallery" data-product-gallery>
+          <div class="product-gallery__thumbs" aria-label="Product image thumbnails">
+            {% for image in product_images %}
+              <button
+                class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                type="button"
+                data-product-gallery-thumb
+                data-full="{{ image | image_url: width: 1400 }}"
+                data-alt="{{ image.alt | default: product.title | escape }}"
+                aria-label="View image {{ forloop.index }} of {{ product_images.size }}"
+                {% if forloop.first %}aria-current="true"{% endif %}
+              >
+                <img src="{{ image | image_url: width: 180 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
+              </button>
+            {% endfor %}
+          </div>
+
+          <div class="product-gallery__main">
+            <img
+              src="{{ product.featured_image | image_url: width: 1400 }}"
+              alt="{{ product.title | escape }}"
+              loading="eager"
+              data-product-gallery-main-image
+            >
+          </div>
+        </div>
       {% else %}
-        {{ 'product-1' | placeholder_svg_tag }}
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="eager">
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {% endif %}
       {% endif %}
     </div>
 

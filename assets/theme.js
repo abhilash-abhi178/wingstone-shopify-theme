@@ -33,6 +33,33 @@ document.querySelectorAll('.product-form').forEach((form) => {
   selects.forEach((select) => select.addEventListener('change', updateVariant));
 });
 
+document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
+  const mainImage = gallery.querySelector('[data-product-gallery-main-image]');
+  const thumbs = [...gallery.querySelectorAll('[data-product-gallery-thumb]')];
+  if (!mainImage || thumbs.length === 0) return;
+
+  const setActiveThumb = (activeThumb) => {
+    thumbs.forEach((thumb) => {
+      const isActive = thumb === activeThumb;
+      thumb.classList.toggle('is-active', isActive);
+      thumb.setAttribute('aria-current', String(isActive));
+    });
+  };
+
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      const full = thumb.dataset.full;
+      const alt = thumb.dataset.alt;
+
+      if (full) mainImage.src = full;
+      if (alt) mainImage.alt = alt;
+      setActiveThumb(thumb);
+    });
+  });
+
+  setActiveThumb(thumbs[0]);
+});
+
 const revealItems = document.querySelectorAll('.section, .product-card, .feature-item, .newsletter form, .site-footer__inner');
 
 if ('IntersectionObserver' in window) {

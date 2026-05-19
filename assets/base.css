@@ -672,18 +672,18 @@ button.shopify-payment-button__button {
   overflow-wrap: anywhere;
 }
 
-.product-card__rating {
+.product-card__signal {
   display: flex;
   align-items: center;
-  gap: .35rem;
-  color: #f59b23;
-  font-size: .9rem;
+  width: fit-content;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--color-accent), transparent 78%);
+  color: color-mix(in srgb, var(--color-ink), #000 10%);
+  padding: .22rem .45rem;
+  font-size: .72rem;
+  font-weight: 800;
   line-height: 1;
-}
-
-.product-card__rating small {
-  color: var(--color-steel);
-  font-size: .78rem;
+  text-transform: uppercase;
 }
 
 .product-card__pricing {
@@ -1245,8 +1245,8 @@ button.shopify-payment-button__button {
     line-height: 1.32;
   }
 
-  .product-card__rating {
-    font-size: .74rem;
+  .product-card__signal {
+    font-size: .62rem;
   }
 
   .product-card__price {
@@ -1254,8 +1254,7 @@ button.shopify-payment-button__button {
   }
 
   .product-card__delivery,
-  .product-card__pricing s,
-  .product-card__rating small {
+  .product-card__pricing s {
     font-size: .7rem;
   }
 

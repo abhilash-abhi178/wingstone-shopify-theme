@@ -15,9 +15,8 @@
     <a href="{{ product.url }}">
       <h3 class="product-card__title">{{ product.title }}</h3>
     </a>
-    <div class="product-card__rating" aria-label="Customer rating">
-      <span aria-hidden="true">★★★★★</span>
-      <small>4.5</small>
+    <div class="product-card__signal">
+      <span>Customer pick</span>
     </div>
     <div class="product-card__pricing">
       <span class="product-card__price">{{ product.price | money }}</span>
@@ -25,7 +24,7 @@
         <s>{{ product.compare_at_price | money }}</s>
       {% endif %}
     </div>
-    <p class="product-card__delivery">Fast dispatch • Easy support</p>
+    <p class="product-card__delivery">Fast dispatch &bull; Easy support</p>
     {% form 'product', product, class: 'product-card__form' %}
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
       <button class="product-card__button" type="submit" {% unless product.available %}disabled{% endunless %}>

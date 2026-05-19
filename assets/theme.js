@@ -1,12 +1,5 @@
 document.documentElement.classList.remove('no-js');
 
-const updateHeaderState = () => {
-  document.documentElement.classList.toggle('is-scrolled', window.scrollY > 12);
-};
-
-updateHeaderState();
-window.addEventListener('scroll', updateHeaderState, { passive: true });
-
 document.addEventListener('click', (event) => {
   const toggle = event.target.closest('[data-menu-toggle]');
   if (!toggle) return;

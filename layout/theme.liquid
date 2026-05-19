@@ -46,5 +46,22 @@
       {{ content_for_layout }}
     </main>
     {% section 'footer' %}
+
+    <div class="cart-drawer-backdrop" data-cart-drawer-backdrop hidden></div>
+    <aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Shopping cart" hidden>
+      <div class="cart-drawer__shell">
+        <div class="cart-drawer__header">
+          <div>
+            <p class="eyebrow">Your cart</p>
+            <h2 class="cart-drawer__title">Cart summary</h2>
+          </div>
+          <button class="cart-drawer__close" type="button" data-cart-drawer-close aria-label="Close cart">×</button>
+        </div>
+
+        <div class="cart-drawer__body" data-cart-drawer-content>
+          <p class="cart-drawer__loading">Loading cart...</p>
+        </div>
+      </div>
+    </aside>
   </body>
 </html>

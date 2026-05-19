@@ -1,5 +1,99 @@
 document.documentElement.classList.remove('no-js');
 
+const cartDrawer = document.querySelector('[data-cart-drawer]');
+const cartDrawerBackdrop = document.querySelector('[data-cart-drawer-backdrop]');
+const cartDrawerContent = document.querySelector('[data-cart-drawer-content]');
+
+const formatMoney = (cents) => {
+  if (typeof Shopify !== 'undefined' && Shopify.formatMoney) {
+    return Shopify.formatMoney(cents);
+  }
+
+  return `₹${(cents / 100).toFixed(2)}`;
+};
+
+const openCartDrawer = async () => {
+  if (!cartDrawer || !cartDrawerBackdrop || !cartDrawerContent) return;
+
+  cartDrawer.hidden = false;
+  cartDrawerBackdrop.hidden = false;
+  requestAnimationFrame(() => {
+    cartDrawer.classList.add('is-open');
+    cartDrawerBackdrop.classList.add('is-open');
+    document.body.classList.add('cart-drawer-open');
+  });
+
+  cartDrawerContent.innerHTML = '<p class="cart-drawer__loading">Loading cart...</p>';
+
+  const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+  const cart = await response.json();
+
+  const itemsMarkup = cart.items.length
+    ? cart.items.map((item) => {
+        const imageUrl = item.image ? item.image.replace(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i, '_120x120.$1$2') : '';
+        return `
+          <div class="cart-drawer__item">
+            ${imageUrl ? `<img src="${imageUrl}" alt="${item.product_title.replace(/"/g, '&quot;')}">` : ''}
+            <div>
+              <h3 class="cart-drawer__item-title">${item.product_title}</h3>
+              <div class="cart-drawer__item-meta">${item.variant_title === 'Default Title' ? '' : item.variant_title}</div>
+              <div class="cart-drawer__item-meta">Qty ${item.quantity}</div>
+              <div class="cart-drawer__item-price">${formatMoney(item.final_line_price / 100)}</div>
+            </div>
+          </div>`;
+      }).join('')
+    : '<p class="cart-drawer__empty">Your cart is empty.</p>';
+
+  cartDrawerContent.innerHTML = `
+    <div class="cart-drawer__content">
+      <div class="cart-drawer__items">${itemsMarkup}</div>
+    </div>
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__summary">
+        <span>Subtotal</span>
+        <strong>${formatMoney(cart.total_price / 100)}</strong>
+      </div>
+      <div class="cart-drawer__actions">
+        <a class="button button--secondary" href="/cart">View cart</a>
+        <a class="button" href="/checkout">Checkout</a>
+      </div>
+    </div>
+  `;
+};
+
+const closeCartDrawer = () => {
+  if (!cartDrawer || !cartDrawerBackdrop) return;
+
+  cartDrawer.classList.remove('is-open');
+  cartDrawerBackdrop.classList.remove('is-open');
+  document.body.classList.remove('cart-drawer-open');
+
+  window.setTimeout(() => {
+    cartDrawer.hidden = true;
+    cartDrawerBackdrop.hidden = true;
+  }, 280);
+};
+
+document.addEventListener('click', (event) => {
+  const cartToggle = event.target.closest('[data-cart-drawer-toggle]');
+  if (cartToggle) {
+    event.preventDefault();
+    openCartDrawer();
+    return;
+  }
+
+  const cartClose = event.target.closest('[data-cart-drawer-close]');
+  if (cartClose) {
+    closeCartDrawer();
+    return;
+  }
+
+  if (event.target.closest('[data-cart-drawer-backdrop]')) {
+    closeCartDrawer();
+    return;
+  }
+});
+
 document.addEventListener('click', (event) => {
   const toggle = event.target.closest('[data-menu-toggle]');
   if (!toggle) return;
@@ -9,6 +103,34 @@ document.addEventListener('click', (event) => {
 
   const isOpen = nav.classList.toggle('is-open');
   toggle.setAttribute('aria-expanded', String(isOpen));
+});
+
+const cartForms = [...document.querySelectorAll('.product-form, .product-card__form')];
+
+cartForms.forEach((form) => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Unable to add item to cart');
+      }
+
+      await openCartDrawer();
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
+  });
 });
 
 document.querySelectorAll('.product-form').forEach((form) => {

@@ -221,74 +221,88 @@ button.shopify-payment-button__button {
   scroll-margin-top: 70px;
 }
 
+.hero--tones {
+  min-height: clamp(290px, 38vw, 520px);
+  background: var(--color-paper);
+}
+
 .hero__inner {
+  position: relative;
+  min-height: inherit;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, .78fr);
-  align-items: center;
-  gap: clamp(2rem, 4.8vw, 4.5rem);
+  place-items: center;
+}
+
+.hero__backdrop {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: color-mix(in srgb, var(--color-ink), transparent 88%);
+  font-family: var(--font-heading-family);
+  font-size: clamp(5.4rem, 18vw, 17rem);
+  font-weight: 900;
+  line-height: .74;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .hero__content {
   position: relative;
-  z-index: 2;
-  padding: clamp(2rem, 6vw, 5rem) 0;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  text-align: center;
 }
 
-.hero__title {
-  margin: 0 0 1rem;
+.hero__rule {
+  width: min(74px, 18vw);
+  height: 1px;
+  background: color-mix(in srgb, var(--color-ink), transparent 58%);
+}
+
+.hero__offer {
+  margin: .55rem 0 .15rem;
+  color: #000;
   font-family: var(--font-heading-family);
-  max-width: 9ch;
-  font-size: clamp(3.5rem, 5.8vw, 6.35rem);
-  line-height: .86;
-  letter-spacing: 0;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .06em;
   text-transform: uppercase;
 }
 
 .hero__text {
-  max-width: 620px;
-  margin: 0 0 1.5rem;
-  color: color-mix(in srgb, var(--color-ink), var(--color-steel) 24%);
-  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  max-width: 420px;
+  margin: 0;
+  color: color-mix(in srgb, #000, transparent 28%);
+  font-size: clamp(.88rem, 1.2vw, 1rem);
+  line-height: 1.9;
+}
+
+.hero__text p {
+  margin: 0;
+}
+
+.hero__text strong {
+  color: #000;
+  font-weight: 800;
 }
 
 .hero__buttons {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: .75rem;
-}
-
-.hero__media {
-  position: relative;
-  z-index: 1;
-  min-height: 520px;
-  display: grid;
-  place-items: center;
-}
-
-.hero__media::before {
-  content: "";
-  position: absolute;
-  inset: 8% 0 6%;
-  border: 1px solid var(--color-line);
-  background: color-mix(in srgb, var(--color-paper), transparent 36%);
-}
-
-.hero__media img,
-.hero__logo-mark {
-  position: relative;
-  width: min(430px, 82vw);
-  filter: drop-shadow(0 24px 46px rgba(29, 44, 67, .18));
-}
-
-.hero__logo-mark {
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  color: var(--color-ink);
-  font-family: var(--font-heading-family);
-  font-size: clamp(6rem, 16vw, 13rem);
-  font-weight: 900;
-  letter-spacing: -.04em;
+  margin: 1rem 0;
 }
 
 .product-grid {
@@ -564,17 +578,12 @@ button.shopify-payment-button__button {
     padding: .9rem 0;
   }
 
-  .hero__inner,
   .product {
     grid-template-columns: 1fr;
   }
 
   .hero {
     min-height: auto;
-  }
-
-  .hero__media {
-    min-height: 360px;
   }
 
   .product-grid {
@@ -604,8 +613,13 @@ button.shopify-payment-button__button {
     grid-template-columns: 1fr;
   }
 
-  .hero__title {
-    font-size: clamp(3.1rem, 18vw, 5rem);
+  .hero--tones {
+    min-height: 260px;
+  }
+
+  .hero__backdrop {
+    font-size: clamp(4rem, 21vw, 6.8rem);
+    white-space: normal;
   }
 
   .cart-table,

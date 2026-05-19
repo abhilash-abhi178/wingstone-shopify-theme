@@ -3,12 +3,12 @@
     "hero": {
       "type": "hero-wingstone",
       "settings": {
-        "eyebrow": "Precision essentials",
+        "eyebrow": "Under 999",
         "heading": "Wingstone",
-        "text": "<p>Minimal pieces with a sharp profile, cool-toned finishes, and a calm premium feel inspired by the Wingstone mark.</p>",
-        "primary_label": "Shop collection",
+        "text": "<p>Explore curated pieces<br>Extra 10% OFF &bull; Use Code: TFV10</p>",
+        "primary_label": "",
         "primary_link": "#featured-products",
-        "secondary_label": "View lookbook"
+        "secondary_label": ""
       }
     },
     "featured": {

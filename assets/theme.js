@@ -38,7 +38,7 @@ const openCartDrawer = async () => {
               <h3 class="cart-drawer__item-title">${item.product_title}</h3>
               <div class="cart-drawer__item-meta">${item.variant_title === 'Default Title' ? '' : item.variant_title}</div>
               <div class="cart-drawer__item-meta">Qty ${item.quantity}</div>
-              <div class="cart-drawer__item-price">${formatMoney(item.final_line_price / 100)}</div>
+              <div class="cart-drawer__item-price">${formatMoney(item.final_line_price)}</div>
             </div>
           </div>`;
       }).join('')
@@ -51,7 +51,7 @@ const openCartDrawer = async () => {
     <div class="cart-drawer__footer">
       <div class="cart-drawer__summary">
         <span>Subtotal</span>
-        <strong>${formatMoney(cart.total_price / 100)}</strong>
+        <strong>${formatMoney(cart.total_price)}</strong>
       </div>
       <div class="cart-drawer__actions">
         <a class="button button--secondary" href="/cart">View cart</a>

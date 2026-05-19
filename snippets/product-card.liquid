@@ -1,5 +1,5 @@
 <article class="product-card">
-  <a href="{{ product.url }}">
+  <a class="product-card__media-link" href="{{ product.url }}" aria-label="{{ product.title }}">
     <div class="product-card__image">
       {% if product.featured_media %}
         {{ product.featured_media | image_url: width: 720 | image_tag: loading: 'lazy', alt: product.title }}
@@ -7,9 +7,30 @@
         {{ 'product-1' | placeholder_svg_tag }}
       {% endif %}
     </div>
-    <div class="product-card__body">
-      <h3 class="product-card__title">{{ product.title }}</h3>
-      <div class="product-card__price">{{ product.price | money }}</div>
-    </div>
   </a>
+  <div class="product-card__body">
+    {% if product.compare_at_price > product.price %}
+      <span class="product-card__deal">Limited time deal</span>
+    {% endif %}
+    <a href="{{ product.url }}">
+      <h3 class="product-card__title">{{ product.title }}</h3>
+    </a>
+    <div class="product-card__rating" aria-label="Customer rating">
+      <span aria-hidden="true">★★★★★</span>
+      <small>4.5</small>
+    </div>
+    <div class="product-card__pricing">
+      <span class="product-card__price">{{ product.price | money }}</span>
+      {% if product.compare_at_price > product.price %}
+        <s>{{ product.compare_at_price | money }}</s>
+      {% endif %}
+    </div>
+    <p class="product-card__delivery">Fast dispatch • Easy support</p>
+    {% form 'product', product, class: 'product-card__form' %}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      <button class="product-card__button" type="submit" {% unless product.available %}disabled{% endunless %}>
+        {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+      </button>
+    {% endform %}
+  </div>
 </article>

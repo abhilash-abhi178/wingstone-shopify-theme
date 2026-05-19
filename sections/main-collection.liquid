@@ -8,15 +8,27 @@
       {% endif %}
     </div>
 
-    <div class="product-grid">
-      {% paginate collection.products by 16 %}
+    {% paginate collection.products by 16 %}
+      <div class="product-grid">
         {% for product in collection.products %}
           {% render 'product-card', product: product %}
         {% else %}
           <p>No products found in this collection.</p>
         {% endfor %}
-      {% endpaginate %}
-    </div>
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="pagination" aria-label="Collection pagination">
+          {% if paginate.previous %}
+            <a class="pagination__link" href="{{ paginate.previous.url }}">Previous</a>
+          {% endif %}
+          <span class="pagination__current">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {% if paginate.next %}
+            <a class="pagination__link" href="{{ paginate.next.url }}">View more</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
   </div>
 </section>
 

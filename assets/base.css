@@ -6,6 +6,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -16,6 +17,7 @@ body {
   font-family: var(--font-body-family);
   font-size: 16px;
   line-height: 1.55;
+  overflow-x: hidden;
 }
 
 img {
@@ -68,6 +70,7 @@ select {
   line-height: .95;
   letter-spacing: 0;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .eyebrow {
@@ -92,6 +95,7 @@ button.shopify-payment-button__button {
   color: var(--color-paper);
   padding: .85rem 1.35rem;
   font-weight: 800;
+  text-align: center;
   cursor: pointer;
   transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
 }
@@ -219,6 +223,7 @@ button.shopify-payment-button__button {
   font-weight: 800;
   letter-spacing: .18em;
   text-transform: uppercase;
+  min-width: 0;
 }
 
 .site-header__logo {
@@ -252,6 +257,7 @@ button.shopify-payment-button__button {
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
 }
 
 .main {
@@ -371,6 +377,7 @@ button.shopify-payment-button__button {
   line-height: 1;
   letter-spacing: .06em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .hero__text {
@@ -478,6 +485,7 @@ button.shopify-payment-button__button {
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: .04em;
+  overflow-wrap: anywhere;
 }
 
 .product-card__price {
@@ -577,6 +585,7 @@ button.shopify-payment-button__button {
   font-weight: 900;
   letter-spacing: .18em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .collection-toolbar,
@@ -641,6 +650,7 @@ button.shopify-payment-button__button {
   justify-content: flex-end;
   gap: 1rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .gift-card {
@@ -724,6 +734,7 @@ button.shopify-payment-button__button {
   .site-header__inner {
     grid-template-columns: auto 1fr auto;
     min-height: 58px;
+    gap: .65rem;
   }
 
   .menu-toggle {
@@ -763,6 +774,10 @@ button.shopify-payment-button__button {
     grid-template-columns: 1fr;
   }
 
+  .product__info {
+    position: static;
+  }
+
   .hero {
     min-height: auto;
   }
@@ -780,9 +795,17 @@ button.shopify-payment-button__button {
     grid-template-columns: 1fr;
   }
 
+  .site-footer__inner {
+    text-align: center;
+  }
+
   .newsletter form {
     flex-direction: column;
     border-radius: 20px;
+  }
+
+  .newsletter .button {
+    width: 100%;
   }
 }
 
@@ -791,8 +814,37 @@ button.shopify-payment-button__button {
     width: min(100% - 24px, 1180px);
   }
 
+  .section {
+    padding: clamp(36px, 12vw, 58px) 0;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 13vw, 3.45rem);
+  }
+
+  .eyebrow {
+    font-size: .68rem;
+    letter-spacing: .13em;
+  }
+
+  .site-header__inner {
+    padding: 0 .45rem;
+  }
+
   .site-header__action--account {
     display: none;
+  }
+
+  .site-header__action {
+    font-size: .72rem;
+    letter-spacing: .08em;
+  }
+
+  .site-header__action--cart {
+    max-width: 88px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .site-header__promo-track {
@@ -807,25 +859,62 @@ button.shopify-payment-button__button {
     max-width: min(96px, 28vw);
   }
 
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
   .product-grid {
     grid-template-columns: 1fr;
   }
 
   .hero--tones {
-    min-height: 260px;
+    min-height: clamp(300px, 88vw, 420px);
   }
 
   .hero__backdrop {
-    font-size: clamp(4rem, 21vw, 6.8rem);
+    font-size: clamp(3.85rem, 20vw, 6.8rem);
     white-space: normal;
+  }
+
+  .hero__content {
+    padding: clamp(2.4rem, 15vw, 4.5rem) 0;
   }
 
   .hero__offer {
     font-size: clamp(1.75rem, 11vw, 3rem);
+    letter-spacing: .035em;
+  }
+
+  .hero__text {
+    font-size: .88rem;
+    line-height: 1.65;
   }
 
   .hero__ticker {
     width: calc(100vw - 32px);
+    font-size: .64rem;
+    letter-spacing: .14em;
+  }
+
+  .product-card__body,
+  .feature-item {
+    padding: 1rem;
+  }
+
+  .feature-item {
+    min-height: 180px;
+  }
+
+  .newsletter form {
+    max-width: 100%;
+  }
+
+  .field,
+  .button,
+  .shopify-payment-button__button,
+  button.shopify-payment-button__button {
+    width: 100%;
   }
 
   .cart-table,
@@ -838,6 +927,53 @@ button.shopify-payment-button__button {
 
   .cart-table thead {
     display: none;
+  }
+
+  .cart-table td {
+    padding: .85rem;
+  }
+
+  .cart-total {
+    justify-content: stretch;
+  }
+
+  .cart-total .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .page-width {
+    width: min(100% - 18px, 1180px);
+  }
+
+  .site-header__promo {
+    width: min(100% - 18px, 1180px);
+  }
+
+  .site-header__shell,
+  .is-scrolled .site-header__shell {
+    width: min(100% - 18px, 1180px);
+  }
+
+  .site-header__inner {
+    gap: .4rem;
+  }
+
+  .site-header__brand {
+    letter-spacing: .1em;
+  }
+
+  .site-header__logo {
+    max-width: min(82px, 26vw);
+  }
+
+  .site-header__action--cart {
+    max-width: 72px;
+  }
+
+  .hero__backdrop {
+    font-size: clamp(3.25rem, 19vw, 5.2rem);
   }
 }
 

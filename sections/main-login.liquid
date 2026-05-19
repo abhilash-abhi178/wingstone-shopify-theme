@@ -1,0 +1,37 @@
+<section class="section login-page">
+  <div class="page-width login-page__shell">
+    <div class="login-page__card">
+      <p class="eyebrow">Account access</p>
+      <h1 class="section-title">Sign in</h1>
+      <p class="login-page__text">Use your Wingstone account to track orders, manage details, and check out faster.</p>
+
+      {% form 'customer_login', class: 'login-form' %}
+        {{ form.errors | default_errors }}
+
+        <label>
+          <span class="eyebrow">Email</span>
+          <input class="field" type="email" name="customer[email]" autocomplete="email" required>
+        </label>
+
+        <label>
+          <span class="eyebrow">Password</span>
+          <input class="field" type="password" name="customer[password]" autocomplete="current-password" required>
+        </label>
+
+        <button class="button" type="submit">Sign in</button>
+
+        <div class="login-page__links">
+          <a href="{{ routes.account_register_url }}">Create account</a>
+          <a href="{{ routes.account_recover_url }}">Forgot password?</a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main login",
+  "settings": []
+}
+{% endschema %}

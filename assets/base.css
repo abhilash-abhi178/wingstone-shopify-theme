@@ -281,6 +281,39 @@ button.shopify-payment-button__button {
   min-width: 0;
 }
 
+.site-header__action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 84%);
+  background: color-mix(in srgb, var(--color-paper), transparent 18%);
+}
+
+.site-header__action svg {
+  width: 20px;
+  height: 20px;
+}
+
+.site-header__badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-size: .66rem;
+  font-weight: 800;
+  line-height: 19px;
+  text-align: center;
+}
+
 .main {
   padding-top: 104px;
 }
@@ -695,19 +728,19 @@ button.shopify-payment-button__button {
 
 .product-card__price {
   color: color-mix(in srgb, var(--color-ink), #000 12%);
-  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  font-size: 1rem;
   font-weight: 900;
 }
 
 .product-card__pricing s {
   color: var(--color-steel);
-  font-size: .82rem;
+  font-size: .74rem;
 }
 
 .product-card__delivery {
   margin: 0;
   color: var(--color-steel);
-  font-size: .82rem;
+  font-size: .74rem;
   line-height: 1.35;
 }
 
@@ -950,21 +983,22 @@ button.shopify-payment-button__button {
 .product__title {
   margin: 0 0 .75rem;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.2rem, 5vw, 4.8rem);
-  line-height: .92;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: .98;
   text-transform: uppercase;
 }
 
 .price {
   color: color-mix(in srgb, var(--color-accent), var(--color-ink) 30%);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 900;
 }
 
 .product__description {
   margin-top: 1.4rem;
   color: var(--color-steel);
-  line-height: 1.75;
+  line-height: 1.65;
+  font-size: .95rem;
 }
 
 .product__description p {
@@ -1017,6 +1051,51 @@ button.shopify-payment-button__button {
 
 .gift-card__inner {
   max-width: 720px;
+}
+
+.login-page {
+  min-height: calc(100svh - 104px);
+  display: grid;
+  align-items: center;
+}
+
+.login-page__shell {
+  display: grid;
+  place-items: center;
+}
+
+.login-page__card {
+  width: min(520px, 100%);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 88%);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-paper), var(--color-frost) 36%);
+  box-shadow: 0 24px 70px rgba(29, 44, 67, .12);
+}
+
+.login-page__text {
+  margin: -.25rem 0 1.5rem;
+  color: var(--color-steel);
+  line-height: 1.6;
+}
+
+.login-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.login-page__links {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+  color: var(--color-steel);
+  font-size: .92rem;
+}
+
+.login-page__links a:hover,
+.login-page__links a:focus-visible {
+  color: var(--color-accent);
 }
 
 .gift-card__panel {
@@ -1121,6 +1200,10 @@ button.shopify-payment-button__button {
     padding: .9rem 0;
   }
 
+  .site-header__actions {
+    gap: .65rem;
+  }
+
   .product {
     grid-template-columns: 1fr;
   }
@@ -1199,22 +1282,6 @@ button.shopify-payment-button__button {
 
   .site-header__inner {
     padding: 0 .35rem;
-  }
-
-  .site-header__action--account {
-    display: none;
-  }
-
-  .site-header__action {
-    font-size: .72rem;
-    letter-spacing: .08em;
-  }
-
-  .site-header__action--cart {
-    max-width: 88px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .site-header__promo-track {

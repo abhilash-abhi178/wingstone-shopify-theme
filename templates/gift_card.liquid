@@ -1,0 +1,39 @@
+<section class="section gift-card">
+  <div class="page-width gift-card__inner">
+    <p class="eyebrow">{{ shop.name }}</p>
+    <h1 class="section-title">Gift card</h1>
+
+    <div class="gift-card__panel">
+      <div class="gift-card__logo">
+        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
+      </div>
+
+      <p class="gift-card__balance">{{ gift_card.balance | money }}</p>
+
+      {% if gift_card.enabled == false or gift_card.expired %}
+        <p>This gift card is no longer active.</p>
+      {% else %}
+        <p>Use this code at checkout.</p>
+      {% endif %}
+
+      <div class="gift-card__code" aria-label="Gift card code">
+        {{ gift_card.code | format_code }}
+      </div>
+
+      {% if gift_card.qr_identifier %}
+        <img
+          class="gift-card__qr"
+          src="{{ gift_card.qr_identifier | qr_code_url: size: 240 }}"
+          alt="Gift card QR code"
+          width="240"
+          height="240"
+        >
+      {% endif %}
+
+      <div class="gift-card__actions">
+        <a class="button" href="{{ shop.url }}">Shop now</a>
+        <button class="button button--secondary" type="button" onclick="window.print()">Print</button>
+      </div>
+    </div>
+  </div>
+</section>

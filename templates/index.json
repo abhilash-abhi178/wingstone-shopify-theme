@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-wingstone",
+      "settings": {
+        "eyebrow": "Precision essentials",
+        "heading": "Wingstone",
+        "text": "<p>Minimal pieces with a sharp profile, cool-toned finishes, and a calm premium feel inspired by the Wingstone mark.</p>",
+        "primary_label": "Shop collection",
+        "primary_link": "#featured-products",
+        "secondary_label": "View lookbook"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Featured",
+        "heading": "Built in navy",
+        "products_to_show": 4
+      }
+    },
+    "values": {
+      "type": "brand-values",
+      "settings": {
+        "eyebrow": "Wingstone standard",
+        "heading": "Sharp, calm, exact"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Private list",
+        "heading": "Join Wingstone",
+        "text": "<p>New drops, restocks, and early access notes.</p>",
+        "button_label": "Subscribe"
+      }
+    }
+  },
+  "order": ["hero", "featured", "values", "newsletter"]
+}

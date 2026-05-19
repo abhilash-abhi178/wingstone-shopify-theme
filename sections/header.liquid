@@ -1,0 +1,45 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <div class="site-header__left">
+      <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" data-menu-toggle>
+        <span class="menu-toggle__line" aria-hidden="true"></span>
+        <span class="menu-toggle__line" aria-hidden="true"></span>
+        <span class="menu-toggle__line" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" data-site-nav>
+        <a href="{{ routes.root_url }}">Home</a>
+        <a href="{{ routes.root_url }}#featured-products">Products</a>
+        <a href="{{ routes.root_url }}#contact">Contact</a>
+      </nav>
+    </div>
+
+    <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
+      {% else %}
+        <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
+      {% endif %}
+    </a>
+
+    <div class="site-header__actions">
+      {% if shop.customer_accounts_enabled %}
+        <a class="site-header__action site-header__action--account" href="{{ routes.account_url }}">Account</a>
+      {% endif %}
+      <a class="site-header__action" href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    }
+  ]
+}
+{% endschema %}

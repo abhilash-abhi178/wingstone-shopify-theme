@@ -1,0 +1,85 @@
+<section class="section feature-band">
+  <div class="page-width">
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 class="section-title">{{ section.settings.heading }}</h2>
+    <div class="feature-grid">
+      {% for block in section.blocks %}
+        <article class="feature-item" {{ block.shopify_attributes }}>
+          <div class="feature-item__number">{{ forloop.index | prepend: '0' }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand values",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Wingstone standard"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sharp, calm, exact"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Clean silhouette"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Strong shapes, restrained details, and a visual system that keeps the product in focus."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand values",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "Clean silhouette",
+            "text": "Strong shapes, restrained details, and a visual system that keeps the product in focus."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Frosted palette",
+            "text": "A cool blue foundation balanced by deep navy, steel accents, and bright product space."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Premium rhythm",
+            "text": "Editorial scale, crisp spacing, and clear shopping paths from first view to checkout."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

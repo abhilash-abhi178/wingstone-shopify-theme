@@ -1,0 +1,28 @@
+<section class="section">
+  <div class="page-width collection-toolbar">
+    <div>
+      <p class="eyebrow">{{ collection.products_count }} products</p>
+      <h1 class="section-title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div>{{ collection.description }}</div>
+      {% endif %}
+    </div>
+
+    <div class="product-grid">
+      {% paginate collection.products by 16 %}
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% else %}
+          <p>No products found in this collection.</p>
+        {% endfor %}
+      {% endpaginate %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main collection",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+{
+  "current": {
+    "color_ink": "#1D2C43",
+    "color_frost": "#D5DFF5",
+    "color_steel": "#5E789B",
+    "color_paper": "#FFFFFF",
+    "color_line": "#B9C7DE",
+    "color_accent": "#8EA4C6",
+    "heading_font": "assistant_n7",
+    "body_font": "assistant_n4"
+  }
+}

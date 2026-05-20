@@ -642,7 +642,10 @@
             id="addToCartBtn"
             {% unless product.available %}disabled{% endunless %}
           >
-            {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+            <span class="pdp-btn__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M7 6h14l-2 8H9L7 6Zm0 0-1-2H2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/><circle cx="10" cy="19" r="1.4" fill="currentColor"/><circle cx="17" cy="19" r="1.4" fill="currentColor"/></svg>
+            </span>
+            <span class="pdp-btn__label">{% if product.available %}Add to cart{% else %}Sold out{% endif %}</span>
           </button>
           {% if product.available %}
             <div>{{ form | payment_button }}</div>
@@ -861,7 +864,8 @@
     /* Add to cart btn */
     if (addToCartBtn) {
       addToCartBtn.disabled = !v.available;
-      addToCartBtn.textContent = v.available ? 'Add to cart' : 'Sold out';
+      const lbl = addToCartBtn.querySelector('.pdp-btn__label');
+      if (lbl) lbl.textContent = v.available ? 'Add to cart' : 'Sold out'; else addToCartBtn.textContent = v.available ? 'Add to cart' : 'Sold out';
     }
 
     /* Main image – switch to variant image if present */

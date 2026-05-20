@@ -91,6 +91,21 @@ const openCartDrawer = async () => {
   document.addEventListener('keydown', _cartKeydownHandler);
 };
 
+// Toast helper
+const showToast = (msg, duration = 2200) => {
+  const toast = document.getElementById('cartToast');
+  const msgEl = document.getElementById('cartToastMessage');
+  if (!toast || !msgEl) return;
+  msgEl.textContent = msg;
+  toast.hidden = false;
+  toast.classList.add('show');
+  if (toast._timeout) clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => { toast.hidden = true; }, 340);
+  }, duration);
+};
+
 const closeCartDrawer = () => {
   if (!cartDrawer || !cartDrawerBackdrop) return;
 
@@ -170,9 +185,11 @@ if (pdpForm) {
       }
 
       if (submitButton) {
-        const original = submitButton.textContent;
-        submitButton.textContent = 'Added';
-        setTimeout(() => { submitButton.textContent = original; }, 1800);
+        const label = submitButton.querySelector('.pdp-btn__label');
+        const original = label ? label.textContent : submitButton.textContent;
+        if (label) label.textContent = 'Added'; else submitButton.textContent = 'Added';
+        showToast('Added to cart');
+        setTimeout(() => { if (label) label.textContent = original; else submitButton.textContent = original; }, 1800);
       }
     } catch (err) {
       console.error(err);
@@ -234,9 +251,11 @@ cartForms.forEach((form) => {
 
           // quick feedback on the submit button
           if (submitButton) {
-            const original = submitButton.textContent;
-            submitButton.textContent = 'Added';
-            setTimeout(() => { submitButton.textContent = original; }, 1800);
+            const label = submitButton.querySelector('.pdp-btn__label');
+            const original = label ? label.textContent : submitButton.textContent;
+            if (label) label.textContent = 'Added'; else submitButton.textContent = 'Added';
+            showToast('Added to cart');
+            setTimeout(() => { if (label) label.textContent = original; else submitButton.textContent = original; }, 1800);
           }
         } catch (e) {
           // ignore silent update errors
@@ -327,7 +346,8 @@ document.querySelectorAll('.product-form').forEach((form) => {
 
     idInput.value = variant.id;
     submit.disabled = !variant.available;
-    submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
+    const submitLabel = submit.querySelector('.pdp-btn__label');
+    if (submitLabel) submitLabel.textContent = variant.available ? 'Add to cart' : 'Sold out'; else submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
 
     if (currentPrice) {
       currentPrice.textContent = formatMoney(variant.price);

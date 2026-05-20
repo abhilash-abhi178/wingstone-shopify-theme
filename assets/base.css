@@ -486,6 +486,34 @@ button.shopify-payment-button__button {
   box-shadow: none;
 }
 
+.pdp-btn__icon { display: inline-flex; align-items: center; justify-content: center; margin-right: .8rem; color: #111; }
+.pdp-btn__label { display: inline-block; vertical-align: middle; font-weight:800; }
+
+/* Style Shopify payment button on PDP to match 'Buy It Now' large navy bar */
+.pdp-cta .shopify-payment-button__button,
+.pdp-cta .shopify-payment-button__button--unbranded,
+.pdp-cta .shopify-payment-button {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f254b, #162948) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 12px 30px rgba(8,18,40,0.18) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.pdp-cta .shopify-payment-button__button:hover { transform: translateY(-2px); }
+
+/* Toast confirmation */
+.cart-toast { position: fixed; right: 20px; bottom: 20px; z-index: 120; display: grid; place-items:center; }
+.cart-toast[hidden] { display: none; }
+.cart-toast__inner { background: rgba(7,18,40,0.96); color: #fff; padding: .72rem 1rem; border-radius: 12px; box-shadow: 0 12px 40px rgba(2,6,23,0.5); transform: translateY(12px); opacity: 0; transition: transform .32s cubic-bezier(.2,.9,.2,1), opacity .32s ease; font-weight:800; }
+.cart-toast.show .cart-toast__inner { transform: translateY(0); opacity: 1; }
+
 /* price badge on current price */
 .purchase-price__current{font-size:1.35rem;font-weight:800;color:color-mix(in srgb, var(--color-accent), black 8%)}
 

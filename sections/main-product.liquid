@@ -63,64 +63,16 @@
 
       {% form 'product', product, class: 'product-form' %}
         {% unless product.has_only_default_variant %}
-          <div class="product-form__swatches">
-            {% for option in product.options_with_values %}
-              <div class="swatch-group" data-option-index="{{ forloop.index }}">
-                <span class="eyebrow swatch-group__label">
-                  {{ option.name }}: <span class="swatch-group__selected-value" data-selected-value-label>{{ option.selected_value }}</span>
-                </span>
-                
-                <select class="field" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index }}" style="display: none;">
-                  {% for value in option.values %}
-                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
-                  {% endfor %}
-                </select>
-
-                {% assign option_name_downcase = option.name | downcase %}
-                {% if option_name_downcase contains 'color' or option_name_downcase contains 'colour' %}
-                  <div class="swatch-list swatch-list--color">
-                    {% for value in option.values %}
-                      {% assign matching_variant = nil %}
-                      {% for variant in product.variants %}
-                        {% if variant.options contains value %}
-                          {% assign matching_variant = variant %}
-                          {% break %}
-                        {% endif %}
-                      {% endfor %}
-
-                      <button type="button" 
-                              class="swatch-card{% if option.selected_value == value %} is-active{% endif %}"
-                              data-swatch-value="{{ value | escape }}"
-                              aria-label="Select {{ option.name }}: {{ value | escape }}">
-                        <div class="swatch-card__media">
-                          {% if matching_variant.image %}
-                            <img src="{{ matching_variant.image | image_url: width: 120, height: 120, crop: 'center' }}" alt="{{ value | escape }}" loading="lazy">
-                          {% else %}
-                            <div class="swatch-card__color-fallback" style="background-color: {{ value | downcase | remove: ' ' }};"></div>
-                          {% endif %}
-                        </div>
-                        <div class="swatch-card__info">
-                          <span class="swatch-card__label">{{ value }}</span>
-                          <span class="swatch-card__price">{{ matching_variant.price | money }}</span>
-                        </div>
-                      </button>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  <div class="swatch-list swatch-list--pill">
-                    {% for value in option.values %}
-                      <button type="button" 
-                              class="swatch-pill{% if option.selected_value == value %} is-active{% endif %}"
-                              data-swatch-value="{{ value | escape }}"
-                              aria-label="Select {{ option.name }}: {{ value | escape }}">
-                        {{ value }}
-                      </button>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-              </div>
-            {% endfor %}
-          </div>
+          {% for option in product.options_with_values %}
+            <label>
+              <span class="eyebrow">{{ option.name }}</span>
+              <select class="field" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index }}">
+                {% for value in option.values %}
+                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          {% endfor %}
         {% endunless %}
 
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">

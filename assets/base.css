@@ -503,6 +503,62 @@ button.shopify-payment-button__button {
   text-overflow: ellipsis;
 }
 
+/* Alternate hero layout matching provided example: large backdrop word + scrolling ticker */
+.hero.hero--tones {
+  position: relative;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero .bg-text {
+  margin: 0;
+  font-size: 180px;
+  color: #3E5A86;
+  letter-spacing: 5px;
+  font-weight: 700;
+  font-family: serif;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+.ticker-wrap {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-6%);
+  width: 100%;
+  overflow: hidden;
+  border-top: 2px solid #7B61FF;
+  border-bottom: 2px solid #7B61FF;
+  padding: 8px 0;
+  z-index: 1;
+}
+
+.ticker {
+  display: flex;
+  width: max-content;
+  animation: scroll 18s linear infinite;
+}
+
+.ticker span {
+  white-space: nowrap;
+  font-size: 22px;
+  padding-right: 80px;
+  color: #111;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .hero__content {
   position: relative;
   z-index: 1;

@@ -2,10 +2,13 @@
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="hero__pattern" aria-hidden="true"></div>
   <div class="page-width hero__inner">
-    <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
+    <h1 class="bg-text" aria-hidden="true">{{ section.settings.heading }}</h1>
 
-    <div class="hero__tagline-bar" aria-hidden="true">
-      <div class="hero__tagline">{{ section.settings.announcement_text }}</div>
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker">
+        <span>{{ section.settings.announcement_text }}</span>
+        <span>{{ section.settings.announcement_text }}</span>
+      </div>
     </div>
 
     <div class="hero__content">

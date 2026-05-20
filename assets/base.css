@@ -450,6 +450,20 @@ button.shopify-payment-button__button {
   place-items: center;
 }
 
+.hero__brand {
+  display: block;
+  z-index: 1;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.hero__logo {
+  max-width: 160px;
+  width: min(24vw, 160px);
+  height: auto;
+  display: inline-block;
+}
+
 .hero__backdrop {
   position: absolute;
   left: 50%;

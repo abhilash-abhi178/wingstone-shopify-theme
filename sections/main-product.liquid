@@ -75,7 +75,7 @@
                   </span>
                   {% if option_name_downcase contains 'size' %}
                     <button type="button" class="swatch-group__size-chart-trigger" data-size-chart-trigger>
-                      <svg class="swatch-group__size-chart-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;">
                         <path d="M12 20h9M3 20v-8a2 2 0 0 1 2-2h4M3 12h18M3 16h18M16 20V10M12 20V12M8 20v-4" />
                       </svg>
                       Size Chart
@@ -158,8 +158,9 @@
       <div class="size-chart-modal__header">
         <h2 id="size-chart-title" class="size-chart-modal__title">Size Chart</h2>
         <button type="button" class="size-chart-modal__close" data-size-chart-close aria-label="Close size chart">
-          <svg class="size-chart-modal__close-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M6 6l12 12M18 6 6 18"></path>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>

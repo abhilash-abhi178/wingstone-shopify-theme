@@ -13,6 +13,8 @@
                 data-product-gallery-thumb
                 data-full="{{ image | image_url: width: 1400 }}"
                 data-alt="{{ image.alt | default: product.title | escape }}"
+                data-image-alt="{{ image.alt | escape }}"
+                data-image-filename="{{ image.src | split: '/' | last | split: '?' | first | escape }}"
                 aria-label="View image {{ forloop.index }} of {{ product_images.size }}"
                 {% if forloop.first %}aria-current="true"{% endif %}
               >
@@ -63,16 +65,72 @@
 
       {% form 'product', product, class: 'product-form' %}
         {% unless product.has_only_default_variant %}
-          {% for option in product.options_with_values %}
-            <label>
-              <span class="eyebrow">{{ option.name }}</span>
-              <select class="field" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index }}">
-                {% for value in option.values %}
-                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
-                {% endfor %}
-              </select>
-            </label>
-          {% endfor %}
+          <div class="product-form__swatches">
+            {% for option in product.options_with_values %}
+              <div class="swatch-group" data-option-index="{{ forloop.index }}">
+                <span class="eyebrow swatch-group__label">
+                  {{ option.name }}: <span class="swatch-group__selected-value" data-selected-value-label>{{ option.selected_value }}</span>
+                </span>
+                
+                <select class="field" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index }}" style="display: none;">
+                  {% for value in option.values %}
+                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {% endfor %}
+                </select>
+
+                {% assign option_name_downcase = option.name | downcase %}
+                {% if option_name_downcase contains 'color' or option_name_downcase contains 'colour' %}
+                  <div class="swatch-list swatch-list--color">
+                    {% for value in option.values %}
+                      {% assign matching_variant = nil %}
+                      {% for variant in product.variants %}
+                        {% if variant.options contains value %}
+                          {% assign matching_variant = variant %}
+                          {% break %}
+                        {% endif %}
+                      {% endfor %}
+
+                      <button type="button" 
+                              class="swatch-card{% if option.selected_value == value %} is-active{% endif %}"
+                              data-swatch-value="{{ value | escape }}"
+                              aria-label="Select {{ option.name }}: {{ value | escape }}">
+                        <div class="swatch-card__media">
+                          {% if matching_variant.image %}
+                            <img src="{{ matching_variant.image | image_url: width: 120, height: 120, crop: 'center' }}" alt="{{ value | escape }}" loading="lazy">
+                          {% else %}
+                            <div class="swatch-card__color-fallback" style="background-color: {{ value | downcase | remove: ' ' }};"></div>
+                          {% endif %}
+                        </div>
+                        <div class="swatch-card__info">
+                          <span class="swatch-card__label">{{ value }}</span>
+                          <span class="swatch-card__price">{{ matching_variant.price | money }}</span>
+                        </div>
+                      </button>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <div class="swatch-list swatch-list--pill">
+                    {% for value in option.values %}
+                      <button type="button" 
+                              class="swatch-pill{% if option.selected_value == value %} is-active{% endif %}"
+                              data-swatch-value="{{ value | escape }}"
+                              aria-label="Select {{ option.name }}: {{ value | escape }}">
+                        {{ value }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                  {% if option_name_downcase contains 'size' %}
+                    <button type="button" class="swatch-group__size-chart-trigger" data-size-chart-trigger>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;">
+                        <path d="M12 20h9M3 20v-8a2 2 0 0 1 2-2h4M3 12h18M3 16h18M16 20V10M12 20V12M8 20v-4" />
+                      </svg>
+                      Size Chart
+                    </button>
+                  {% endif %}
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
         {% endunless %}
 
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
@@ -88,6 +146,127 @@
         {% endif %}
         <script type="application/json" data-product-variants>{{ product.variants | json }}</script>
       {% endform %}
+    </div>
+  </div>
+
+  <!-- Size Chart Modal -->
+  <div class="size-chart-modal" data-size-chart-modal aria-hidden="true" role="dialog" aria-labelledby="size-chart-title">
+    <div class="size-chart-modal__backdrop" data-size-chart-close></div>
+    <div class="size-chart-modal__card">
+      <div class="size-chart-modal__header">
+        <h2 id="size-chart-title" class="size-chart-modal__title">Size Chart</h2>
+        <button type="button" class="size-chart-modal__close" data-size-chart-close aria-label="Close size chart">&times;</button>
+      </div>
+      <div class="size-chart-modal__body">
+        <div class="size-chart-tabs">
+          <button type="button" class="size-chart-tab is-active" data-tab-target="inches">Inches</button>
+          <button type="button" class="size-chart-tab" data-tab-target="cm">Centimeters</button>
+        </div>
+        
+        <div class="size-chart-content is-active" id="size-chart-inches">
+          <table class="size-chart-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Chest (in)</th>
+                <th>Length (in)</th>
+                <th>Sleeve (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>XS</strong></td>
+                <td>36</td>
+                <td>26</td>
+                <td>24</td>
+              </tr>
+              <tr>
+                <td><strong>S</strong></td>
+                <td>38</td>
+                <td>27</td>
+                <td>24.5</td>
+              </tr>
+              <tr>
+                <td><strong>M</strong></td>
+                <td>40</td>
+                <td>28</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>42</td>
+                <td>29</td>
+                <td>25.5</td>
+              </tr>
+              <tr>
+                <td><strong>XL</strong></td>
+                <td>44</td>
+                <td>30</td>
+                <td>26</td>
+              </tr>
+              <tr>
+                <td><strong>XXL</strong></td>
+                <td>46</td>
+                <td>31</td>
+                <td>26.5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="size-chart-content" id="size-chart-cm">
+          <table class="size-chart-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Chest (cm)</th>
+                <th>Length (cm)</th>
+                <th>Sleeve (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>XS</strong></td>
+                <td>91</td>
+                <td>66</td>
+                <td>61</td>
+              </tr>
+              <tr>
+                <td><strong>S</strong></td>
+                <td>97</td>
+                <td>69</td>
+                <td>62</td>
+              </tr>
+              <tr>
+                <td><strong>M</strong></td>
+                <td>102</td>
+                <td>71</td>
+                <td>64</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>107</td>
+                <td>74</td>
+                <td>65</td>
+              </tr>
+              <tr>
+                <td><strong>XL</strong></td>
+                <td>112</td>
+                <td>76</td>
+                <td>66</td>
+              </tr>
+              <tr>
+                <td><strong>XXL</strong></td>
+                <td>117</td>
+                <td>79</td>
+                <td>67</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <p class="size-chart-modal__note">* All measurements are of the actual garment. Please allow 0.5" - 1" tolerance due to manual measurement.</p>
+      </div>
     </div>
   </div>
 </section>

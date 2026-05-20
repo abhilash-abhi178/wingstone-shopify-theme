@@ -819,6 +819,62 @@ button.shopify-payment-button__button {
   margin: 1rem 0;
 }
 
+.hero--with-media .hero__inner {
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+@media (min-width: 900px) {
+  .hero--with-media .hero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+    align-items: center;
+  }
+
+  .hero--with-media .hero__content {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .hero--with-media .hero__buttons,
+  .hero--with-media .hero__stats {
+    justify-content: flex-start;
+  }
+}
+
+.hero__media {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 520px);
+  margin: 2rem auto 0;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 88%);
+  box-shadow: 0 24px 60px color-mix(in srgb, var(--color-ink), transparent 90%);
+  background: color-mix(in srgb, var(--color-paper), var(--color-ink) 2%);
+}
+
+.hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-ink), transparent 94%) 100%);
+  pointer-events: none;
+}
+
+.hero__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+
+@media (min-width: 900px) {
+  .hero--with-media .hero__media {
+    margin: 0;
+  }
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -891,6 +947,12 @@ button.shopify-payment-button__button {
   font-size: .78rem;
   font-weight: 800;
   line-height: 1.1;
+}
+
+.product-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
 }
 
 .product-card__title {
@@ -1097,6 +1159,35 @@ button.shopify-payment-button__button {
   letter-spacing: .18em;
   text-transform: uppercase;
   overflow-wrap: anywhere;
+}
+
+.site-footer__philosophy {
+  margin: .65rem 0 0;
+  max-width: 36ch;
+  color: color-mix(in srgb, var(--color-paper), transparent 22%);
+  font-size: .92rem;
+  line-height: 1.65;
+}
+
+.site-footer__meta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem 1rem;
+  margin-top: .75rem;
+}
+
+.site-footer__meta-links a {
+  color: color-mix(in srgb, var(--color-paper), transparent 10%);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.site-footer__meta-links a:hover,
+.site-footer__meta-links a:focus-visible {
+  text-decoration: underline;
 }
 
 .collection-toolbar,

@@ -1,4 +1,4 @@
-<section class="hero hero--tones">
+<section class="hero hero--tones{% if section.settings.image != blank %} hero--with-media{% endif %}">
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="hero__pattern" aria-hidden="true"></div>
   <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
@@ -51,6 +51,11 @@
         </div>
       </div>
     </div>
+    {% if section.settings.image != blank %}
+      <div class="hero__media" aria-hidden="true">
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', class: 'hero__image', alt: section.settings.heading }}
+      </div>
+    {% endif %}
   </div>
 </section>
 

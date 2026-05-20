@@ -2,6 +2,7 @@
   <div class="page-width site-footer__inner">
     <div>
       <p class="site-footer__brand">{{ shop.name | default: 'Wingstone' }}</p>
+      <p class="site-footer__philosophy">Future-focused streetwear with a quieter, more premium shopping experience.</p>
       <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Wingstone' }}. All rights reserved.</small>
     </div>
     <div>
@@ -11,6 +12,12 @@
           <a href="{{ link.url }}">{{ link.title }}</a>{% unless forloop.last %} &nbsp;/&nbsp; {% endunless %}
         {% endfor %}
       {% endif %}
+      <div class="site-footer__meta-links">
+        <a href="{{ routes.root_url }}#featured-products">Drops</a>
+        <a href="{{ routes.root_url }}#trust">Brand values</a>
+        <a href="{{ routes.root_url }}#contact">Newsletter</a>
+        <a href="{{ pages.about.url | default: routes.root_url }}">About</a>
+      </div>
     </div>
   </div>
 </footer>

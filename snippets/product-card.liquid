@@ -9,14 +9,22 @@
     </div>
   </a>
   <div class="product-card__body">
-    {% if product.compare_at_price > product.price %}
-      <span class="product-card__deal">Limited time deal</span>
-    {% endif %}
+    <div class="product-card__badges">
+      {% if product.tags contains 'new' or product.tags contains 'new-drop' %}
+        <span class="product-card__deal">New drop</span>
+      {% endif %}
+      {% if product.tags contains 'best-seller' %}
+        <span class="product-card__signal">Best seller</span>
+      {% endif %}
+      {% if product.compare_at_price > product.price %}
+        <span class="product-card__deal">Limited</span>
+      {% endif %}
+    </div>
     <a href="{{ product.url }}">
       <h3 class="product-card__title">{{ product.title }}</h3>
     </a>
     <div class="product-card__signal">
-      <span>Customer pick</span>
+      <span>{{ product.vendor | default: 'Wingstone drop' }}</span>
     </div>
     <div class="product-card__pricing">
       <span class="product-card__price">{{ product.price | money }}</span>
@@ -24,11 +32,11 @@
         <s>{{ product.compare_at_price | money }}</s>
       {% endif %}
     </div>
-    <p class="product-card__delivery">Fast dispatch &bull; Easy support</p>
+    <p class="product-card__delivery">Editorial fit &bull; Limited release energy</p>
     {% form 'product', product, class: 'product-card__form' %}
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
       <button class="product-card__button" type="submit" {% unless product.available %}disabled{% endunless %}>
-        {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+        {% if product.available %}Quick add{% else %}Sold out{% endif %}
       </button>
     {% endform %}
   </div>

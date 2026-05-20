@@ -56,12 +56,12 @@ select {
 }
 
 .page-width {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1220px, calc(100% - 40px));
   margin: 0 auto;
 }
 
 .section {
-  padding: clamp(72px, 8vw, 112px) 0;
+  padding: clamp(84px, 9vw, 136px) 0;
   animation: content-rise .7s ease both;
 }
 
@@ -80,7 +80,7 @@ select {
   margin: 0 0 1rem;
   color: var(--color-ink);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.35rem, 5vw, 4.8rem);
+  font-size: clamp(2.55rem, 5.4vw, 5.2rem);
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: 0;
@@ -104,6 +104,15 @@ select {
   letter-spacing: .16em;
   text-transform: uppercase;
   animation: content-rise .62s ease both;
+}
+
+.rte,
+.page-content,
+.contact-page__lede,
+.login-page__text,
+.site-footer__philosophy,
+.pdp-description {
+  max-width: 70ch;
 }
 
 .button,
@@ -906,8 +915,8 @@ button.shopify-payment-button__button {
 
 .product-card:hover {
   background: var(--color-paper);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px color-mix(in srgb, var(--color-ink), transparent 90%);
+  transform: translateY(-6px);
+  box-shadow: 0 22px 56px color-mix(in srgb, var(--color-ink), transparent 90%);
 }
 
 .product-card:hover::after {
@@ -934,8 +943,8 @@ button.shopify-payment-button__button {
 
 .product-card__body {
   display: grid;
-  gap: .55rem;
-  padding: clamp(.9rem, 1.8vw, 1.2rem);
+  gap: .65rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
 }
 
 .product-card__deal {

@@ -661,11 +661,10 @@
             id="addToCartBtn"
             {% unless product.available %}disabled{% endunless %}
           >
-            {% if product.available %}🛒 Add to Cart{% else %}Sold out{% endif %}
+            {% if product.available %}Add to cart{% else %}Sold out{% endif %}
           </button>
           {% if product.available %}
             <div>{{ form | payment_button }}</div>
-            <button class="pdp-btn pdp-btn--buy" type="button" id="buyNowBtn">⚡ Buy Now</button>
           {% endif %}
         </div>
 

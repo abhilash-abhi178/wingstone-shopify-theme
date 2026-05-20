@@ -411,7 +411,7 @@ button.shopify-payment-button__button {
 .color-variants{display:flex;gap:14px;overflow-x:auto}
 .color-card{width:120px;border:1px solid #ddd;border-radius:14px;padding:10px;cursor:pointer;transition:0.3s ease;background:#fff;display:flex;flex-direction:column;align-items:center}
 .color-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.08)}
-.color-card.is-active,.color-card.active{border:2px solid #2563eb;box-shadow:0 0 0 4px rgba(37,99,235,0.12)}
+.color-card.is-active,.color-card.active{border:2px solid var(--color-accent);box-shadow:0 0 0 4px color-mix(in srgb, var(--color-accent), transparent 88%)}
 .color-card img{width:100%;border-radius:10px}
 .variant-info{margin-top:10px;text-align:center}
 .variant-name{display:block;font-weight:600}
@@ -421,7 +421,7 @@ button.shopify-payment-button__button {
 .size-btn:hover{border-color:#111827}
 .size-btn.is-active,.size-btn.active{background:#1e3a8a;color:#fff;border-color:#1e3a8a}
 .size-btn.disabled{opacity:0.4;cursor:not-allowed;text-decoration:line-through}
-.size-chart{margin-left:10px;font-size:13px;color:#2563eb;text-decoration:none}
+.size-chart{margin-left:10px;font-size:13px;color:var(--color-accent);text-decoration:none}
 .quantity-box{display:flex;align-items:center;width:170px;border:1px solid #ddd;border-radius:14px;overflow:hidden}
 .qty-btn{width:50px;height:50px;border:none;background:#f5f5f5;font-size:22px;cursor:pointer}
 .quantity-box input{width:70px;text-align:center;border:none;font-size:18px}
@@ -437,18 +437,17 @@ button.shopify-payment-button__button {
 @media(max-width:768px){.product-buttons{position:sticky;bottom:0;background:#fff;padding-top:15px}}
 
 /* Enhanced visuals */
-.amazon-product-options{--accent:#2563eb;--accent-dark:#1e3a8a;--muted:#6b7280}
 .amazon-product-options{padding:18px;background:linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,0.06)}
 .color-card{border:1px solid rgba(15,23,42,0.06);background:linear-gradient(180deg,#fff,#fbfdff);padding:12px}
 .color-card img{height:100px;object-fit:cover;border-radius:10px;margin-bottom:8px}
-.color-card .variant-price{display:block;color:var(--muted);font-size:13px;margin-top:6px}
-.color-card::after{content:'✓';position:absolute;right:8px;top:8px;background:var(--accent);color:#fff;width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:0 6px 18px rgba(37,99,235,0.18);opacity:0;transform:scale(0.85);transition:all .18s ease}
+.color-card .variant-price{display:block;color:var(--color-steel);font-size:13px;margin-top:6px}
+.color-card::after{content:'✓';position:absolute;right:8px;top:8px;background:var(--color-accent);color:#fff;width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:0 6px 18px color-mix(in srgb, var(--color-accent), transparent 76%);opacity:0;transform:scale(0.85);transition:all .18s ease}
 .color-card.is-active::after{opacity:1;transform:scale(1)}
 .color-card:not(.is-active){filter:grayscale(0);}
 .color-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,23,42,0.08)}
 
 .size-btn{background:linear-gradient(180deg,#fff,#f6f9ff);border:1px solid rgba(15,23,42,0.06)}
-.size-btn.is-active{background:linear-gradient(180deg,var(--accent),var(--accent-dark));box-shadow:0 10px 30px rgba(37,99,235,0.12)}
+.size-btn.is-active{background:linear-gradient(180deg,var(--color-accent), color-mix(in srgb, var(--color-accent), black 12%));box-shadow:0 10px 30px color-mix(in srgb, var(--color-accent), transparent 76%)}
 .size-btn.is-active:hover{transform:none}
 .size-btn.disabled{background:#fff;border-color:rgba(203,213,225,0.6)}
 
@@ -456,11 +455,11 @@ button.shopify-payment-button__button {
 .qty-btn{background:transparent}
 
 .product-buttons{flex-direction:row;gap:12px}
-.product-buttons .cart-btn{flex:1;border-radius:12px;padding:0 18px}
+.product-buttons .cart-btn{flex:1;border-radius:12px;padding:0 18px;background:linear-gradient(135deg, var(--color-accent), color-mix(in srgb, var(--color-accent), black 8%));}
 .product-buttons .purchase-actions__buy-now .shopify-payment-button__button{height:60px;border-radius:12px}
 
 /* price badge on current price */
-.purchase-price__current{font-size:1.35rem;font-weight:800;color:var(--accent-dark)}
+.purchase-price__current{font-size:1.35rem;font-weight:800;color:color-mix(in srgb, var(--color-accent), black 8%)}
 
 /* responsive tweaks */
 @media(max-width:980px){

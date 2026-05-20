@@ -6,14 +6,9 @@
       <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Wingstone' }}. All rights reserved.</small>
     </div>
     <div>
-      {% assign footer_menu = linklists[section.settings.menu] %}
-      {% if footer_menu and footer_menu.links.size > 0 %}
-        {% for link in footer_menu.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>{% unless forloop.last %} &nbsp;/&nbsp; {% endunless %}
-        {% endfor %}
-      {% endif %}
       <div class="site-footer__meta-links">
         <a href="{{ routes.root_url }}#featured-products">Drops</a>
+        <a href="{{ routes.collections_url }}">Collections</a>
         <a href="{{ routes.root_url }}#trust">Brand values</a>
         <a href="{{ routes.root_url }}#contact">Newsletter</a>
         <a href="{{ pages.about.url | default: routes.root_url }}">About</a>

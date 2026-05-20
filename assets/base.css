@@ -1035,6 +1035,91 @@ button.shopify-payment-button__button {
   transform: none;
 }
 
+.page-shell__inner {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-shell__intro,
+.contact-page__hero {
+  display: grid;
+  gap: .6rem;
+  max-width: 72ch;
+}
+
+.page-shell__lede,
+.contact-page__lede {
+  margin: 0;
+  color: var(--color-steel);
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+.page-shell__card,
+.contact-form,
+.contact-details {
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 88%);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--color-paper), var(--color-frost) 30%);
+  box-shadow: 0 16px 48px rgba(29, 44, 67, .06);
+}
+
+.page-content {
+  color: var(--color-ink);
+  line-height: 1.75;
+}
+
+.page-content > :first-child { margin-top: 0; }
+.page-content > :last-child { margin-bottom: 0; }
+.page-content ul,
+.page-content ol {
+  padding-left: 1.2rem;
+  margin: 1rem 0;
+}
+
+.page-content li + li { margin-top: .35rem; }
+
+.page-content a {
+  color: var(--color-accent);
+}
+
+.page-content a:hover,
+.page-content a:focus-visible {
+  text-decoration: underline;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.contact-form,
+.contact-details {
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-details h3 {
+  margin: .25rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+}
+
+.contact-details p {
+  margin: 0;
+  color: var(--color-steel);
+  line-height: 1.7;
+}
+
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .pagination {
   display: flex;
   flex-wrap: wrap;

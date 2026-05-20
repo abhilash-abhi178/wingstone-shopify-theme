@@ -1,9 +1,13 @@
 <section class="section contact-page">
   <div class="page-width">
-    <h1 class="section-title">Contact us</h1>
+    <div class="contact-page__hero">
+      <p class="eyebrow">Support</p>
+      <h1 class="section-title">Contact us</h1>
+      <p class="contact-page__lede">Questions about an order, a drop, or a sizing detail? Send a note and we’ll keep the path simple.</p>
+    </div>
 
     <div class="contact-grid">
-      <div class="contact-form">
+      <div class="contact-form page-shell__card">
         {% form 'contact' %}
           <div>
             <label for="ContactName">Name</label>
@@ -26,11 +30,13 @@
         {% endform %}
       </div>
 
-      <div class="contact-details">
+      <div class="contact-details page-shell__card">
         <h3>Our address</h3>
         <p>Wingstone HQ<br>123 Example Street<br>City, Country</p>
         <h3>Support</h3>
         <p>Email: support@wingstone.example</p>
+        <h3>Hours</h3>
+        <p>Mon-Fri, 9am-6pm</p>
       </div>
     </div>
   </div>

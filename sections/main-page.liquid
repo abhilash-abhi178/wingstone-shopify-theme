@@ -1,7 +1,19 @@
-<section class="section">
-  <div class="page-width">
-    <h1 class="section-title">{{ page.title }}</h1>
-    <div>{{ page.content }}</div>
+<section class="section page-shell">
+  <div class="page-width page-shell__inner">
+    <div class="page-shell__intro">
+      <p class="eyebrow">Wingstone</p>
+      <h1 class="section-title">{{ page.title }}</h1>
+      <p class="page-shell__lede">Editorial brand pages, clear product stories, and no default Shopify clutter.</p>
+    </div>
+
+    <article class="page-shell__card rte page-content">
+      {{ page.content }}
+    </article>
+
+    <div class="page-shell__actions">
+      <a class="button" href="{{ routes.root_url }}#featured-products">Shop drops</a>
+      <a class="button button--secondary" href="{{ routes.root_url }}#trust">Brand values</a>
+    </div>
   </div>
 </section>
 

@@ -399,6 +399,43 @@ button.shopify-payment-button__button {
   }
 }
 
+/* Amazon-style variant picker styles (added) */
+.amazon-product-options{
+  max-width:500px;
+  font-family:Arial,sans-serif;
+}
+
+.variant-group{margin-bottom:30px}
+.variant-title{font-size:14px;font-weight:700;letter-spacing:2px;margin-bottom:15px;color:#1f2a44}
+.variant-title span{margin-left:5px;font-weight:600}
+.color-variants{display:flex;gap:14px;overflow-x:auto}
+.color-card{width:120px;border:1px solid #ddd;border-radius:14px;padding:10px;cursor:pointer;transition:0.3s ease;background:#fff;display:flex;flex-direction:column;align-items:center}
+.color-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.08)}
+.color-card.is-active,.color-card.active{border:2px solid #2563eb;box-shadow:0 0 0 4px rgba(37,99,235,0.12)}
+.color-card img{width:100%;border-radius:10px}
+.variant-info{margin-top:10px;text-align:center}
+.variant-name{display:block;font-weight:600}
+.variant-price{color:#666;font-size:14px}
+.size-variants{display:flex;flex-wrap:wrap;gap:10px}
+.size-btn{min-width:60px;height:50px;border:1px solid #ccc;background:#fff;border-radius:12px;cursor:pointer;font-weight:600;transition:0.25s ease}
+.size-btn:hover{border-color:#111827}
+.size-btn.is-active,.size-btn.active{background:#1e3a8a;color:#fff;border-color:#1e3a8a}
+.size-btn.disabled{opacity:0.4;cursor:not-allowed;text-decoration:line-through}
+.size-chart{margin-left:10px;font-size:13px;color:#2563eb;text-decoration:none}
+.quantity-box{display:flex;align-items:center;width:170px;border:1px solid #ddd;border-radius:14px;overflow:hidden}
+.qty-btn{width:50px;height:50px;border:none;background:#f5f5f5;font-size:22px;cursor:pointer}
+.quantity-box input{width:70px;text-align:center;border:none;font-size:18px}
+.quantity-box input:focus{outline:none}
+.trust-badges{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:30px 0;font-size:14px}
+.trust-badges div{background:#f8fafc;padding:12px;border-radius:12px;text-align:center}
+.product-buttons{display:flex;flex-direction:column;gap:15px}
+.cart-btn,.buy-btn{height:60px;border:none;border-radius:14px;font-size:16px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:0.3s ease}
+.cart-btn{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+.buy-btn{background:#111827;color:#fff}
+.cart-btn:hover,.buy-btn:hover{transform:translateY(-2px);opacity:0.95}
+
+@media(max-width:768px){.product-buttons{position:sticky;bottom:0;background:#fff;padding-top:15px}}
+
 /* Cart drawer styles and micro-interactions */
 .cart-drawer {
   position: fixed;

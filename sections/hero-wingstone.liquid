@@ -4,6 +4,10 @@
   <div class="page-width hero__inner">
     <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
 
+    <div class="hero__tagline-bar" aria-hidden="true">
+      <div class="hero__tagline">{{ section.settings.announcement_text }}</div>
+    </div>
+
     <div class="hero__content">
       {% if section.settings.badge != blank %}
         <div class="hero__badge"><span aria-hidden="true">*</span>{{ section.settings.badge }}</div>

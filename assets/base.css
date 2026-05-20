@@ -472,6 +472,37 @@ button.shopify-payment-button__button {
   animation: backdrop-drift 9s ease-in-out infinite;
 }
 
+/* Centered thin tagline bar that overlays the backdrop text */
+.hero__tagline-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -6%);
+  z-index: 1;
+  width: min(980px, calc(100% - 48px));
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero__tagline {
+  pointer-events: auto;
+  background: color-mix(in srgb, var(--color-paper), transparent 86%);
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 88%);
+  padding: .36rem 1rem;
+  font-size: .86rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: none;
+  color: var(--color-ink);
+  white-space: nowrap;
+  border-radius: 2px;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--color-ink), transparent 92%);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .hero__content {
   position: relative;
   z-index: 1;

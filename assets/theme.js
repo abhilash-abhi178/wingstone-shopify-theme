@@ -180,8 +180,8 @@ document.querySelectorAll('.product-form').forEach((form) => {
   if (!variantData || !idInput || !submit) return;
 
   const variants = JSON.parse(variantData.textContent);
-  const selects = [...form.querySelectorAll('select[data-option-index]')];
   const optionGroups = [...form.querySelectorAll('[data-option-group]')];
+  const optionButtons = optionGroups.map(group => [...group.querySelectorAll('[data-option-value]')]);
   const currentPrice = form.querySelector('[data-current-price]');
   const comparePrice = form.querySelector('[data-compare-price]');
   const stockNote = form.querySelector('[data-stock-note]');
@@ -192,7 +192,14 @@ document.querySelectorAll('.product-form').forEach((form) => {
   const sizeChartTabs = sizeChartModal ? [...sizeChartModal.querySelectorAll('[data-tab-target]')] : [];
   const sizeChartPanels = sizeChartModal ? [...sizeChartModal.querySelectorAll('.size-chart-content')] : [];
 
-  const getSelectedValues = () => selects.map((select) => select.value);
+  // compute selected values from active buttons inside each option group
+  const getSelectedValues = () => optionGroups.map((group) => {
+    const active = group.querySelector('[data-option-value].is-active');
+    if (active) return active.dataset.optionValue;
+    // fallback to first available button's value
+    const first = group.querySelector('[data-option-value]');
+    return first ? first.dataset.optionValue : '';
+  });
 
   const findVariant = (selectedValues) => variants.find((variant) => selectedValues.every((value, index) => variant.options[index] === value));
 
@@ -270,24 +277,23 @@ document.querySelectorAll('.product-form').forEach((form) => {
     syncButtonStates();
   };
 
-  optionGroups.forEach((group) => {
-    const optionIndex = Number(group.dataset.optionIndex) - 1;
-    const select = selects[optionIndex];
+  // wire custom option buttons to update selected state and variant
+  optionGroups.forEach((group, idx) => {
     const buttons = [...group.querySelectorAll('[data-option-value]')];
-
-    if (!select) return;
-
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         if (button.disabled) return;
 
-        select.value = button.dataset.optionValue;
-        select.dispatchEvent(new Event('change', { bubbles: true }));
+        // toggle active state within group
+        buttons.forEach(b => b.classList.toggle('is-active', b === button));
+        // sync label
+        const label = group.querySelector('[data-selected-value-label]');
+        if (label) label.textContent = button.dataset.optionValue;
+        // update the hidden variant id by computing selected values
+        updateVariant();
       });
     });
   });
-
-  selects.forEach((select) => select.addEventListener('change', updateVariant));
 
   if (quantityInput) {
     quantityInput.addEventListener('change', () => {

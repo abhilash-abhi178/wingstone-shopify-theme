@@ -94,11 +94,7 @@
                   {% endif %}
                 </div>
 
-                <select class="purchase-option__select" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index }}" aria-label="{{ option.name }}" hidden>
-                  {% for value in option.values %}
-                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
-                  {% endfor %}
-                </select>
+                <!-- native select removed: using custom variant cards/pills instead -->
 
                 {% if is_color_option %}
                   <div class="variant-card-list variant-card-list--color" data-option-buttons>

@@ -31,6 +31,8 @@
       <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
         {% if section.settings.logo != blank %}
           {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
+        {% elsif settings.brand_logo != blank %}
+          {{ settings.brand_logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
         {% else %}
           <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
         {% endif %}

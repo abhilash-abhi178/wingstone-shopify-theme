@@ -2,44 +2,56 @@
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="hero__pattern" aria-hidden="true"></div>
   <div class="page-width hero__inner">
-    <!-- Background Brand -->
-    <div class="brand-bg" aria-hidden="true">{{ section.settings.heading }}</div>
+    <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
 
-    <!-- Main Content -->
-    <div class="hero-content">
+    <div class="hero__content">
       {% if section.settings.badge != blank %}
-        <p class="badge">{{ section.settings.badge }}</p>
+        <div class="hero__badge"><span aria-hidden="true">*</span>{{ section.settings.badge }}</div>
       {% endif %}
-
       {% if section.settings.eyebrow != blank %}
-        <h1>{{ section.settings.eyebrow }}</h1>
+        <h1 class="hero__offer">{{ section.settings.eyebrow }}</h1>
       {% endif %}
-
       {% if section.settings.text != blank %}
-        <p class="desc">{{ section.settings.text }}</p>
+        <div class="hero__text">{{ section.settings.text }}</div>
       {% endif %}
-
       {% if section.settings.primary_label != blank or section.settings.secondary_label != blank %}
-        <div class="buttons">
+        <div class="hero__buttons">
           {% if section.settings.primary_label != blank %}
             <a class="button" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label }}</a>
           {% endif %}
           {% if section.settings.secondary_label != blank %}
-            <a class="button outline" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>
+            <a class="button button--secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>
           {% endif %}
         </div>
       {% endif %}
-    </div>
-
-    <!-- Moving Ticker -->
-    {% if section.settings.announcement_text != blank %}
-      <div class="ticker-wrap" aria-hidden="true">
-        <div class="ticker">
-          <span>{{ section.settings.announcement_text }}</span>
-          <span>{{ section.settings.announcement_text }}</span>
+      {% if section.settings.announcement_text != blank %}
+        <div class="hero__ticker" aria-label="{{ section.settings.announcement_text | strip_html | escape }}">
+          <div class="hero__ticker-track">
+            {% for i in (1..2) %}
+              <span>{{ section.settings.announcement_text }}</span>
+              <span>{{ section.settings.announcement_text }}</span>
+              <span>{{ section.settings.announcement_text }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="hero__stats" aria-label="Store highlights">
+        <div class="hero__stat">
+          <strong>{{ section.settings.stat_one_number }}</strong>
+          <span>{{ section.settings.stat_one_label }}</span>
+        </div>
+        <span class="hero__stat-divider" aria-hidden="true"></span>
+        <div class="hero__stat">
+          <strong>{{ section.settings.stat_two_number }}</strong>
+          <span>{{ section.settings.stat_two_label }}</span>
+        </div>
+        <span class="hero__stat-divider" aria-hidden="true"></span>
+        <div class="hero__stat">
+          <strong>{{ section.settings.stat_three_number }}</strong>
+          <span>{{ section.settings.stat_three_label }}</span>
         </div>
       </div>
-    {% endif %}
+    </div>
   </div>
 </section>
 

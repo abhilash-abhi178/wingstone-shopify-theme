@@ -188,6 +188,13 @@ document.querySelectorAll('.product-form').forEach((form) => {
   const variants = JSON.parse(variantData.textContent);
   const selects = [...form.querySelectorAll('[data-option-index]')];
 
+  // Swatch elements
+  const swatchGroups = form.querySelectorAll('.swatch-group');
+  
+  // Find thumbnails if on product page
+  const gallery = document.querySelector('[data-product-gallery]');
+  const thumbs = gallery ? [...gallery.querySelectorAll('[data-product-gallery-thumb]')] : [];
+
   const updateVariant = () => {
     const selected = selects.map((select) => select.value);
     const variant = variants.find((item) => selected.every((value, index) => item.options[index] === value));
@@ -196,9 +203,92 @@ document.querySelectorAll('.product-form').forEach((form) => {
     idInput.value = variant.id;
     submit.disabled = !variant.available;
     submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
+
+    // Synchronize gallery image if matching variant image exists
+    if (variant.featured_image && thumbs.length > 0) {
+      const cleanUrl = (url) => {
+        if (!url) return '';
+        // Extract base filename before size parameters like _180x, _120x120, _1400x
+        return url.split('?')[0].split('/').pop().replace(/_(?:[0-9]+x[0-9]*|[0-9]*x[0-9]+)\.[a-zA-Z]+$/, '').split('_')[0];
+      };
+      
+      const variantBase = cleanUrl(variant.featured_image.src);
+      const matchingThumb = thumbs.find(thumb => {
+        const thumbFull = thumb.dataset.full;
+        return thumbFull && cleanUrl(thumbFull) === variantBase;
+      });
+
+      if (matchingThumb) {
+        // Toggle active thumbnail styling by simulating a click
+        matchingThumb.click();
+      }
+    }
   };
 
+  // Helper to check availability of a specific option value combination
+  const isCombinationAvailable = (optionIndex, value) => {
+    const currentSelected = selects.map((select) => select.value);
+    currentSelected[optionIndex] = value;
+    
+    return variants.some((variant) => {
+      if (variant.options[optionIndex] !== value) return false;
+      
+      for (let i = 0; i < selects.length; i++) {
+        if (i === optionIndex) continue;
+        if (variant.options[i] !== currentSelected[i]) return false;
+      }
+      return variant.available;
+    });
+  };
+
+  const updateSwatchAvailability = () => {
+    swatchGroups.forEach((group) => {
+      const optionIndex = parseInt(group.dataset.optionIndex, 10) - 1;
+      const buttons = group.querySelectorAll('[data-swatch-value]');
+      
+      buttons.forEach((btn) => {
+        const val = btn.dataset.swatchValue;
+        const available = isCombinationAvailable(optionIndex, val);
+        
+        if (available) {
+          btn.classList.remove('is-out-of-stock');
+          btn.removeAttribute('disabled');
+        } else {
+          btn.classList.add('is-out-of-stock');
+        }
+      });
+    });
+  };
+
+  swatchGroups.forEach((group) => {
+    const optionIndex = parseInt(group.dataset.optionIndex, 10);
+    const select = form.querySelector(`select[data-option-index="${optionIndex}"]`);
+    const labelVal = group.querySelector('[data-selected-value-label]');
+    const buttons = group.querySelectorAll('[data-swatch-value]');
+    
+    if (!select) return;
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const val = btn.dataset.swatchValue;
+        
+        select.value = val;
+        select.dispatchEvent(new Event('change'));
+        
+        buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
+        if (labelVal) {
+          labelVal.textContent = val;
+        }
+
+        updateSwatchAvailability();
+      });
+    });
+  });
+
   selects.forEach((select) => select.addEventListener('change', updateVariant));
+
+  // Initialize availability styles on load
+  updateSwatchAvailability();
 });
 
 document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {

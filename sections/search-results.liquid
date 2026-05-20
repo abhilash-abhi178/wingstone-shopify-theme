@@ -1,0 +1,44 @@
+<section class="search-results section">
+  <div class="page-width">
+    <form action="/search" method="get" role="search" class="search-results__form">
+      <label for="SearchQuery" class="skip-link">Search</label>
+      <div style="display:flex;gap:.5rem;align-items:center;">
+        <input id="SearchQuery" name="q" type="search" value="{{ search.terms }}" placeholder="Search products" class="field" />
+        <button class="button" type="submit">Search</button>
+      </div>
+    </form>
+
+    <h2 class="section-title">Search results{% if search.terms %} for "{{ search.terms }}"{% endif %}</h2>
+
+    {% if search.results_count > 0 %}
+      <div class="product-grid">
+        {% for result in search.results %}
+          {% if result.object_type == 'product' %}
+            {% render 'product-card', product: result %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if search.results_count > search.results.size %}
+        <div class="search-results__more">
+          <a class="button button--secondary" href="/search?q={{ search.terms | url_encode }}&page=2">View more results</a>
+        </div>
+      {% endif %}
+    {% else %}
+      <p>No results found. Try different keywords or browse our collections.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    {
+      "type": "text",
+      "id": "no_results_text",
+      "label": "No results message",
+      "default": "No results found. Try different keywords or browse our collections."
+    }
+  ]
+}
+{% endschema %}

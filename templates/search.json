@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "search": {
+      "type": "search-results",
+      "settings": {
+        "no_results_text": "No results found. Try different keywords or browse our collections."
+      }
+    }
+  },
+  "order": ["search"]
+}

@@ -332,7 +332,8 @@
     font-size: 10.5px; color: var(--clr-muted); text-align: center;
     font-weight: 500; line-height: 1.3;
   }
-  .pdp-trust-icon { font-size: 18px; }
+  .pdp-trust-icon { width: 20px; height: 20px; color: var(--clr-accent); display: block; flex-shrink: 0; }
+  .pdp-trust-item span { color: var(--clr-text); font-size: 13px; font-weight: 600; margin-top: 4px; }
   @media (max-width: 540px) {
     .pdp-trust { grid-template-columns: repeat(2,1fr); }
   }
@@ -671,16 +672,33 @@
         <!-- Trust Badges -->
         <div class="pdp-trust" aria-label="Purchase reassurances">
           <div class="pdp-trust-item">
-            <span class="pdp-trust-icon">🔒</span>Secure Checkout
+            <svg class="pdp-trust-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+              <rect x="5" y="9" width="14" height="8" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"></rect>
+              <path d="M9 9V7a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+            </svg>
+            <span>Secure Checkout</span>
           </div>
           <div class="pdp-trust-item">
-            <span class="pdp-trust-icon">↩</span>Easy Returns
+            <svg class="pdp-trust-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+              <path d="M20 7v6a2 2 0 01-2 2H9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+              <path d="M20 7l-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+            </svg>
+            <span>Easy Returns</span>
           </div>
           <div class="pdp-trust-item">
-            <span class="pdp-trust-icon">🚚</span>Free Shipping
+            <svg class="pdp-trust-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+              <path d="M3 7h11v6H3z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+              <circle cx="7" cy="17" r="1.6" fill="currentColor"></circle>
+              <circle cx="18" cy="17" r="1.6" fill="currentColor"></circle>
+            </svg>
+            <span>Free Shipping</span>
           </div>
           <div class="pdp-trust-item">
-            <span class="pdp-trust-icon">💵</span>COD Available
+            <svg class="pdp-trust-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+              <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"></rect>
+              <path d="M8 12h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+            </svg>
+            <span>Cash on Delivery</span>
           </div>
         </div>
 

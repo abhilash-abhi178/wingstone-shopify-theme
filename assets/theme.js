@@ -253,8 +253,12 @@ document.querySelectorAll('.product-form').forEach((form) => {
         if (available) {
           btn.classList.remove('is-out-of-stock');
           btn.removeAttribute('disabled');
+          btn.disabled = false;
+          btn.setAttribute('aria-disabled', 'false');
         } else {
           btn.classList.add('is-out-of-stock');
+          try { btn.disabled = true; } catch (e) {}
+          btn.setAttribute('aria-disabled', 'true');
         }
       });
     });
@@ -269,12 +273,18 @@ document.querySelectorAll('.product-form').forEach((form) => {
     if (!select) return;
 
     buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        // Ignore clicks on out-of-stock swatches
+        if (btn.classList.contains('is-out-of-stock') || btn.getAttribute('aria-disabled') === 'true' || btn.disabled) {
+          e.preventDefault();
+          return;
+        }
+
         const val = btn.dataset.swatchValue;
-        
+
         select.value = val;
         select.dispatchEvent(new Event('change'));
-        
+
         buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
         if (labelVal) {
           labelVal.textContent = val;

@@ -2082,8 +2082,17 @@ body.cart-drawer-open {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   width: 100%;
   margin-bottom: 0.5rem;
+}
+
+.swatch-group__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1;
 }
 
 button.swatch-group__size-chart-trigger,
@@ -2102,10 +2111,16 @@ button.swatch-group__size-chart-trigger,
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
+  white-space: nowrap !important;
   transition: color 0.15s ease !important;
   height: auto !important;
   min-height: 0 !important;
   vertical-align: middle !important;
+}
+
+.swatch-group__size-chart-icon {
+  display: block;
+  flex: none;
 }
 
 button.swatch-group__size-chart-trigger:hover,
@@ -2205,8 +2220,13 @@ button.size-chart-modal__close,
 
 button.size-chart-modal__close:hover,
 .size-chart-modal__close:hover {
-  background-color: var(--color-frost) !important;
+  background-color: color-mix(in srgb, var(--color-frost), white 8%) !important;
   color: var(--color-ink) !important;
+  transform: rotate(90deg);
+}
+
+.size-chart-modal__close-icon {
+  display: block;
 }
 
 .size-chart-modal__body {
@@ -2217,8 +2237,8 @@ button.size-chart-modal__close:hover,
 
 .size-chart-tabs {
   display: inline-flex;
-  background: var(--color-frost);
-  border-radius: 8px;
+  background: rgba(245, 247, 250, 0.92);
+  border-radius: 999px;
   padding: 4px;
   gap: 4px;
   margin-bottom: 20px;
@@ -2238,7 +2258,7 @@ button.size-chart-tab,
   font-weight: 700 !important;
   color: var(--color-steel) !important;
   cursor: pointer !important;
-  border-radius: 6px !important;
+  border-radius: 999px !important;
   transition: all 0.2s ease !important;
   min-height: 0 !important;
   text-align: center !important;
@@ -2253,7 +2273,7 @@ button.size-chart-tab.is-active,
 .size-chart-tab.is-active {
   background: var(--color-paper) !important;
   color: var(--color-ink) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(26, 37, 69, 0.12) !important;
 }
 
 .size-chart-content {
@@ -2278,15 +2298,22 @@ button.size-chart-tab.is-active,
   font-size: 0.85rem;
   margin-bottom: 16px;
   border: 1px solid var(--color-line);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  background: var(--color-paper);
 }
 
 .size-chart-table th, 
 .size-chart-table td {
   padding: 12px 16px;
   border-bottom: 1px solid var(--color-line);
+  border-right: 1px solid var(--color-line);
   color: var(--color-ink);
+}
+
+.size-chart-table th:last-child,
+.size-chart-table td:last-child {
+  border-right: none;
 }
 
 .size-chart-table tr:last-child td {
@@ -2298,7 +2325,7 @@ button.size-chart-tab.is-active,
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: var(--color-frost);
+  background: linear-gradient(180deg, rgba(245, 247, 250, 0.98), rgba(239, 243, 247, 0.98));
   color: var(--color-steel);
   border-bottom: 1px solid var(--color-line);
 }
@@ -2313,7 +2340,7 @@ button.size-chart-tab.is-active,
 }
 
 .size-chart-table tr:hover td {
-  background: color-mix(in srgb, var(--color-frost), transparent 40%);
+  background: color-mix(in srgb, var(--color-frost), white 26%);
 }
 
 .size-chart-modal__note {

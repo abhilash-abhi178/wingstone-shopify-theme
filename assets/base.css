@@ -9,40 +9,6 @@ html {
   overflow-x: hidden;
 }
 
-.scroll-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: var(--color-accent);
-  transform-origin: left;
-  transform: scaleX(0);
-  z-index: 1010;
-  transition: transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1);
-  pointer-events: none;
-}
-
-#ambient-particles {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.75;
-}
-
-@keyframes body-gradient-drift {
-  0% {
-    background-position: 0% 0%, 100% 100%, 0% 0%;
-  }
-  50% {
-    background-position: 20% 10%, 80% 20%, 0% 0%;
-  }
-  100% {
-    background-position: 0% 0%, 100% 100%, 0% 0%;
-  }
-}
-
 body {
   margin: 0;
   color: var(--color-ink);
@@ -50,8 +16,6 @@ body {
     radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--color-accent), transparent 84%), transparent 26rem),
     radial-gradient(circle at 92% 18%, color-mix(in srgb, var(--color-steel), transparent 86%), transparent 30rem),
     linear-gradient(180deg, var(--color-paper) 0%, var(--color-frost) 38%, color-mix(in srgb, var(--color-paper), var(--color-frost) 62%) 100%);
-  background-size: 140% 140%;
-  animation: body-gradient-drift 24s ease infinite;
   font-family: var(--font-body-family);
   font-size: 16px;
   line-height: 1.55;

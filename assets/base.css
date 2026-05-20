@@ -458,6 +458,34 @@ button.shopify-payment-button__button {
 .product-buttons .cart-btn{flex:1;border-radius:12px;padding:0 18px;background:linear-gradient(135deg, var(--color-accent), color-mix(in srgb, var(--color-accent), black 8%));}
 .product-buttons .purchase-actions__buy-now .shopify-payment-button__button{height:60px;border-radius:12px}
 
+/* PDP Add to cart primary CTA */
+.pdp-btn--cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 1.1rem;
+  border-radius: 12px;
+  border: 0;
+  background: linear-gradient(135deg, #ffd814, #f7c600);
+  color: #111;
+  font-weight: 800;
+  letter-spacing: .06em;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+.pdp-btn--cart:hover,
+.pdp-btn--cart:focus-visible {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffdf5a, #f5c200);
+}
+.pdp-btn--cart[disabled] {
+  opacity: .7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 /* price badge on current price */
 .purchase-price__current{font-size:1.35rem;font-weight:800;color:color-mix(in srgb, var(--color-accent), black 8%)}
 

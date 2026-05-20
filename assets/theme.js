@@ -134,6 +134,54 @@ document.addEventListener('click', (event) => {
   }
 });
 
+// Silent add handler for the custom PDP form (pdpForm)
+const pdpForm = document.getElementById('pdpForm');
+if (pdpForm) {
+  pdpForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const submitButton = pdpForm.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+      const formData = new FormData(pdpForm);
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+      if (!res.ok) throw new Error('Add failed');
+
+      // update header badge silently
+      try {
+        const cartRes = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+        const cart = await cartRes.json();
+        let badge = document.querySelector('.site-header__badge');
+        if (!badge) {
+          const cartToggle = document.querySelector('.site-header__action--cart');
+          if (cartToggle) {
+            badge = document.createElement('span');
+            badge.className = 'site-header__badge';
+            cartToggle.appendChild(badge);
+          }
+        }
+        if (badge) badge.textContent = String(cart.item_count || 0);
+      } catch (e) {
+        console.warn('Could not refresh cart count', e);
+      }
+
+      if (submitButton) {
+        const original = submitButton.textContent;
+        submitButton.textContent = 'Added';
+        setTimeout(() => { submitButton.textContent = original; }, 1800);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
+  });
+}
+
 document.addEventListener('click', (event) => {
   const toggle = event.target.closest('[data-menu-toggle]');
   if (!toggle) return;

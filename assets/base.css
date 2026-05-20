@@ -515,29 +515,6 @@ button.shopify-payment-button__button {
   place-items: center;
 }
 
-.hero__frontword {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  margin: 0;
-  width: max-content;
-  max-width: 100%;
-  color: color-mix(in srgb, var(--color-ink), #fff 6%);
-  font-family: "Space Grotesk", var(--font-body-family), sans-serif;
-  font-size: clamp(1.35rem, 4.5vw, 4.8rem);
-  font-weight: 700;
-  letter-spacing: .22em;
-  line-height: 1;
-  text-transform: uppercase;
-  transform: translate(-50%, -44%);
-  white-space: nowrap;
-  text-align: center;
-  opacity: .94;
-  text-shadow: 0 8px 26px color-mix(in srgb, var(--color-ink), transparent 78%);
-  animation: frontword-breathe 7s ease-in-out infinite;
-}
-
 .hero__backdrop {
   position: absolute;
   left: 50%;
@@ -697,21 +674,6 @@ button.shopify-payment-button__button {
 
   to {
     transform: translateX(-50%);
-  }
-}
-
-@keyframes frontword-breathe {
-  0%,
-  100% {
-    transform: translate(-50%, -44%) scale(1);
-    letter-spacing: .22em;
-    opacity: .9;
-  }
-
-  50% {
-    transform: translate(-50%, -46%) scale(1.01);
-    letter-spacing: .27em;
-    opacity: 1;
   }
 }
 
@@ -1724,12 +1686,6 @@ body.cart-drawer-open {
 
   .hero__offer {
     font-size: clamp(2.35rem, 14vw, 3.5rem);
-  }
-
-  .hero__frontword {
-    font-size: clamp(1rem, 4vw, 2rem);
-    letter-spacing: .18em;
-    transform: translate(-50%, -42%);
   }
 
   .product-grid {

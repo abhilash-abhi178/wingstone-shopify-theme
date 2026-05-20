@@ -180,102 +180,184 @@ document.querySelectorAll('.product-form').forEach((form) => {
   if (!variantData || !idInput || !submit) return;
 
   const variants = JSON.parse(variantData.textContent);
-  const selects = [...form.querySelectorAll('[data-option-index]')];
-  
-  // DEBUG: Log variants and their availability
-  console.log('🔍 Product Variants:', variants.map(v => ({
-    id: v.id,
-    title: v.title,
-    options: v.options,
-    available: v.available,
-    inventory_quantity: v.inventory_quantity,
-    inventory_management: v.inventory_management
-  })));
+  const selects = [...form.querySelectorAll('select[data-option-index]')];
+  const optionGroups = [...form.querySelectorAll('[data-option-group]')];
+  const currentPrice = form.querySelector('[data-current-price]');
+  const comparePrice = form.querySelector('[data-compare-price]');
+  const stockNote = form.querySelector('[data-stock-note]');
+  const quantityInput = form.querySelector('[data-quantity-input]');
+  const quantityButtons = [...form.querySelectorAll('[data-quantity-change]')];
+  const sizeChartModal = document.querySelector('[data-size-chart-modal]');
+  const sizeChartTriggers = [...document.querySelectorAll('[data-size-chart-trigger]')];
+  const sizeChartTabs = sizeChartModal ? [...sizeChartModal.querySelectorAll('[data-tab-target]')] : [];
+  const sizeChartPanels = sizeChartModal ? [...sizeChartModal.querySelectorAll('.size-chart-content')] : [];
 
-  const updateVariant = () => {
-    const selected = selects.map((select) => select.value);
-    const variant = variants.find((item) => selected.every((value, index) => item.options[index] === value));
-    if (!variant) return;
+  const getSelectedValues = () => selects.map((select) => select.value);
 
-    idInput.value = variant.id;
-    submit.disabled = !variant.available;
-    submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
-  };
-  // Helper to check availability of a specific option value combination
-  const isCombinationAvailable = (optionIndex, value) => {
-    const currentSelected = selects.map((select) => select.value);
-    currentSelected[optionIndex] = value;
-    
-    return variants.some((variant) => {
-      if (variant.options[optionIndex] !== value) return false;
-      
-      for (let i = 0; i < selects.length; i++) {
-        if (i === optionIndex) continue;
-        if (variant.options[i] !== currentSelected[i]) return false;
-      }
-      return variant.available;
+  const findVariant = (selectedValues) => variants.find((variant) => selectedValues.every((value, index) => variant.options[index] === value));
+
+  const isOptionAvailable = (optionIndex, candidateValue, selectedValues) => variants.some((variant) => {
+    if (variant.options[optionIndex] !== candidateValue) return false;
+
+    return selectedValues.every((value, index) => {
+      if (index === optionIndex) return true;
+      return variant.options[index] === value;
     });
-  };
+  });
 
-  const updateSwatchAvailability = () => {
-    swatchGroups.forEach((group) => {
-      const optionIndex = parseInt(group.dataset.optionIndex, 10) - 1;
-      const buttons = group.querySelectorAll('[data-swatch-value]');
-      
-      buttons.forEach((btn) => {
-        const val = btn.dataset.swatchValue;
-        const available = isCombinationAvailable(optionIndex, val);
-        
-        if (available) {
-          btn.classList.remove('is-out-of-stock');
-          btn.removeAttribute('disabled');
-          btn.disabled = false;
-          btn.setAttribute('aria-disabled', 'false');
-        } else {
-          btn.classList.add('is-out-of-stock');
-          try { btn.disabled = true; } catch (e) {}
-          btn.setAttribute('aria-disabled', 'true');
-        }
+  const syncButtonStates = () => {
+    const selectedValues = getSelectedValues();
+
+    optionGroups.forEach((group) => {
+      const optionIndex = Number(group.dataset.optionIndex) - 1;
+      const selectedValue = selects[optionIndex] ? selects[optionIndex].value : '';
+      const label = group.querySelector('[data-selected-value-label]');
+      const buttons = [...group.querySelectorAll('[data-option-value]')];
+
+      if (label) {
+        label.textContent = selectedValue;
+      }
+
+      buttons.forEach((button) => {
+        const candidateValue = button.dataset.optionValue;
+        const available = isOptionAvailable(optionIndex, candidateValue, selectedValues);
+        const active = candidateValue === selectedValue;
+
+        button.classList.toggle('is-active', active);
+        button.classList.toggle('is-out-of-stock', !available);
+        button.disabled = !available;
+        button.setAttribute('aria-pressed', String(active));
+        button.setAttribute('aria-disabled', String(!available));
       });
     });
   };
 
-  swatchGroups.forEach((group) => {
-    const optionIndex = parseInt(group.dataset.optionIndex, 10);
-    const select = form.querySelector(`select[data-option-index="${optionIndex}"]`);
-    const labelVal = group.querySelector('[data-selected-value-label]');
-    const buttons = group.querySelectorAll('[data-swatch-value]');
-    
+  const updateVariant = () => {
+    const selectedValues = getSelectedValues();
+    const variant = findVariant(selectedValues);
+
+    if (!variant) {
+      return;
+    }
+
+    idInput.value = variant.id;
+    submit.disabled = !variant.available;
+    submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
+
+    if (currentPrice) {
+      currentPrice.textContent = formatMoney(variant.price);
+    }
+
+    if (comparePrice) {
+      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+        comparePrice.textContent = formatMoney(variant.compare_at_price);
+        comparePrice.hidden = false;
+      } else {
+        comparePrice.hidden = true;
+      }
+    }
+
+    if (stockNote) {
+      const inventory = Number(variant.inventory_quantity);
+      if (variant.available && Number.isFinite(inventory) && inventory > 0 && inventory <= 5) {
+        stockNote.textContent = `Only ${inventory} left in stock. Order soon.`;
+        stockNote.hidden = false;
+      } else {
+        stockNote.hidden = true;
+      }
+    }
+
+    syncButtonStates();
+  };
+
+  optionGroups.forEach((group) => {
+    const optionIndex = Number(group.dataset.optionIndex) - 1;
+    const select = selects[optionIndex];
+    const buttons = [...group.querySelectorAll('[data-option-value]')];
+
     if (!select) return;
 
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        // Ignore clicks on out-of-stock swatches
-        if (btn.classList.contains('is-out-of-stock') || btn.getAttribute('aria-disabled') === 'true' || btn.disabled) {
-          e.preventDefault();
-          return;
-        }
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (button.disabled) return;
 
-        const val = btn.dataset.swatchValue;
-
-        select.value = val;
-        select.dispatchEvent(new Event('change'));
-
-        buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
-        if (labelVal) {
-          labelVal.textContent = val;
-        }
-
-        updateSwatchAvailability();
+        select.value = button.dataset.optionValue;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
       });
     });
   });
 
   selects.forEach((select) => select.addEventListener('change', updateVariant));
 
-  // Initialize availability styles on load and call updateVariant for initial state
-  updateSwatchAvailability();
-  updateVariant(); // Ensure button state is correct from the start
+  if (quantityInput) {
+    quantityInput.addEventListener('change', () => {
+      const parsed = Math.max(1, Number.parseInt(quantityInput.value, 10) || 1);
+      quantityInput.value = String(parsed);
+    });
+  }
+
+  quantityButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!quantityInput) return;
+
+      const delta = button.dataset.quantityChange === 'increase' ? 1 : -1;
+      const parsed = Math.max(1, Number.parseInt(quantityInput.value, 10) || 1);
+      quantityInput.value = String(Math.max(1, parsed + delta));
+      quantityInput.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
+
+  const openSizeChart = () => {
+    if (!sizeChartModal) return;
+    sizeChartModal.classList.add('is-open');
+    sizeChartModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('size-chart-open');
+  };
+
+  const closeSizeChart = () => {
+    if (!sizeChartModal) return;
+    sizeChartModal.classList.remove('is-open');
+    sizeChartModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('size-chart-open');
+  };
+
+  sizeChartTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => openSizeChart());
+  });
+
+  if (sizeChartModal) {
+    sizeChartModal.addEventListener('click', (event) => {
+      const closeTarget = event.target.closest('[data-size-chart-close]');
+      if (closeTarget) {
+        closeSizeChart();
+        return;
+      }
+    });
+
+    sizeChartTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tabTarget;
+
+        sizeChartTabs.forEach((otherTab) => {
+          const isActive = otherTab === tab;
+          otherTab.classList.toggle('is-active', isActive);
+          otherTab.setAttribute('aria-selected', String(isActive));
+        });
+
+        sizeChartPanels.forEach((panel) => {
+          panel.classList.toggle('is-active', panel.id === `size-chart-${target}`);
+        });
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && sizeChartModal.classList.contains('is-open')) {
+        closeSizeChart();
+      }
+    });
+  }
+
+  updateVariant();
 });
 
 document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {

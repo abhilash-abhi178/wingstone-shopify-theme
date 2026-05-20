@@ -2,13 +2,6 @@
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="hero__pattern" aria-hidden="true"></div>
   <div class="page-width hero__inner">
-    <a class="hero__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-      {% if settings.logo != blank %}
-        {{ settings.logo | image_url: width: 380 | image_tag: class: 'hero__logo', alt: shop.name }}
-      {% else %}
-        <img class="hero__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
-      {% endif %}
-    </a>
     <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
 
     <div class="hero__content">

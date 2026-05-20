@@ -28,7 +28,13 @@
         </nav>
       </div>
 
-      <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}"></a>
+      <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
+        {% else %}
+          <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
+        {% endif %}
+      </a>
 
       <div class="site-header__actions">
         {% if shop.customer_accounts_enabled %}
@@ -57,6 +63,11 @@
 {
   "name": "Header",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
     {
       "type": "text",
       "id": "promo_text",

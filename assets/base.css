@@ -9,6 +9,40 @@ html {
   overflow-x: hidden;
 }
 
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--color-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 1010;
+  transition: transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1);
+  pointer-events: none;
+}
+
+#ambient-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.75;
+}
+
+@keyframes body-gradient-drift {
+  0% {
+    background-position: 0% 0%, 100% 100%, 0% 0%;
+  }
+  50% {
+    background-position: 20% 10%, 80% 20%, 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 100%, 0% 0%;
+  }
+}
+
 body {
   margin: 0;
   color: var(--color-ink);
@@ -16,6 +50,8 @@ body {
     radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--color-accent), transparent 84%), transparent 26rem),
     radial-gradient(circle at 92% 18%, color-mix(in srgb, var(--color-steel), transparent 86%), transparent 30rem),
     linear-gradient(180deg, var(--color-paper) 0%, var(--color-frost) 38%, color-mix(in srgb, var(--color-paper), var(--color-frost) 62%) 100%);
+  background-size: 140% 140%;
+  animation: body-gradient-drift 24s ease infinite;
   font-family: var(--font-body-family);
   font-size: 16px;
   line-height: 1.55;
@@ -67,13 +103,14 @@ select {
 
 .js-reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .72s ease, transform .72s ease;
+  transform: translateY(32px) scale(0.96);
+  transition: opacity 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .js-reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .section-title {
@@ -109,6 +146,8 @@ select {
 .button,
 .shopify-payment-button__button,
 button.shopify-payment-button__button {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -125,16 +164,48 @@ button.shopify-payment-button__button {
   text-align: center;
   cursor: pointer;
   box-shadow: 0 14px 34px color-mix(in srgb, var(--color-ink), transparent 84%);
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1), background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.button::before,
+.shopify-payment-button__button::before,
+button.shopify-payment-button__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s cubic-bezier(0.3, 1, 0.2, 1);
+  pointer-events: none;
+}
+
+.button:hover::before,
+.shopify-payment-button__button:hover::before,
+button.shopify-payment-button__button:hover::before {
+  left: 150%;
 }
 
 .button:hover,
-.button:focus-visible {
-  transform: translateY(-2px);
+.shopify-payment-button__button:hover,
+button.shopify-payment-button__button:hover,
+.button:focus-visible,
+.shopify-payment-button__button:focus-visible,
+button.shopify-payment-button__button:focus-visible {
+  transform: translateY(-3px);
   background: color-mix(in srgb, var(--color-paper), transparent 4%);
   color: var(--color-ink);
   border-color: var(--color-accent);
   box-shadow: 0 18px 44px color-mix(in srgb, var(--color-accent), transparent 76%);
+}
+
+.button:active,
+.shopify-payment-button__button:active,
+button.shopify-payment-button__button:active {
+  transform: translateY(0) scale(0.96) !important;
+  transition: transform 0.1s ease;
 }
 
 .button--secondary {
@@ -172,6 +243,37 @@ button.shopify-payment-button__button {
   background: color-mix(in srgb, var(--color-frost), transparent 10%);
   box-shadow: 0 16px 46px color-mix(in srgb, var(--color-ink), transparent 90%);
   backdrop-filter: blur(18px);
+  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-steel), var(--color-accent));
+  background-size: 200% 100%;
+  animation: header-border-shift 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.site-header.is-scrolled {
+  background: color-mix(in srgb, var(--color-frost), transparent 25%);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--color-ink), transparent 94%);
+  backdrop-filter: blur(24px);
+}
+
+.site-header.is-scrolled::after {
+  opacity: 0.85;
+}
+
+@keyframes header-border-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 .site-header__promo,
@@ -225,6 +327,11 @@ button.shopify-payment-button__button {
   min-height: 72px;
   gap: 1rem;
   padding: 0 .9rem;
+  transition: min-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.site-header.is-scrolled .site-header__inner {
+  min-height: 56px;
 }
 
 .site-header__left {
@@ -258,19 +365,50 @@ button.shopify-payment-button__button {
   gap: clamp(.9rem, 2.4vw, 2rem);
 }
 
-.site-nav a,
+.site-nav a {
+  position: relative;
+  display: inline-block;
+  color: var(--color-ink);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: color .25s ease, transform .25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.site-nav a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.site-nav a:hover {
+  color: var(--color-accent);
+}
+
 .site-header__action {
   color: var(--color-ink);
   font-size: .82rem;
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
-  transition: color .18s ease, opacity .18s ease;
+  transition: color .18s ease, opacity .18s ease, transform .25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.site-nav a:hover,
 .site-header__action:hover {
   color: var(--color-accent);
+  transform: scale(1.08) translateY(-1px);
 }
 
 .site-header__actions {
@@ -326,14 +464,34 @@ button.shopify-payment-button__button {
   border-radius: 6px;
   background: transparent;
   color: var(--color-ink);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0;
 }
 
 .menu-toggle__line {
   display: block;
   width: 18px;
   height: 2px;
-  margin: 2px auto;
+  margin: 0 !important;
   background: currentColor;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .hero {
@@ -709,7 +867,9 @@ button.shopify-payment-button__button {
   border-radius: 6px;
   overflow: hidden;
   position: relative;
-  transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: background .3s ease, transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 10px 28px color-mix(in srgb, var(--color-ink), transparent 94%);
 }
 
@@ -720,14 +880,15 @@ button.shopify-payment-button__button {
   bottom: 0;
   width: 0;
   height: 2px;
-  background: var(--color-ink);
-  transition: width .4s ease;
+  background: var(--color-accent);
+  transition: width .4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .product-card:hover {
   background: var(--color-paper);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px color-mix(in srgb, var(--color-ink), transparent 90%);
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-4px) translateZ(10px);
+  box-shadow: 0 20px 48px color-mix(in srgb, var(--color-ink), transparent 84%), 0 0 20px color-mix(in srgb, var(--color-accent), transparent 60%);
+  border-color: var(--color-accent);
 }
 
 .product-card:hover::after {
@@ -735,7 +896,7 @@ button.shopify-payment-button__button {
 }
 
 .product-card:hover img {
-  transform: scale(1.04);
+  transform: scale(1.06) translateZ(20px);
 }
 
 .product-card__image {
@@ -833,13 +994,25 @@ button.shopify-payment-button__button {
   padding: .65rem 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform .18s ease, background .18s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.18s ease, opacity 0.3s ease;
+}
+
+@media (hover: hover) {
+  .product-card__button {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  .product-card:hover .product-card__button,
+  .product-card:focus-within .product-card__button {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .product-card__button:hover,
 .product-card__button:focus-visible {
   background: #f7ca00;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .product-card__button[disabled] {
@@ -847,6 +1020,7 @@ button.shopify-payment-button__button {
   color: var(--color-steel);
   cursor: not-allowed;
   transform: none;
+  opacity: 0.6;
 }
 
 .pagination {
@@ -1266,6 +1440,15 @@ button.shopify-payment-button__button {
   border: 1px solid color-mix(in srgb, var(--color-ink), transparent 90%);
   border-radius: 8px;
   background: var(--color-paper);
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--item-delay, 0ms);
+}
+
+.cart-drawer.is-open .cart-drawer__item {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .cart-drawer__item img {
@@ -1707,6 +1890,444 @@ body.cart-drawer-open {
   }
 }
 
+/* Premium Product Variant Swatches */
+.product-form__swatches {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.swatch-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.swatch-group__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.swatch-group__selected-value {
+  color: var(--color-ink);
+  font-weight: 900;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.swatch-list {
+  margin: 0;
+  padding: 0;
+}
+
+.swatch-list--color {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 10px;
+}
+
+.swatch-card {
+  position: relative;
+  background: var(--color-paper);
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 90%);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  min-width: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.swatch-card:hover {
+  border-color: var(--color-steel);
+}
+
+.swatch-card.is-active {
+  border: 2px solid var(--color-accent);
+  padding: 5px; /* Offset border size shift */
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.swatch-card.is-out-of-stock {
+  opacity: 0.55;
+  border-style: dashed;
+  pointer-events: auto;
+  cursor: not-allowed;
+}
+
+.swatch-card.is-out-of-stock:hover {
+  box-shadow: none;
+}
+
+.swatch-card__media {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-paper), var(--color-frost) 45%);
+}
+
+.swatch-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swatch-card__color-fallback {
+  width: 100%;
+  height: 100%;
+}
+
+.swatch-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.swatch-card__label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swatch-card__price {
+  font-size: 0.64rem;
+  color: var(--color-steel);
+  font-weight: 600;
+}
+
+.swatch-list--pill {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swatch-pill {
+  position: relative;
+  min-width: 46px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 84%);
+  border-radius: 4px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.swatch-pill:hover {
+  background-color: color-mix(in srgb, var(--color-frost), transparent 80%);
+  border-color: var(--color-steel);
+}
+
+.swatch-pill.is-active {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 2px solid var(--color-accent);
+  padding: 0 11px; /* Offset border size shift */
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.swatch-pill.is-active:hover {
+  background: var(--color-paper);
+  border-color: var(--color-accent);
+}
+
+.swatch-pill.is-out-of-stock {
+  position: relative;
+  border: 1px dashed color-mix(in srgb, var(--color-ink), transparent 86%);
+  color: color-mix(in srgb, var(--color-ink), transparent 50%);
+  background: color-mix(in srgb, var(--color-frost), transparent 90%);
+  cursor: not-allowed;
+  text-decoration: none;
+  opacity: 0.55;
+}
+
+.swatch-pill.is-out-of-stock::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top right, transparent calc(50% - 0.75px), color-mix(in srgb, var(--color-ink), transparent 75%) 50%, transparent calc(50% + 0.75px));
+  pointer-events: none;
+}
+
+.swatch-pill.is-out-of-stock:hover {
+  border-color: color-mix(in srgb, var(--color-ink), transparent 86%);
+  background: color-mix(in srgb, var(--color-frost), transparent 90%);
+}
+
+/* Size Chart trigger and Modal styles */
+.swatch-group__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+button.swatch-group__size-chart-trigger,
+.swatch-group__size-chart-trigger {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--color-steel) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .05em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  transition: color 0.15s ease !important;
+  height: auto !important;
+  min-height: 0 !important;
+  vertical-align: middle !important;
+}
+
+button.swatch-group__size-chart-trigger:hover,
+.swatch-group__size-chart-trigger:hover {
+  color: var(--color-accent) !important;
+}
+
+.size-chart-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 20px;
+}
+
+.size-chart-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.size-chart-modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 37, 69, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.size-chart-modal__card {
+  position: relative;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px -12px rgba(26, 37, 69, 0.25);
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+}
+
+.size-chart-modal.is-open .size-chart-modal__card {
+  transform: scale(1) translateY(0);
+}
+
+.size-chart-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-paper);
+}
+
+.size-chart-modal__title {
+  font-family: var(--font-heading-family);
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+
+button.size-chart-modal__close,
+.size-chart-modal__close {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--color-steel) !important;
+  cursor: pointer !important;
+  padding: 8px !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  min-height: 0 !important;
+  height: 32px !important;
+  width: 32px !important;
+}
+
+button.size-chart-modal__close:hover,
+.size-chart-modal__close:hover {
+  background-color: var(--color-frost) !important;
+  color: var(--color-ink) !important;
+}
+
+.size-chart-modal__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.size-chart-tabs {
+  display: inline-flex;
+  background: var(--color-frost);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 20px;
+  border: 1px solid var(--color-line);
+  width: 100%;
+}
+
+button.size-chart-tab,
+.size-chart-tab {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 8px 16px !important;
+  margin: 0 !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  color: var(--color-steel) !important;
+  cursor: pointer !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  min-height: 0 !important;
+  text-align: center !important;
+}
+
+button.size-chart-tab:hover,
+.size-chart-tab:hover {
+  color: var(--color-ink) !important;
+}
+
+button.size-chart-tab.is-active,
+.size-chart-tab.is-active {
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.size-chart-content {
+  display: none;
+}
+
+.size-chart-content.is-active {
+  display: block;
+  animation: chartFadeIn 0.25s ease-out;
+}
+
+@keyframes chartFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.size-chart-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.size-chart-table th, 
+.size-chart-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-ink);
+}
+
+.size-chart-table tr:last-child td {
+  border-bottom: none;
+}
+
+.size-chart-table th {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-frost);
+  color: var(--color-steel);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.size-chart-table td {
+  color: var(--color-ink);
+}
+
+.size-chart-table td strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.size-chart-table tr:hover td {
+  background: color-mix(in srgb, var(--color-frost), transparent 40%);
+}
+
+.size-chart-modal__note {
+  font-size: 0.72rem;
+  color: var(--color-steel);
+  margin: 0;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+body.size-chart-open {
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1720,3 +2341,4 @@ body.cart-drawer-open {
     transition-duration: .01ms !important;
   }
 }
+

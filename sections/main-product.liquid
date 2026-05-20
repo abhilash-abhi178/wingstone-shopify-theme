@@ -67,10 +67,21 @@
         {% unless product.has_only_default_variant %}
           <div class="product-form__swatches">
             {% for option in product.options_with_values %}
+              {% assign option_name_downcase = option.name | downcase %}
               <div class="swatch-group" data-option-index="{{ forloop.index }}">
-                <span class="eyebrow swatch-group__label">
-                  {{ option.name }}: <span class="swatch-group__selected-value" data-selected-value-label>{{ option.selected_value }}</span>
-                </span>
+                <div class="swatch-group__header">
+                  <span class="eyebrow swatch-group__label">
+                    {{ option.name }}: <span class="swatch-group__selected-value" data-selected-value-label>{{ option.selected_value }}</span>
+                  </span>
+                  {% if option_name_downcase contains 'size' %}
+                    <button type="button" class="swatch-group__size-chart-trigger" data-size-chart-trigger>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;">
+                        <path d="M12 20h9M3 20v-8a2 2 0 0 1 2-2h4M3 12h18M3 16h18M16 20V10M12 20V12M8 20v-4" />
+                      </svg>
+                      Size Chart
+                    </button>
+                  {% endif %}
+                </div>
                 
                 <select class="field" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index }}" style="display: none;">
                   {% for value in option.values %}
@@ -78,7 +89,6 @@
                   {% endfor %}
                 </select>
 
-                {% assign option_name_downcase = option.name | downcase %}
                 {% if option_name_downcase contains 'color' or option_name_downcase contains 'colour' %}
                   <div class="swatch-list swatch-list--color">
                     {% for value in option.values %}
@@ -119,14 +129,6 @@
                       </button>
                     {% endfor %}
                   </div>
-                  {% if option_name_downcase contains 'size' %}
-                    <button type="button" class="swatch-group__size-chart-trigger" data-size-chart-trigger>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;">
-                        <path d="M12 20h9M3 20v-8a2 2 0 0 1 2-2h4M3 12h18M3 16h18M16 20V10M12 20V12M8 20v-4" />
-                      </svg>
-                      Size Chart
-                    </button>
-                  {% endif %}
                 {% endif %}
               </div>
             {% endfor %}
@@ -155,7 +157,12 @@
     <div class="size-chart-modal__card">
       <div class="size-chart-modal__header">
         <h2 id="size-chart-title" class="size-chart-modal__title">Size Chart</h2>
-        <button type="button" class="size-chart-modal__close" data-size-chart-close aria-label="Close size chart">&times;</button>
+        <button type="button" class="size-chart-modal__close" data-size-chart-close aria-label="Close size chart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
       <div class="size-chart-modal__body">
         <div class="size-chart-tabs">

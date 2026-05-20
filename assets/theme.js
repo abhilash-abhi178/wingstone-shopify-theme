@@ -200,6 +200,15 @@ document.querySelectorAll('.product-form').forEach((form) => {
     idInput.value = variant.id;
     submit.disabled = !variant.available;
     submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
+
+    // Update product gallery image if variant has a featured image
+    if (variant.featured_image) {
+      const mainGalleryImg = form.closest('section').querySelector('[data-product-gallery-main-image]');
+      if (mainGalleryImg) {
+        mainGalleryImg.src = variant.featured_image.src;
+        mainGalleryImg.alt = variant.featured_image.alt || variant.title;
+      }
+    }
   };
   // Helper to check availability of a specific option value combination
   const isCombinationAvailable = (optionIndex, value) => {

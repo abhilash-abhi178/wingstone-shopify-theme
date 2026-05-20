@@ -247,38 +247,8 @@ button.shopify-payment-button__button {
   min-width: 0;
 }
 
-/* Keep header inner positioned so we can absolutely center the brand reliably */
-.site-header__inner { position: relative; }
-
-.site-header__brand {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 60;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .75rem;
-  font-family: var(--font-heading-family);
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  min-width: 0;
-}
-
 .site-header__logo {
-  /* Responsive logo width: min 64px, scales with viewport, max 140px */
-  width: clamp(64px, 12vw, 140px);
-  height: auto;
-  max-width: 100%;
-  display: block;
-}
-
-/* On very small screens ensure menu/actions remain usable and brand doesn't overlap; reduce logo slightly */
-@media (max-width: 420px) {
-  .site-header__logo { width: clamp(52px, 18vw, 110px); }
+  max-width: min(118px, 30vw);
 }
 
 .site-nav {

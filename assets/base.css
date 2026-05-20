@@ -517,7 +517,8 @@ button.shopify-payment-button__button {
 
 .hero__backdrop {
   position: absolute;
-  left: 50%;
+  /* center across the viewport (not limited by .page-width) */
+  left: 50vw;
   top: 50%;
   z-index: 0;
   width: max-content;

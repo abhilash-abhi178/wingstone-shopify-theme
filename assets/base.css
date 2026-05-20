@@ -146,6 +146,8 @@ select {
 .button,
 .shopify-payment-button__button,
 button.shopify-payment-button__button {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -162,16 +164,48 @@ button.shopify-payment-button__button {
   text-align: center;
   cursor: pointer;
   box-shadow: 0 14px 34px color-mix(in srgb, var(--color-ink), transparent 84%);
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1), background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.button::before,
+.shopify-payment-button__button::before,
+button.shopify-payment-button__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s cubic-bezier(0.3, 1, 0.2, 1);
+  pointer-events: none;
+}
+
+.button:hover::before,
+.shopify-payment-button__button:hover::before,
+button.shopify-payment-button__button:hover::before {
+  left: 150%;
 }
 
 .button:hover,
-.button:focus-visible {
-  transform: translateY(-2px);
+.shopify-payment-button__button:hover,
+button.shopify-payment-button__button:hover,
+.button:focus-visible,
+.shopify-payment-button__button:focus-visible,
+button.shopify-payment-button__button:focus-visible {
+  transform: translateY(-3px);
   background: color-mix(in srgb, var(--color-paper), transparent 4%);
   color: var(--color-ink);
   border-color: var(--color-accent);
   box-shadow: 0 18px 44px color-mix(in srgb, var(--color-accent), transparent 76%);
+}
+
+.button:active,
+.shopify-payment-button__button:active,
+button.shopify-payment-button__button:active {
+  transform: translateY(0) scale(0.96) !important;
+  transition: transform 0.1s ease;
 }
 
 .button--secondary {

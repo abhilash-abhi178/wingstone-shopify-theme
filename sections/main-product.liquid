@@ -501,21 +501,9 @@
     <!-- ── Info ── -->
     <div class="pdp-info">
 
-      <div class="pdp-social-proof">
-        <strong>1,200+ bought</strong> in past month
-      </div>
-
       <p class="pdp-vendor">{{ product.vendor | default: shop.name }}</p>
 
       <h1 class="pdp-title">{{ product.title }}</h1>
-
-      <!-- Rating -->
-      <div class="pdp-rating">
-        <span class="pdp-stars" aria-label="4.5 out of 5">★★★★☆</span>
-        <a href="#reviews" class="pdp-rating-link">4.5</a>
-        <span class="pdp-rating-sep">|</span>
-        <a href="#reviews" class="pdp-rating-link">2,841 ratings</a>
-      </div>
 
       <div class="pdp-divider"></div>
 
@@ -640,14 +628,7 @@
           </div>
         </div>
 
-        <!-- Delivery -->
-        <div class="pdp-delivery">
-          <span class="pdp-delivery-icon">🚚</span>
-          <div class="pdp-delivery-text">
-            <strong>FREE delivery</strong> Sunday, {{ 'now' | date: '%d' | plus: 3 | append: ' ' }}{{ 'now' | date: '%B %Y' }}.
-            Order within <strong>{{ 'now' | date: '%H' | modulo: 12 | plus: 2 }}h {{ 'now' | date: '%M' }}m</strong>
-          </div>
-        </div>
+        <!-- Delivery: removed per user request -->
 
         <!-- Stock -->
         <p class="pdp-stock" id="pdpStock" data-stock-note></p>

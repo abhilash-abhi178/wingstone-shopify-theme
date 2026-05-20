@@ -468,7 +468,7 @@ button.shopify-payment-button__button {
   padding: 0 1.1rem;
   border-radius: 12px;
   border: 0;
-  background: linear-gradient(135deg, #ffd814, #f7c600);
+  background: linear-gradient(135deg, var(--product-accent, #ffd814), color-mix(in srgb, var(--product-accent, #f7c600), black 8%));
   color: #111;
   font-weight: 800;
   letter-spacing: .06em;
@@ -478,7 +478,7 @@ button.shopify-payment-button__button {
 .pdp-btn--cart:hover,
 .pdp-btn--cart:focus-visible {
   transform: translateY(-2px);
-  background: linear-gradient(135deg, #ffdf5a, #f5c200);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--product-accent, #ffd814), white 6%), color-mix(in srgb, var(--product-accent, #f7c600), black 8%));
 }
 .pdp-btn--cart[disabled] {
   opacity: .7;

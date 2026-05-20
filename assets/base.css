@@ -463,6 +463,27 @@ button.shopify-payment-button__button {
 
 .search-results p { color: var(--color-steel); }
 
+/* Masked marquee in header */
+.masked-brand { width: min(220px, 30vw); height: auto; display: block; }
+.masked-brand .masked-ticker { display:flex; gap:2rem; align-items:center; height:100%; font-weight:800; font-family:var(--font-heading-family); font-size:28px; white-space:nowrap; }
+.masked-brand .masked-ticker span { display:inline-block; padding-right:1rem; }
+.masked-brand .masked-ticker { transform: translateX(0); animation:masked-marquee 14s linear infinite; }
+
+@keyframes masked-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Make headline larger on bigger screens */
+@media (min-width: 900px) {
+  .masked-brand .masked-ticker { font-size:34px; }
+}
+
+/* Reduced motion respects user preference */
+@media (prefers-reduced-motion: reduce) {
+  .masked-brand .masked-ticker { animation: none !important; }
+}
+
 
 @keyframes rule-glow {
   0%,

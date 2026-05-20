@@ -65,12 +65,6 @@ const openCartDrawer = async () => {
     </div>
   `;
 
-  // Set staggered delay for items
-  const drawerItems = cartDrawer.querySelectorAll('.cart-drawer__item');
-  drawerItems.forEach((item, index) => {
-    item.style.setProperty('--item-delay', `${index * 60}ms`);
-  });
-
   // Focus management & accessible keyboard handling
   const closeBtn = cartDrawer.querySelector('[data-cart-drawer-close]') || cartDrawer.querySelector('.cart-drawer__close');
   if (closeBtn) {
@@ -187,13 +181,16 @@ document.querySelectorAll('.product-form').forEach((form) => {
 
   const variants = JSON.parse(variantData.textContent);
   const selects = [...form.querySelectorAll('[data-option-index]')];
-
-  // Swatch elements
-  const swatchGroups = form.querySelectorAll('.swatch-group');
   
-  // Find thumbnails if on product page
-  const gallery = document.querySelector('[data-product-gallery]');
-  const thumbs = gallery ? [...gallery.querySelectorAll('[data-product-gallery-thumb]')] : [];
+  // DEBUG: Log variants and their availability
+  console.log('🔍 Product Variants:', variants.map(v => ({
+    id: v.id,
+    title: v.title,
+    options: v.options,
+    available: v.available,
+    inventory_quantity: v.inventory_quantity,
+    inventory_management: v.inventory_management
+  })));
 
   const updateVariant = () => {
     const selected = selects.map((select) => select.value);
@@ -203,98 +200,7 @@ document.querySelectorAll('.product-form').forEach((form) => {
     idInput.value = variant.id;
     submit.disabled = !variant.available;
     submit.textContent = variant.available ? 'Add to cart' : 'Sold out';
-
-    // Find option colors and selected color
-    const colorSelect = selects.find(select => {
-      const name = select.getAttribute('name').toLowerCase();
-      return name.includes('color') || name.includes('colour');
-    });
-    const optionColors = colorSelect ? Array.from(colorSelect.options).map(opt => opt.value) : [];
-    const selectedColor = colorSelect ? colorSelect.value : null;
-
-    // Filter product thumbnails based on color variant (Amazon style)
-    if (thumbs.length > 0) {
-      let selectedColorCode = null;
-      if (variant.featured_image) {
-        const src = variant.featured_image.src;
-        const match = src.match(/_c_(\d+)/i);
-        if (match) {
-          selectedColorCode = match[1];
-        }
-      }
-
-      let visibleThumbs = [];
-
-      thumbs.forEach(thumb => {
-        const filename = (thumb.dataset.imageFilename || '');
-        const alt = (thumb.dataset.imageAlt || '');
-        
-        let isMatch = false;
-
-        if (selectedColorCode) {
-          // If we have a pattern like _c_1 or _c_61, filter based on that
-          const fileMatch = filename.match(/_c_(\d+)/i);
-          const altMatch = alt.match(/_c_(\d+)/i);
-          const thumbCode = (fileMatch ? fileMatch[1] : null) || (altMatch ? altMatch[1] : null);
-
-          if (thumbCode) {
-            isMatch = (thumbCode === selectedColorCode);
-          } else {
-            // General images that do not contain a color code are shown
-            isMatch = true;
-          }
-        } else if (selectedColor) {
-          // Fallback: match color name in filename or alt
-          const cleanColor = selectedColor.toLowerCase().trim();
-          const cleanAlt = alt.toLowerCase();
-          const cleanFilename = filename.toLowerCase();
-          
-          // Check if it belongs to any OTHER color
-          const otherColors = optionColors.filter(c => c.toLowerCase() !== cleanColor);
-          const hasOtherColor = otherColors.some(c => {
-            const cleanC = c.toLowerCase().trim();
-            return cleanAlt.includes(cleanC) || cleanFilename.includes(cleanC);
-          });
-          
-          if (hasOtherColor) {
-            isMatch = false;
-          } else {
-            isMatch = cleanAlt.includes(cleanColor) || cleanFilename.includes(cleanColor) || 
-                      (!cleanAlt.includes('color') && !cleanFilename.includes('color'));
-          }
-        } else {
-          isMatch = true;
-        }
-
-        if (isMatch) {
-          thumb.style.display = '';
-          visibleThumbs.push(thumb);
-        } else {
-          thumb.style.display = 'none';
-        }
-      });
-      
-      // Auto-click the first visible thumbnail if the active one was hidden
-      const activeThumb = thumbs.find(thumb => thumb.classList.contains('is-active'));
-      if (activeThumb && activeThumb.style.display === 'none' && visibleThumbs.length > 0) {
-        visibleThumbs[0].click();
-      } else if (variant.featured_image) {
-        const cleanUrl = (url) => {
-          if (!url) return '';
-          return url.split('?')[0].split('/').pop().replace(/_(?:[0-9]+x[0-9]*|[0-9]*x[0-9]+)\.[a-zA-Z]+$/, '').split('_')[0];
-        };
-        const variantBase = cleanUrl(variant.featured_image.src);
-        const matchingThumb = visibleThumbs.find(thumb => {
-          const thumbFull = thumb.dataset.full;
-          return thumbFull && cleanUrl(thumbFull) === variantBase;
-        });
-        if (matchingThumb) {
-          matchingThumb.click();
-        }
-      }
-    }
   };
-
   // Helper to check availability of a specific option value combination
   const isCombinationAvailable = (optionIndex, value) => {
     const currentSelected = selects.map((select) => select.value);
@@ -323,8 +229,12 @@ document.querySelectorAll('.product-form').forEach((form) => {
         if (available) {
           btn.classList.remove('is-out-of-stock');
           btn.removeAttribute('disabled');
+          btn.disabled = false;
+          btn.setAttribute('aria-disabled', 'false');
         } else {
           btn.classList.add('is-out-of-stock');
+          try { btn.disabled = true; } catch (e) {}
+          btn.setAttribute('aria-disabled', 'true');
         }
       });
     });
@@ -339,12 +249,18 @@ document.querySelectorAll('.product-form').forEach((form) => {
     if (!select) return;
 
     buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        // Ignore clicks on out-of-stock swatches
+        if (btn.classList.contains('is-out-of-stock') || btn.getAttribute('aria-disabled') === 'true' || btn.disabled) {
+          e.preventDefault();
+          return;
+        }
+
         const val = btn.dataset.swatchValue;
-        
+
         select.value = val;
         select.dispatchEvent(new Event('change'));
-        
+
         buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
         if (labelVal) {
           labelVal.textContent = val;
@@ -357,8 +273,9 @@ document.querySelectorAll('.product-form').forEach((form) => {
 
   selects.forEach((select) => select.addEventListener('change', updateVariant));
 
-  // Initialize availability styles on load
+  // Initialize availability styles on load and call updateVariant for initial state
   updateSwatchAvailability();
+  updateVariant(); // Ensure button state is correct from the start
 });
 
 document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
@@ -388,259 +305,23 @@ document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
   setActiveThumb(thumbs[0]);
 });
 
-// Stagger delay based on index in their parent grid
-const gridContainers = document.querySelectorAll('.grid, .featured-products__grid, .feature-band__grid');
-gridContainers.forEach(container => {
-  const children = container.querySelectorAll('.product-card, .feature-item');
-  children.forEach((child, index) => {
-    child.style.setProperty('--reveal-delay', `${index * 80}ms`);
-  });
-});
-
 const revealItems = document.querySelectorAll('.section, .product-card, .feature-item, .newsletter form, .site-footer__inner');
 
 if ('IntersectionObserver' in window) {
   revealItems.forEach((item) => item.classList.add('js-reveal'));
 
   const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+    entries.forEach((entry, i) => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
+      if (prefersReducedMotion) {
+        entry.target.classList.add('is-visible');
+      } else {
+        // small stagger for visual polish
+        setTimeout(() => entry.target.classList.add('is-visible'), i * 60);
+      }
       revealObserver.unobserve(entry.target);
     });
   }, { threshold: 0.12 });
 
   revealItems.forEach((item) => revealObserver.observe(item));
 }
-
-// Scroll progress bar and site header scroll state
-document.addEventListener('DOMContentLoaded', () => {
-  const progressBar = document.querySelector('.scroll-progress-bar');
-  const siteHeader = document.querySelector('.site-header');
-
-  function handleScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    
-    // Update scroll progress
-    if (progressBar && docHeight > 0) {
-      const scrollPct = Math.min(1, Math.max(0, scrollTop / docHeight));
-      progressBar.style.transform = `scaleX(${scrollPct})`;
-    }
-
-    // Toggle header scroll state
-    if (siteHeader) {
-      if (scrollTop > 24) {
-        siteHeader.classList.add('is-scrolled');
-      } else {
-        siteHeader.classList.remove('is-scrolled');
-      }
-    }
-  }
-
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Run once on load
-});
-
-// Interactive floating particles canvas
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('ambient-particles');
-  if (!canvas || prefersReducedMotion) return;
-
-  const ctx = canvas.getContext('2d');
-  let width = canvas.width = window.innerWidth;
-  let height = canvas.height = window.innerHeight;
-
-  // Track colors dynamically
-  let accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#2a5a5b';
-  let inkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-ink').trim() || '#111';
-
-  // Listen to resize
-  window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  });
-
-  const particles = [];
-  const particleCount = Math.min(60, Math.floor((width * height) / 25000));
-  
-  class Particle {
-    constructor() {
-      this.reset();
-      // start at random position
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-    }
-
-    reset() {
-      this.x = Math.random() * width;
-      this.y = height + Math.random() * 50; // spawn offscreen bottom
-      this.size = Math.random() * 3 + 1.2;
-      this.speedX = Math.random() * 0.4 - 0.2;
-      this.speedY = -(Math.random() * 0.5 + 0.15); // move upwards
-      this.opacity = Math.random() * 0.35 + 0.1;
-      this.color = Math.random() > 0.4 ? accentColor : inkColor;
-    }
-
-    update(mouseX, mouseY) {
-      this.x += this.speedX;
-      this.y += this.speedY;
-
-      // Mouse interactive push
-      if (mouseX !== null && mouseY !== null) {
-        const dx = this.x - mouseX;
-        const dy = this.y - mouseY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-          const force = (100 - dist) / 100;
-          this.x += (dx / dist) * force * 1.8;
-          this.y += (dy / dist) * force * 1.8;
-        }
-      }
-
-      // Reset if out of bounds or completely faded
-      if (this.y < -10 || this.x < -10 || this.x > width + 10) {
-        this.reset();
-      }
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.globalAlpha = this.opacity;
-      ctx.fill();
-    }
-  }
-
-  // Init particles
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-  }
-
-  // Mouse coords tracking
-  let mouse = { x: null, y: null };
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
-
-  window.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
-  });
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-      p.update(mouse.x, mouse.y);
-      p.draw();
-    });
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-});
-
-// 3D Card Tilt Effect
-document.addEventListener('DOMContentLoaded', () => {
-  if (prefersReducedMotion) return;
-
-  const cards = document.querySelectorAll('.product-card');
-
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left; // x position within card
-      const y = e.clientY - rect.top;  // y position within card
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Calculate degrees of rotation (-8 to 8 deg max)
-      const rotateY = ((x - centerX) / centerX) * 8;
-      const rotateX = -((y - centerY) / centerY) * 8;
-
-      card.style.setProperty('--tilt-x', `${rotateX}deg`);
-      card.style.setProperty('--tilt-y', `${rotateY}deg`);
-    });
-
-    card.addEventListener('mouseleave', () => {
-      // Smoothly reset
-      card.style.setProperty('--tilt-x', '0deg');
-      card.style.setProperty('--tilt-y', '0deg');
-    });
-  });
-});
-
-// Magnetic Header Navigation Links & Actions
-document.addEventListener('DOMContentLoaded', () => {
-  if (prefersReducedMotion) return;
-
-  const magneticElements = document.querySelectorAll('.site-nav a, .site-header__action');
-
-  magneticElements.forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      // Magnetic pull (max 8px movement)
-      const pullX = x * 0.35;
-      const pullY = y * 0.35;
-
-      el.style.transform = `translate(${pullX}px, ${pullY}px) scale(1.04)`;
-    });
-
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = '';
-    });
-  });
-});
-
-// Size Chart Modal and Tabs Interaction (Amazon style)
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.querySelector('[data-size-chart-modal]');
-  const triggers = document.querySelectorAll('[data-size-chart-trigger]');
-  const closeButtons = document.querySelectorAll('[data-size-chart-close]');
-
-  if (!modal) return;
-
-  const openModal = () => {
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('size-chart-open');
-  };
-
-  const closeModal = () => {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('size-chart-open');
-  };
-
-  triggers.forEach(trigger => trigger.addEventListener('click', openModal));
-  closeButtons.forEach(close => close.addEventListener('click', closeModal));
-
-  // Close on Esc key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-      closeModal();
-    }
-  });
-
-  // Switch between inches and cm tabs
-  const tabs = modal.querySelectorAll('.size-chart-tab');
-  const contents = modal.querySelectorAll('.size-chart-content');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetId = tab.dataset.tabTarget;
-      
-      tabs.forEach(t => t.classList.toggle('is-active', t === tab));
-      contents.forEach(content => {
-        const isActive = content.id === `size-chart-${targetId}`;
-        content.classList.toggle('is-active', isActive);
-      });
-    });
-  });
-});

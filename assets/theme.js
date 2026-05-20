@@ -181,6 +181,16 @@ document.querySelectorAll('.product-form').forEach((form) => {
 
   const variants = JSON.parse(variantData.textContent);
   const selects = [...form.querySelectorAll('[data-option-index]')];
+  
+  // DEBUG: Log variants and their availability
+  console.log('🔍 Product Variants:', variants.map(v => ({
+    id: v.id,
+    title: v.title,
+    options: v.options,
+    available: v.available,
+    inventory_quantity: v.inventory_quantity,
+    inventory_management: v.inventory_management
+  })));
 
   const updateVariant = () => {
     const selected = selects.map((select) => select.value);
@@ -259,9 +269,13 @@ document.querySelectorAll('.product-form').forEach((form) => {
         updateSwatchAvailability();
       });
     });
-    });
+  });
 
   selects.forEach((select) => select.addEventListener('change', updateVariant));
+
+  // Initialize availability styles on load and call updateVariant for initial state
+  updateSwatchAvailability();
+  updateVariant(); // Ensure button state is correct from the start
 });
 
 document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {

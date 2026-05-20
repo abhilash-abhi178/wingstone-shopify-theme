@@ -251,6 +251,74 @@ button.shopify-payment-button__button {
   max-width: min(118px, 30vw);
 }
 
+/* Logo slabs: left and right show only the edge letters; center shows a muted logo with an inline promo track */
+.brand-slab {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+  height: 48px;
+}
+
+.brand-slab--left,
+.brand-slab--right {
+  width: 56px;
+  flex: 0 0 56px;
+}
+
+.brand-slab--center {
+  min-width: 120px;
+  width: min(118px, 30vw);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-slab__logo {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.brand-slab__promo {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.brand-promo-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  padding: .28rem 0;
+  font-size: .64rem;
+  font-weight: 900;
+  letter-spacing: .14em;
+  line-height: 1;
+  text-transform: uppercase;
+  animation: brand-promo 18s linear infinite;
+  color: var(--color-ink);
+}
+
+.brand-promo-track span {
+  white-space: nowrap;
+}
+
+@keyframes brand-promo {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .site-nav {
   display: flex;
   align-items: center;

@@ -28,12 +28,31 @@
         </nav>
       </div>
 
+      {% if section.settings.logo != blank %}
+        {% assign logo_src = section.settings.logo | image_url: width: 380 %}
+      {% else %}
+        {% assign logo_src = 'wingstone-logo.png' | asset_url %}
+      {% endif %}
+
       <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-        {% if section.settings.logo != blank %}
-          {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
-        {% else %}
-          <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
-        {% endif %}
+        <div class="brand-slab brand-slab--left" style="background-image: url({{ logo_src }});" aria-hidden="true"></div>
+
+        <div class="brand-slab brand-slab--center">
+          <div class="brand-slab__logo" style="background-image: url({{ logo_src }});" aria-hidden="true"></div>
+
+          {% if section.settings.promo_text != blank %}
+            <div class="brand-slab__promo" aria-label="{{ section.settings.promo_text | escape }}">
+              <div class="brand-promo-track">
+                {% for i in (1..2) %}
+                  <span>{{ section.settings.promo_text }}</span>
+                  <span>{{ section.settings.promo_text }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="brand-slab brand-slab--right" style="background-image: url({{ logo_src }});" aria-hidden="true"></div>
       </a>
 
       <div class="site-header__actions">

@@ -203,11 +203,25 @@ document.querySelectorAll('.product-form').forEach((form) => {
 
     // Update product gallery image if variant has a featured image
     if (variant.featured_image) {
-      const mainGalleryImg = form.closest('section').querySelector('[data-product-gallery-main-image]');
-      if (mainGalleryImg) {
-        mainGalleryImg.src = variant.featured_image.src;
-        mainGalleryImg.alt = variant.featured_image.alt || variant.title;
+      // Try multiple selectors to find the main gallery image
+      const section = form.closest('section');
+      let mainGalleryImg = section ? section.querySelector('[data-product-gallery-main-image]') : null;
+      
+      // Fallback: search entire document if section fails
+      if (!mainGalleryImg) {
+        mainGalleryImg = document.querySelector('[data-product-gallery-main-image]');
       }
+      
+      if (mainGalleryImg) {
+        const imageUrl = variant.featured_image.src || variant.featured_image;
+        mainGalleryImg.src = imageUrl;
+        mainGalleryImg.alt = variant.featured_image.alt || variant.title;
+        console.log('✓ Updated gallery image to:', imageUrl);
+      } else {
+        console.log('✗ Gallery image element not found');
+      }
+    } else {
+      console.log('✗ Variant has no featured_image:', variant);
     }
   };
   // Helper to check availability of a specific option value combination

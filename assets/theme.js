@@ -1,8 +1,12 @@
 document.documentElement.classList.remove('no-js');
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const cartDrawer = document.querySelector('[data-cart-drawer]');
 const cartDrawerBackdrop = document.querySelector('[data-cart-drawer-backdrop]');
 const cartDrawerContent = document.querySelector('[data-cart-drawer-content]');
+let _lastActiveElement = null;
+let _cartKeydownHandler = null;
 
 const formatMoney = (cents) => {
   if (typeof Shopify !== 'undefined' && Shopify.formatMoney) {
@@ -15,13 +19,14 @@ const formatMoney = (cents) => {
 const openCartDrawer = async () => {
   if (!cartDrawer || !cartDrawerBackdrop || !cartDrawerContent) return;
 
+  _lastActiveElement = document.activeElement;
+
   cartDrawer.hidden = false;
   cartDrawerBackdrop.hidden = false;
-  requestAnimationFrame(() => {
-    cartDrawer.classList.add('is-open');
-    cartDrawerBackdrop.classList.add('is-open');
-    document.body.classList.add('cart-drawer-open');
-  });
+  cartDrawer.setAttribute('aria-hidden', 'false');
+  cartDrawerBackdrop.classList.add('is-open');
+  cartDrawer.classList.add('is-open');
+  document.body.classList.add('cart-drawer-open');
 
   cartDrawerContent.innerHTML = '<p class="cart-drawer__loading">Loading cart...</p>';
 
@@ -59,6 +64,31 @@ const openCartDrawer = async () => {
       </div>
     </div>
   `;
+
+  // Focus management & accessible keyboard handling
+  const closeBtn = cartDrawer.querySelector('[data-cart-drawer-close]') || cartDrawer.querySelector('.cart-drawer__close');
+  if (closeBtn) {
+    closeBtn.focus();
+  }
+
+  _cartKeydownHandler = (e) => {
+    if (e.key === 'Escape') closeCartDrawer();
+    if (e.key === 'Tab') {
+      const focusable = cartDrawer.querySelectorAll('a, button, input, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
+
+  document.addEventListener('keydown', _cartKeydownHandler);
 };
 
 const closeCartDrawer = () => {
@@ -67,11 +97,21 @@ const closeCartDrawer = () => {
   cartDrawer.classList.remove('is-open');
   cartDrawerBackdrop.classList.remove('is-open');
   document.body.classList.remove('cart-drawer-open');
+  cartDrawer.setAttribute('aria-hidden', 'true');
+
+  if (_cartKeydownHandler) {
+    document.removeEventListener('keydown', _cartKeydownHandler);
+    _cartKeydownHandler = null;
+  }
 
   window.setTimeout(() => {
     cartDrawer.hidden = true;
     cartDrawerBackdrop.hidden = true;
-  }, 280);
+    if (_lastActiveElement && typeof _lastActiveElement.focus === 'function') {
+      _lastActiveElement.focus();
+    }
+    _lastActiveElement = null;
+  }, prefersReducedMotion ? 0 : 280);
 };
 
 document.addEventListener('click', (event) => {
@@ -188,9 +228,14 @@ if ('IntersectionObserver' in window) {
   revealItems.forEach((item) => item.classList.add('js-reveal'));
 
   const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+    entries.forEach((entry, i) => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
+      if (prefersReducedMotion) {
+        entry.target.classList.add('is-visible');
+      } else {
+        // small stagger for visual polish
+        setTimeout(() => entry.target.classList.add('is-visible'), i * 60);
+      }
       revealObserver.unobserve(entry.target);
     });
   }, { threshold: 0.12 });

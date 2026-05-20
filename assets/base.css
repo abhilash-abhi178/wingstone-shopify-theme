@@ -549,7 +549,7 @@ button.shopify-payment-button__button {
 
 .hero__content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   display: grid;
   justify-items: center;
   padding: clamp(4rem, 9vw, 7rem) 0;
@@ -615,13 +615,8 @@ button.shopify-payment-button__button {
 }
 
 .hero__ticker {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 8%);
-  z-index: 1; /* sits above the backdrop (0) but beneath main content (2) */
   width: min(620px, calc(100vw - 48px));
-  margin: 0;
+  margin-top: 3.4rem;
   overflow: hidden;
   color: var(--color-steel);
   font-size: .72rem;
@@ -629,9 +624,7 @@ button.shopify-payment-button__button {
   letter-spacing: .18em;
   line-height: 1.4;
   text-transform: uppercase;
-  text-align: center;
   mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
-  pointer-events: none;
 }
 
 .hero__stats {
@@ -678,14 +671,6 @@ button.shopify-payment-button__button {
   width: max-content;
   gap: 1.35rem;
   animation: hero-ticker 22s linear infinite;
-}
-
-@media (max-width: 880px) {
-  .hero__ticker { transform: translate(-50%, 12%); font-size: .68rem; }
-}
-
-@media (max-width: 560px) {
-  .hero__ticker { transform: translate(-50%, 18%); font-size: .62rem; width: calc(100% - 32px); }
 }
 
 .hero__ticker-track span {

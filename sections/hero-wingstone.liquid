@@ -2,17 +2,6 @@
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="hero__pattern" aria-hidden="true"></div>
   <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
-  {% if section.settings.announcement_text != blank %}
-    <div class="hero__ticker" aria-label="{{ section.settings.announcement_text | strip_html | escape }}">
-      <div class="hero__ticker-track">
-        {% for i in (1..2) %}
-          <span>{{ section.settings.announcement_text }}</span>
-          <span>{{ section.settings.announcement_text }}</span>
-          <span>{{ section.settings.announcement_text }}</span>
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
   <div class="page-width hero__inner">
     <div class="hero__content">
       {% if section.settings.badge != blank %}
@@ -34,7 +23,17 @@
           {% endif %}
         </div>
       {% endif %}
-      
+      {% if section.settings.announcement_text != blank %}
+        <div class="hero__ticker" aria-label="{{ section.settings.announcement_text | strip_html | escape }}">
+          <div class="hero__ticker-track">
+            {% for i in (1..2) %}
+              <span>{{ section.settings.announcement_text }}</span>
+              <span>{{ section.settings.announcement_text }}</span>
+              <span>{{ section.settings.announcement_text }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
       <div class="hero__stats" aria-label="Store highlights">
         <div class="hero__stat">
           <strong>{{ section.settings.stat_one_number }}</strong>

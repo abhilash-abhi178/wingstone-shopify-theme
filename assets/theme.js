@@ -166,7 +166,37 @@ cartForms.forEach((form) => {
         throw new Error('Unable to add item to cart');
       }
 
-      await openCartDrawer();
+      // For PDP form submissions we want a silent update (no drawer).
+      if (form.id === 'pdpForm') {
+        try {
+          const cartRes = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+          const cart = await cartRes.json();
+
+          // update header badge (create if needed)
+          let badge = document.querySelector('.site-header__badge');
+          if (!badge) {
+            const cartToggle = document.querySelector('.site-header__action--cart');
+            if (cartToggle) {
+              badge = document.createElement('span');
+              badge.className = 'site-header__badge';
+              cartToggle.appendChild(badge);
+            }
+          }
+          if (badge) badge.textContent = String(cart.item_count || 0);
+
+          // quick feedback on the submit button
+          if (submitButton) {
+            const original = submitButton.textContent;
+            submitButton.textContent = 'Added';
+            setTimeout(() => { submitButton.textContent = original; }, 1800);
+          }
+        } catch (e) {
+          // ignore silent update errors
+          console.warn('Silent cart update failed', e);
+        }
+      } else {
+        await openCartDrawer();
+      }
     } finally {
       if (submitButton) submitButton.disabled = false;
     }

@@ -5,9 +5,12 @@
       <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Wingstone' }}. All rights reserved.</small>
     </div>
     <div>
-      {% for link in section.settings.menu.links %}
-        <a href="{{ link.url }}">{{ link.title }}</a>{% unless forloop.last %} &nbsp;/&nbsp; {% endunless %}
-      {% endfor %}
+      {% assign footer_menu = linklists[section.settings.menu] %}
+      {% if footer_menu and footer_menu.links.size > 0 %}
+        {% for link in footer_menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>{% unless forloop.last %} &nbsp;/&nbsp; {% endunless %}
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </footer>

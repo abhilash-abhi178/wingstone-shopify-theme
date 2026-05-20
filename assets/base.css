@@ -517,8 +517,8 @@ button.shopify-payment-button__button {
 
 .hero__backdrop {
   position: absolute;
-  /* center across the viewport (not limited by .page-width) */
-  left: 50vw;
+  /* center relative to the full-width .hero container */
+  left: 50%;
   top: 50%;
   z-index: 0;
   width: max-content;
@@ -536,6 +536,15 @@ button.shopify-payment-button__button {
   white-space: nowrap;
   pointer-events: none;
   animation: backdrop-drift 9s ease-in-out infinite;
+}
+
+/* Allow the huge backdrop word to wrap on small viewports so it doesn't overflow or shift visually */
+@media (max-width: 560px) {
+  .hero__backdrop {
+    white-space: normal;
+    font-size: clamp(3rem, 18vw, 8rem);
+    transform: translate(-50%, -60%);
+  }
 }
 
 .hero__content {

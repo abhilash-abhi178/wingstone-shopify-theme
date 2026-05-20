@@ -1,9 +1,8 @@
 <section class="hero hero--tones">
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="hero__pattern" aria-hidden="true"></div>
+  <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
   <div class="page-width hero__inner">
-    <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
-
     <div class="hero__content">
       {% if section.settings.badge != blank %}
         <div class="hero__badge"><span aria-hidden="true">*</span>{{ section.settings.badge }}</div>

@@ -441,6 +441,29 @@ button.shopify-payment-button__button {
   .js-reveal, .cart-drawer, .button, .product-card { transition: none !important; animation: none !important; }
 }
 
+/* Search results grid */
+.search-results__form { margin-bottom: 1.25rem; }
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 992px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.search-results__more { text-align: center; margin-top: 1rem; }
+
+.search-results .section-title { margin-top: 0; }
+
+.search-results p { color: var(--color-steel); }
+
+
 @keyframes rule-glow {
   0%,
   100% {

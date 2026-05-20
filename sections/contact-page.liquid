@@ -1,0 +1,44 @@
+<section class="section contact-page">
+  <div class="page-width">
+    <h1 class="section-title">Contact us</h1>
+
+    <div class="contact-grid">
+      <div class="contact-form">
+        {% form 'contact' %}
+          <div>
+            <label for="ContactName">Name</label>
+            <input id="ContactName" name="contact[name]" type="text" class="field" required>
+          </div>
+
+          <div>
+            <label for="ContactEmail">Email</label>
+            <input id="ContactEmail" name="contact[email]" type="email" class="field" required>
+          </div>
+
+          <div>
+            <label for="ContactMessage">Message</label>
+            <textarea id="ContactMessage" name="contact[body]" class="field" rows="6" required></textarea>
+          </div>
+
+          <div>
+            <button class="button" type="submit">Send message</button>
+          </div>
+        {% endform %}
+      </div>
+
+      <div class="contact-details">
+        <h3>Our address</h3>
+        <p>Wingstone HQ<br>123 Example Street<br>City, Country</p>
+        <h3>Support</h3>
+        <p>Email: support@wingstone.example</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "settings": []
+}
+{% endschema %}

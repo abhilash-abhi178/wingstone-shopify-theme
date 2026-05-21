@@ -542,6 +542,7 @@ button.shopify-payment-button__button {
   background: var(--color-paper);
   box-shadow: 0 28px 80px color-mix(in srgb, var(--color-ink), transparent 92%);
   transform: translateX(110%);
+  will-change: transform;
   transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
   z-index: 110;
   display: flex;
@@ -554,6 +555,7 @@ button.shopify-payment-button__button {
   inset: 0;
   background: rgba(12,16,28,0.48);
   opacity: 0;
+  will-change: opacity;
   transition: opacity .28s ease;
   z-index: 100;
   pointer-events: none;

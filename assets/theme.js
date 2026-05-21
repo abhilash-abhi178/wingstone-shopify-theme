@@ -534,6 +534,25 @@ document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
 
 const revealItems = document.querySelectorAll('.section, .product-card, .feature-item, .newsletter form, .site-footer__inner');
 
+const footerAccordions = [...document.querySelectorAll('[data-footer-accordion]')];
+const footerAccordionQuery = window.matchMedia('(min-width: 901px)');
+
+const syncFooterAccordions = () => {
+  if (!footerAccordions.length) return;
+
+  footerAccordions.forEach((accordion) => {
+    accordion.open = footerAccordionQuery.matches;
+  });
+};
+
+syncFooterAccordions();
+
+if (typeof footerAccordionQuery.addEventListener === 'function') {
+  footerAccordionQuery.addEventListener('change', syncFooterAccordions);
+} else if (typeof footerAccordionQuery.addListener === 'function') {
+  footerAccordionQuery.addListener(syncFooterAccordions);
+}
+
 if ('IntersectionObserver' in window) {
   revealItems.forEach((item) => item.classList.add('js-reveal'));
 

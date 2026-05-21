@@ -1245,6 +1245,15 @@ button.shopify-payment-button__button {
   align-items: center;
 }
 
+.site-footer__inner--accordion {
+  align-items: start;
+}
+
+.site-footer__brand-block {
+  display: grid;
+  gap: .45rem;
+}
+
 .site-footer__brand {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
@@ -1265,20 +1274,70 @@ button.shopify-payment-button__button {
   line-height: 1.65;
 }
 
-.site-footer__meta-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .7rem 1rem;
-  margin-top: .75rem;
+.site-footer__accordion-group {
+  display: grid;
+  gap: .9rem;
 }
 
-.site-footer__meta-links a {
+.site-footer__accordion {
+  padding-top: .9rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-paper), transparent 82%);
+}
+
+.site-footer__accordion:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.site-footer__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+  color: var(--color-paper);
+  font-family: var(--font-heading-family);
+  font-size: .9rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.site-footer__summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-footer__summary::after {
+  content: '+';
+  color: color-mix(in srgb, var(--color-paper), transparent 22%);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.site-footer__accordion[open] .site-footer__summary::after {
+  content: '−';
+}
+
+.site-footer__panel {
+  display: grid;
+  gap: .7rem;
+  padding-top: .95rem;
+}
+
+.site-footer__panel a {
   color: color-mix(in srgb, var(--color-paper), transparent 10%);
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .12em;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.site-footer__panel a:hover,
+.site-footer__panel a:focus-visible {
+  color: var(--color-paper);
+  text-decoration: underline;
 }
 
 .site-footer__meta-links a:hover,
@@ -2421,7 +2480,19 @@ body.cart-drawer-open {
   }
 
   .site-footer__inner {
-    text-align: center;
+    text-align: left;
+  }
+
+  .site-footer__inner--accordion {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__accordion-group {
+    gap: 0;
+  }
+
+  .site-footer__accordion {
+    padding: .95rem 0;
   }
 
   .newsletter form {
@@ -2470,6 +2541,19 @@ body.cart-drawer-open {
 
   .site-header__logo {
     max-width: min(96px, 28vw);
+  }
+
+  .site-footer {
+    padding: 28px 0;
+  }
+
+  .site-footer__brand {
+    font-size: clamp(1.5rem, 7vw, 1.9rem);
+    letter-spacing: .14em;
+  }
+
+  .site-footer__summary {
+    font-size: .84rem;
   }
 
   .menu-toggle {

@@ -23,9 +23,7 @@
     {{ content_for_header }}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    {{ 'mobile-fixes.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'mobile-enhancements.js' | asset_url }}" defer="defer"></script>
 
     <style>
       {{ settings.heading_font | font_face: font_display: 'swap' }}

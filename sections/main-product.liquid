@@ -465,13 +465,24 @@
 
   /* ─── Responsive adjustments ───────────────────────────────── */
   @media (max-width: 640px) {
-    .pdp { padding: 16px 14px 124px; }
+    .pdp { padding: 16px 14px calc(140px + env(safe-area-inset-bottom)); }
     .pdp-gallery { flex-direction: column; position: static; }
     .pdp-thumbs { flex-direction: row; max-height: none; overflow-x: auto; padding-bottom: 2px; }
     .pdp-thumb { width: 56px; height: 56px; }
     .pdp-btn { max-width: 100%; }
     .pdp-title { font-size: 18px; }
     .pdp-price-main { font-size: 28px; }
+    .pdp-size-btn {
+      min-width: 48px;
+      height: 44px;
+      padding: 0 16px;
+      font-size: 14px;
+    }
+    .pdp input,
+    .pdp select,
+    .pdp textarea {
+      font-size: 16px;
+    }
     .pdp-mobile-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;

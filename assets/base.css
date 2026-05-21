@@ -1252,7 +1252,9 @@ button.shopify-payment-button__button {
   font-weight: 600;
   letter-spacing: .18em;
   text-transform: uppercase;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .site-footer__philosophy {
@@ -1645,6 +1647,76 @@ body.cart-drawer-open {
 @media (max-width: 560px) {
   .cart-drawer {
     width: 100vw;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .site-footer__brand {
+    font-size: clamp(1.4rem, 8vw, 1.85rem);
+    letter-spacing: .14em;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .variant-card-list--color {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .variant-card-list--color::-webkit-scrollbar {
+    display: none;
+  }
+
+  .variant-card {
+    flex: 0 0 min(168px, 72vw);
+  }
+
+  .purchase-actions,
+  .purchase-actions__buy-now .shopify-payment-button,
+  .purchase-actions__buy-now .shopify-payment-button__button {
+    min-width: 0;
+  }
+
+  .purchase-actions {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@media (max-width: 860px) {
+  .size-chart-modal {
+    padding: 12px;
+  }
+
+  .size-chart-modal__card {
+    width: min(720px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .size-chart-modal__body {
+    max-height: calc(100dvh - 94px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 860px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .product-grid {
+    grid-template-columns: 1fr;
   }
 }
 

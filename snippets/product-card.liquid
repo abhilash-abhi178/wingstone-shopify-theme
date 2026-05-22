@@ -94,7 +94,7 @@
             <div class="product-card__swatches product-card__swatches--size">
               {%- for value in option.values limit: 4 -%}
                 <span class="product-card__swatch product-card__swatch--size" title="{{ value }}">{{ value }}</span>
-              {%- endfor -xs -%}
+              {%- endfor -%}
               {%- if option.values.size > 4 -%}
                 <span class="product-card__swatch-more">+{{ option.values.size | minus: 4 }}</span>
               {%- endif -%}

@@ -1,0 +1,75 @@
+<section class="cinematic-banner" id="cinematicBanner-{{ section.id }}">
+  {% if section.settings.image != blank %}
+    {{ section.settings.image | image_url: width: 1800 | image_tag: class: 'cinematic-banner__media', loading: 'lazy' }}
+  {% else %}
+    <div class="cinematic-banner__media" style="background-color: var(--color-frost, #e5e7eb);"></div>
+  {% endif %}
+
+  <div class="cinematic-banner__overlay"></div>
+
+  <div class="page-width cinematic-banner__content">
+    {% if section.settings.eyebrow != blank %}
+      <p class="cinematic-banner__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+
+    <h2 class="cinematic-banner__heading">{{ section.settings.heading }}</h2>
+
+    {% if section.settings.text != blank %}
+      <div class="cinematic-banner__text">{{ section.settings.text }}</div>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <a class="btn-primary" href="{{ section.settings.button_link }}">
+        {{ section.settings.button_label }}
+        {% render 'icon-arrow' %}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cinematic Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "ATMOSPHERIC SHOT"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SYSTEM OUTLINES"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>A visual exploration of form and function. Adapting to conditions, engineered for the daily transit.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "View lookbook"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic Banner"
+    }
+  ]
+}
+{% endschema %}

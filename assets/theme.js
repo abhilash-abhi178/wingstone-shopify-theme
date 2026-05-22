@@ -222,8 +222,8 @@ cartForms.forEach((form) => {
 
 document.querySelectorAll('.product-form').forEach((form) => {
   const variantData = form.querySelector('[data-product-variants]');
-            const original = label ? label.textContent : submitButton.textContent;
-            if (label) label.textContent = 'Added'; else submitButton.textContent = 'Added';
+  const idInput = form.querySelector('input[name="id"]');
+  const submit = form.querySelector('button[type="submit"], [type="submit"]');
   if (!variantData || !idInput || !submit) return;
 
   const variants = JSON.parse(variantData.textContent);
@@ -264,7 +264,7 @@ document.querySelectorAll('.product-form').forEach((form) => {
 
     optionGroups.forEach((group) => {
       const optionIndex = Number(group.dataset.optionIndex) - 1;
-      const selectedValue = selects[optionIndex] ? selects[optionIndex].value : '';
+      const selectedValue = selectedValues[optionIndex] || '';
       const label = group.querySelector('[data-selected-value-label]');
       const buttons = [...group.querySelectorAll('[data-option-value]')];
 
@@ -521,3 +521,19 @@ if ('IntersectionObserver' in window) {
 
   revealItems.forEach((item) => revealObserver.observe(item));
 }
+
+// ── Header Scroll Blur & Shrink Effect ──
+document.addEventListener('DOMContentLoaded', () => {
+  const headerEl = document.querySelector('.site-header');
+  if (headerEl) {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        headerEl.classList.add('site-header--scrolled');
+      } else {
+        headerEl.classList.remove('site-header--scrolled');
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+});

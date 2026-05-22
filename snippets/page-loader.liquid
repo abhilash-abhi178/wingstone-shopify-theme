@@ -1,0 +1,16 @@
+<div class="page-loader" id="pageLoader" role="status" aria-label="Loading page">
+  <div class="page-loader__logo">
+    <span class="page-loader__letter">W</span>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('pageLoader');
+    if (loader) {
+      setTimeout(() => {
+        loader.classList.add('hide');
+      }, 750); // Premium slow transition reveal
+    }
+  });
+</script>

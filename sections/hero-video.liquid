@@ -1,0 +1,124 @@
+<section class="hero-video" id="heroVideo-{{ section.id }}">
+  {% if section.settings.video_url != blank %}
+    <video class="hero-video__media" autoplay loop muted playsinline poster="{{ section.settings.poster_image | image_url: width: 1800 }}">
+      <source src="{{ section.settings.video_url }}" type="video/mp4">
+    </video>
+  {% elsif section.settings.shopify_video != blank %}
+    <video class="hero-video__media" autoplay loop muted playsinline poster="{{ section.settings.poster_image | image_url: width: 1800 }}">
+      <source src="{{ section.settings.shopify_video.sources[0].url }}" type="video/mp4">
+    </video>
+  {% elsif section.settings.poster_image != blank %}
+    {{ section.settings.poster_image | image_url: width: 1800 | image_tag: class: 'hero-video__media', loading: 'eager' }}
+  {% else %}
+    <div class="hero-video__media hero-video__media--placeholder" style="background-color: var(--color-frost, #e5e7eb);"></div>
+  {% endif %}
+
+  <div class="hero-overlay"></div>
+
+  <div class="page-width hero-content">
+    {% if section.settings.eyebrow != blank %}
+      <p class="hero-subtitle">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+
+    <h1 class="hero-title">
+      {% if section.settings.headline_line1 != blank %}
+        <span>{{ section.settings.headline_line1 }}</span><br>
+      {% endif %}
+      {% if section.settings.headline_line2 != blank %}
+        {{ section.settings.headline_line2 }}
+      {% endif %}
+    </h1>
+
+    {% if section.settings.text != blank %}
+      <div class="hero-description">{{ section.settings.text }}</div>
+    {% endif %}
+
+    <div class="hero-buttons">
+      {% if section.settings.primary_label != blank %}
+        <a class="btn-primary" href="{{ section.settings.primary_link }}">
+          {{ section.settings.primary_label }}
+          {% render 'icon-arrow' %}
+        </a>
+      {% endif %}
+      {% if section.settings.secondary_label != blank %}
+        <a class="btn-secondary" href="{{ section.settings.secondary_link }}">
+          {{ section.settings.secondary_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cinematic Hero Video",
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "External MP4 Video URL"
+    },
+    {
+      "type": "video",
+      "id": "shopify_video",
+      "label": "Shopify Hosted Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image",
+      "label": "Poster / Fallback Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "NEW ARRIVALS"
+    },
+    {
+      "type": "text",
+      "id": "headline_line1",
+      "label": "Headline Line 1",
+      "default": "SYSTEMS"
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Headline Line 2",
+      "default": "FOR MODERN AGENTS"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>A high-performance technical shell engineered with a water-resistant membrane and functional modular capabilities.</p>"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary Button Label",
+      "default": "Explore collection"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary Button Label",
+      "default": "Technical specifications"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic Hero Video"
+    }
+  ]
+}
+{% endschema %}

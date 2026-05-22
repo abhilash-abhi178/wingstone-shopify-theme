@@ -1,0 +1,93 @@
+<section class="editorial-grid" id="editorialGrid-{{ section.id }}">
+  <div class="editorial-grid__inner">
+    {% for block in section.blocks limit: 3 %}
+      <div class="editorial-cell" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'editorial-cell__img', loading: 'lazy' }}
+        {% else %}
+          <div class="editorial-cell__img" style="background-color: var(--color-frost, #e5e7eb); height: 100%; width: 100%;"></div>
+        {% endif %}
+        
+        <div class="editorial-cell__overlay"></div>
+        
+        <div class="editorial-cell__content">
+          {% if block.settings.label != blank %}
+            <span class="editorial-cell__label">{{ block.settings.label }}</span>
+          {% endif %}
+          {% if block.settings.heading != blank %}
+            <h3 class="editorial-cell__heading">{{ block.settings.heading }}</h3>
+          {% endif %}
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="stretched-link" aria-label="{{ block.settings.heading | default: 'Read story' }}"></a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial Grid",
+  "max_blocks": 3,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "grid_item",
+      "name": "Grid Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Cell Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "SYSTEMS"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Modular Shell Systems"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial Grid",
+      "blocks": [
+        {
+          "type": "grid_item",
+          "settings": {
+            "label": "SERIES 01",
+            "heading": "Cinematic Shells & Outerwear"
+          }
+        },
+        {
+          "type": "grid_item",
+          "settings": {
+            "label": "01 DETAILS",
+            "heading": "Utility Pocket Structures"
+          }
+        },
+        {
+          "type": "grid_item",
+          "settings": {
+            "label": "02 DETAILS",
+            "heading": "Weatherproof Fabric Testing"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

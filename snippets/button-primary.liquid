@@ -1,0 +1,28 @@
+{%- comment -%}
+  Renders a primary button
+  Accepts:
+  - label: {String} Button label (required)
+  - url: {String} Link URL (optional)
+  - id: {String} Element ID (optional)
+  - class: {String} Additional classes (optional)
+  - type: {String} Button type (optional, defaults to 'button')
+  - attr: {String} Additional attributes (optional)
+{%- endcomment -%}
+
+{%- if url != blank -%}
+  <a href="{{ url }}" 
+     {% if id != blank %}id="{{ id }}"{% endif %} 
+     class="btn-primary {{ class }}" 
+     {{ attr }}>
+    <span>{{ label }}</span>
+    {% render 'icon-arrow' %}
+  </a>
+{%- else -%}
+  <button type="{{ type | default: 'button' }}" 
+          {% if id != blank %}id="{{ id }}"{% endif %} 
+          class="btn-primary {{ class }}" 
+          {{ attr }}>
+    <span>{{ label }}</span>
+    {% render 'icon-arrow' %}
+  </button>
+{%- endif -%}

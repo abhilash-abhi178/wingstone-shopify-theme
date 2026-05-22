@@ -1,0 +1,14 @@
+{%- comment -%}
+  Renders a motion-reveal wrapper
+  Accepts:
+  - content: {String} HTML content inside the wrapper
+  - class: {String} Additional classes (optional)
+  - delay: {Number} Transition delay in milliseconds (optional)
+  - attributes: {String} Additional HTML attributes (optional)
+{%- endcomment -%}
+
+<div class="motion-reveal {{ class }}" 
+     {% if delay != blank %}style="transition-delay: {{ delay }}ms;"{% endif %}
+     {{ attributes }}>
+  {{ content }}
+</div>

@@ -1,96 +1,170 @@
-<section class="hero hero--tones{% if section.settings.image != blank %} hero--with-media{% endif %}">
-  <div class="hero__bg" aria-hidden="true"></div>
-  <div class="hero__pattern" aria-hidden="true"></div>
-  <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
-  <div class="page-width hero__inner">
-    <div class="hero__content">
-      {%- comment -%} hero badge removed per request {%- endcomment -%}
-      {% if section.settings.eyebrow != blank %}
-        <h1 class="hero__offer">{{ section.settings.eyebrow }}</h1>
-      {% endif %}
-      {% if section.settings.text != blank %}
-        <div class="hero__text">{{ section.settings.text }}</div>
-      {% endif %}
-      {% if section.settings.primary_label != blank or section.settings.secondary_label != blank %}
-        <div class="hero__buttons">
+<section class="hero2">
+
+  {%- comment -%} Backdrop watermark {%- endcomment -%}
+  <p class="hero2__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
+
+  {%- comment -%} Full-bleed grid: content left | image right {%- endcomment -%}
+  <div class="hero2__grid">
+
+    {%- comment -%} LEFT — content {%- endcomment -%}
+    <div class="hero2__content-wrap">
+      <div class="hero2__content">
+
+        {% if section.settings.eyebrow != blank %}
+          <p class="hero2__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+
+        <h1 class="hero2__heading">
+          {% if section.settings.headline_line1 != blank %}
+            <span class="hero2__line hero2__line--dark">{{ section.settings.headline_line1 }}</span>
+          {% endif %}
+          {% if section.settings.headline_line2 != blank %}
+            <span class="hero2__line hero2__line--dark">{{ section.settings.headline_line2 }}</span>
+          {% endif %}
+          {% if section.settings.headline_line3 != blank %}
+            <span class="hero2__line hero2__line--blue">{{ section.settings.headline_line3 }}</span>
+          {% endif %}
+        </h1>
+
+        {% if section.settings.text != blank %}
+          <div class="hero2__desc">{{ section.settings.text }}</div>
+        {% endif %}
+
+        <div class="hero2__btns">
           {% if section.settings.primary_label != blank %}
-            <a class="button" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label }}</a>
+            <a class="hero2__btn hero2__btn--solid" href="{{ section.settings.primary_link }}">
+              {{ section.settings.primary_label }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
           {% endif %}
           {% if section.settings.secondary_label != blank %}
-            <a class="button button--secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>
+            <a class="hero2__btn hero2__btn--outline" href="{{ section.settings.secondary_link }}">
+              {{ section.settings.secondary_label }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M10 8.5l4.5 3.5-4.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
           {% endif %}
         </div>
-      {% endif %}
-      {% if section.settings.announcement_text != blank %}
-        <div class="hero__ticker" aria-label="{{ section.settings.announcement_text | strip_html | escape }}">
-          <div class="hero__ticker-track">
-            {% for i in (1..2) %}
-              <span>{{ section.settings.announcement_text }}</span>
-              <span>{{ section.settings.announcement_text }}</span>
-              <span>{{ section.settings.announcement_text }}</span>
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}
-      <div class="hero__stats" aria-label="Store highlights">
-        <div class="hero__stat">
-          <strong>{{ section.settings.stat_one_number }}</strong>
-          <span>{{ section.settings.stat_one_label }}</span>
-        </div>
-        <span class="hero__stat-divider" aria-hidden="true"></span>
-        <div class="hero__stat">
-          <strong>{{ section.settings.stat_two_number }}</strong>
-          <span>{{ section.settings.stat_two_label }}</span>
-        </div>
-        <span class="hero__stat-divider" aria-hidden="true"></span>
-        <div class="hero__stat">
-          <strong>{{ section.settings.stat_three_number }}</strong>
-          <span>{{ section.settings.stat_three_label }}</span>
-        </div>
+
+        <ul class="hero2__trust" aria-label="Store highlights">
+          <li class="hero2__trust-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.39 7.26H22l-6.19 4.5 2.38 7.26L12 17.5l-6.19 4.52 2.38-7.26L2 10.26h7.61L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            Limited Release
+          </li>
+          <li class="hero2__trust-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.39 7.26H22l-6.19 4.5 2.38 7.26L12 17.5l-6.19 4.52 2.38-7.26L2 10.26h7.61L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            Premium Quality
+          </li>
+          <li class="hero2__trust-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Future Ready
+          </li>
+        </ul>
+
       </div>
     </div>
-    {% if section.settings.image != blank %}
-      <div class="hero__media" aria-hidden="true">
-        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', class: 'hero__image', alt: section.settings.heading }}
-      </div>
-    {% endif %}
+
+    {%- comment -%} RIGHT — image panel {%- endcomment -%}
+    <div class="hero2__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', class: 'hero2__img', alt: section.settings.heading }}
+      {% else %}
+        {%- comment -%} Placeholder when no image is uploaded {%- endcomment -%}
+        <div class="hero2__img-placeholder" aria-hidden="true">
+          <svg viewBox="0 0 280 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="280" height="420" fill="url(#pg)"/>
+            <defs>
+              <linearGradient id="pg" x1="0" y1="0" x2="280" y2="420" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#b8c8d8"/>
+                <stop offset="1" stop-color="#8fa6bc"/>
+              </linearGradient>
+            </defs>
+            <text x="140" y="230" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="4" fill="rgba(255,255,255,0.18)" font-family="Georgia,serif">W</text>
+          </svg>
+        </div>
+      {% endif %}
+    </div>
+
   </div>
+
+  {%- comment -%} Stats bar {%- endcomment -%}
+  <div class="hero2__stats">
+    <div class="hero2__stats-inner">
+      <div class="hero2__stat">
+        <strong>{{ section.settings.stat_one_number }}</strong>
+        <span>{{ section.settings.stat_one_label }}</span>
+      </div>
+      <span class="hero2__divider" aria-hidden="true"></span>
+      <div class="hero2__stat">
+        <strong>{{ section.settings.stat_two_number }}</strong>
+        <span>{{ section.settings.stat_two_label }}</span>
+      </div>
+      <span class="hero2__divider" aria-hidden="true"></span>
+      <div class="hero2__stat">
+        <strong>{{ section.settings.stat_three_number }}</strong>
+        <span>{{ section.settings.stat_three_label }}</span>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Ticker {%- endcomment -%}
+  {% if section.settings.announcement_text != blank %}
+    <div class="hero2__ticker" aria-hidden="true">
+      <div class="hero2__ticker-inner">
+        {% for i in (1..6) %}
+          <span>{{ section.settings.announcement_text }}</span>
+          <span class="hero2__ticker-sep">·</span>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
 </section>
 
 {% schema %}
 {
-  "name": "Wingstone hero",
+  "name": "Wingstone Hero",
   "settings": [
-    
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Hero heading",
-      "default": "Elevate every fit"
+      "label": "Eyebrow label",
+      "default": "Futuristic Streetwear"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Backdrop text",
-      "default": "Wingstone"
+      "label": "Backdrop watermark text",
+      "default": "WINGSTONE"
+    },
+    {
+      "type": "text",
+      "id": "headline_line1",
+      "label": "Heading line 1",
+      "default": "STREETWEAR"
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Heading line 2",
+      "default": "FOR THE"
+    },
+    {
+      "type": "text",
+      "id": "headline_line3",
+      "label": "Heading line 3 (accent color)",
+      "default": "NEXT ERA"
     },
     {
       "type": "richtext",
       "id": "text",
-      "label": "Text",
-      "default": "<p>Refined pieces with sharp silhouettes, premium finishes, and offers that make confident shopping effortless.</p>"
-    },
-    {
-      "type": "text",
-      "id": "announcement_text",
-      "label": "Moving announcement text",
-      "default": "Discount codes / Offers / Announcements / New drops / Limited pieces"
+      "label": "Description",
+      "default": "<p>Cinematic drops, sharp silhouettes, and a quieter premium experience built for the Wingstone world.</p>"
     },
     {
       "type": "text",
       "id": "primary_label",
       "label": "Primary button label",
-      "default": "Shop collection"
+      "default": "Shop Drop"
     },
     {
       "type": "url",
@@ -101,7 +175,7 @@
       "type": "text",
       "id": "secondary_label",
       "label": "Secondary button label",
-      "default": "View lookbook"
+      "default": "Explore Story"
     },
     {
       "type": "url",
@@ -115,44 +189,50 @@
     },
     {
       "type": "text",
+      "id": "announcement_text",
+      "label": "Ticker text",
+      "default": "WINGSTONE WORLD · LIMITED RELEASE · NEW DROP · FUTURE STREETWEAR · WINGSTONE WORLD"
+    },
+    {
+      "type": "text",
       "id": "stat_one_number",
-      "label": "Stat one number",
-      "default": "4.9"
+      "label": "Stat 1 number",
+      "default": "01"
     },
     {
       "type": "text",
       "id": "stat_one_label",
-      "label": "Stat one label",
-      "default": "Store rating"
+      "label": "Stat 1 label",
+      "default": "Featured Drop"
     },
     {
       "type": "text",
       "id": "stat_two_number",
-      "label": "Stat two number",
-      "default": "10%"
-    },
-    {
-      "type": "text",
-      "id": "stat_two_label",
-      "label": "Stat two label",
-      "default": "Active offer"
-    },
-    {
-      "type": "text",
-      "id": "stat_three_number",
-      "label": "Stat three number",
+      "label": "Stat 2 number",
       "default": "24/7"
     },
     {
       "type": "text",
+      "id": "stat_two_label",
+      "label": "Stat 2 label",
+      "default": "Order Support"
+    },
+    {
+      "type": "text",
+      "id": "stat_three_number",
+      "label": "Stat 3 number",
+      "default": "5.0"
+    },
+    {
+      "type": "text",
       "id": "stat_three_label",
-      "label": "Stat three label",
-      "default": "Order support"
+      "label": "Stat 3 label",
+      "default": "Brand Feel"
     }
   ],
   "presets": [
     {
-      "name": "Wingstone hero"
+      "name": "Wingstone Hero"
     }
   ]
 }

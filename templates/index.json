@@ -1,15 +1,17 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-banner",
+      "type": "hero-wingstone",
       "settings": {
-        "eyebrow": "Cinematic drop",
-        "heading": "Wingstone, designed like a frame from a campaign",
-        "text": "<p>Immersive fashion commerce with editorial pacing, limited-drop urgency, and a calmer premium shopping flow.</p>",
+        "badge": "DROP_01 // CYBER ASCENSION",
+        "eyebrow": "FUTURISTIC STREETWEAR FOR THE NEXT ERA",
+        "heading": "Wingstone",
+        "text": "<p>Cinematic drops, sharp silhouettes, and a quieter premium experience built for the Wingstone world.</p>",
+        "announcement_text": "LIMITED RELEASE / NEW DROP / FUTURE STREETWEAR / WINGSTONE WORLD / EDITORIAL FITS",
         "primary_label": "Shop drop",
-        "primary_link": "/collections/all",
+        "primary_link": "#featured-products",
         "secondary_label": "Explore story",
-        "secondary_link": "/pages/about",
+        "secondary_link": "#trust",
         "stat_one_number": "01",
         "stat_one_label": "Featured drop",
         "stat_two_number": "24/7",
@@ -18,64 +20,45 @@
         "stat_three_label": "Brand feel"
       }
     },
-    "collections": {
-      "type": "collection-banner",
-      "settings": {
-        "eyebrow": "Curated chapter",
-        "heading": "Built as a cinematic collection story",
-        "copy": "Full-bleed visuals, strong typography, and a slower editorial pace that makes each collection feel premium.",
-        "button_label": "Shop collection",
-        "button_link": "/collections/all",
-        "side_eyebrow": "Why Wingstone hits different",
-        "side_heading": "Made for a cleaner mobile flow",
-        "side_copy": "The layout keeps product discovery, urgency, and trust cues in a tighter rhythm so the storefront feels elevated on smaller screens."
-      }
-    },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Featured products",
-        "heading": "A tighter drop grid",
-        "subtext": "Mobile-first cards with clearer pricing, quick add actions, and a more cinematic product rhythm.",
-        "collection": "all",
-        "products_to_show": 8
+        "eyebrow": "Featured drop",
+        "heading": "Built like a campaign, not a catalog.",
+        "subtext": "Each product card should feel editorial, collectible, and clearly part of the Wingstone universe.",
+        "products_to_show": 12
       }
     },
-    "grid": {
-      "type": "product-grid",
+    "values": {
+      "type": "brand-values",
       "settings": {
-        "eyebrow": "More to explore",
-        "heading": "A full-screen product grid",
-        "text": "Clean spacing, better hierarchy, and a more premium browsing cadence.",
-        "collection": "all",
-        "products_to_show": 8
-      }
-    },
-    "countdown": {
-      "type": "countdown-banner",
-      "settings": {
-        "eyebrow": "Limited drop",
-        "heading": "Friend1st sale live",
-        "copy": "For a limited time, the offer auto-applies in cart with a sharper mobile conversion flow.",
-        "badge": "Limited window",
-        "button_label": "Shop now",
-        "button_link": "/collections/all",
-        "target_time": "2026-06-01T00:00:00Z"
-      }
-    },
-    "trust": {
-      "type": "trust-icons",
-      "settings": {
-        "eyebrow": "Trust signals",
-        "heading": "Premium flow, zero friction"
+        "eyebrow": "Wingstone standard",
+        "heading": "Sharp, calm, exact"
       },
       "blocks": {
-        "one": { "type": "item", "settings": { "icon": "truck", "title": "Free Shipping", "copy": "Complimentary shipping on prepaid orders." } },
-        "two": { "type": "item", "settings": { "icon": "return", "title": "Easy Returns", "copy": "Simple exchanges with no awkward friction." } },
-        "three": { "type": "item", "settings": { "icon": "shield", "title": "Secure Payment", "copy": "Encrypted checkout with trusted gateways." } },
-        "four": { "type": "item", "settings": { "icon": "badge", "title": "Premium Quality", "copy": "Carefully selected materials and finish." } }
+        "quality": {
+          "type": "value",
+          "settings": {
+            "title": "Cinematic presentation",
+            "text": "Large imagery, restrained spacing, and strong type make each product feel like a drop, not a listing."
+          }
+        },
+        "shipping": {
+          "type": "value",
+          "settings": {
+            "title": "Cleaner navigation",
+            "text": "Fewer choices, better labels, and a route structure that keeps people moving through the brand world."
+          }
+        },
+        "offers": {
+          "type": "value",
+          "settings": {
+            "title": "Meaningful drops",
+            "text": "Tags, metafields, and collection naming work together so the storefront can evolve without new templates."
+          }
+        }
       },
-      "block_order": ["one", "two", "three", "four"]
+      "block_order": ["quality", "shipping", "offers"]
     },
     "newsletter": {
       "type": "newsletter",
@@ -87,5 +70,5 @@
       }
     }
   },
-  "order": ["hero", "collections", "featured", "grid", "countdown", "trust", "newsletter"]
+  "order": ["hero", "featured", "values", "newsletter"]
 }

@@ -773,25 +773,26 @@ button.shopify-payment-button__button {
   font-weight: 800;
 }
 
-/* Style Shopify payment button on PDP to match 'Buy It Now' large navy bar */
+/* Style Shopify payment button on PDP to match 'Buy It Now' large yellow bar */
 .pdp-cta .shopify-payment-button__button,
 .pdp-cta .shopify-payment-button__button--unbranded,
 .pdp-cta .shopify-payment-button {
   width: 100%;
   min-height: 56px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0f254b, #162948) !important;
-  color: #fff !important;
+  background: #ffd814 !important;
+  color: #000000 !important;
   font-weight: 800 !important;
   letter-spacing: .12em !important;
   text-transform: uppercase !important;
-  box-shadow: 0 12px 30px rgba(8, 18, 40, 0.18) !important;
+  box-shadow: 0 12px 30px rgba(240, 172, 0, 0.18) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
 
 .pdp-cta .shopify-payment-button__button:hover {
+  background: #f7c600 !important;
   transform: translateY(-2px);
 }
 

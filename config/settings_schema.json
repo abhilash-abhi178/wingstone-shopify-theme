@@ -4,7 +4,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Wingstone theme built around a cinematic dark palette with premium streetwear presentation."
+        "content": "Wingstone theme built around the signature navy and frost blue palette."
       }
     ]
   },
@@ -15,43 +15,43 @@
         "type": "color",
         "id": "color_background",
         "label": "Background",
-        "default": "#0A0A0A"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "color_surface",
         "label": "Surface",
-        "default": "#111111"
+        "default": "#D5DFF5"
       },
       {
         "type": "color",
         "id": "color_card",
         "label": "Card",
-        "default": "#181818"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "color_text",
         "label": "Text",
-        "default": "#F5F5F5"
+        "default": "#1D2C43"
       },
       {
         "type": "color",
         "id": "color_muted",
         "label": "Muted",
-        "default": "#8B8B8B"
+        "default": "#5E789B"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent",
-        "default": "#FF3B30"
+        "default": "#8EA4C6"
       },
       {
         "type": "color",
         "id": "color_border",
         "label": "Border",
-        "default": "#262626"
+        "default": "#B9C7DE"
       }
     ]
   },

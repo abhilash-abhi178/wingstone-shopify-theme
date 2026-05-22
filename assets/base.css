@@ -5,6 +5,12 @@
 }
 
 :root {
+  --color-ink: #1D2C43;
+  --color-frost: #D5DFF5;
+  --color-steel: #5E789B;
+  --color-paper: #ffffff;
+  --color-line: #B9C7DE;
+  --color-accent: #8EA4C6;
   --space-xs: clamp(.5rem, 1vw, .75rem);
   --space-sm: clamp(.85rem, 1.5vw, 1.15rem);
   --space-md: clamp(1.5rem, 3vw, 2.25rem);

@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0b0b0b; /* matte black */
+  --color-accent: #d5474a; /* yepperz-red like */
+  --color-muted: #fbf6f3; /* warm cream */
+  --color-dark: #22232a;
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-black antialiased;
+  font-family: Inter, ui-sans-serif, system-ui;
+}
+
+/* hero helpers */
+.hero-noise {
+  background-image: url('/noise.png');
+  opacity: .06;
+  mix-blend-mode: overlay;
+}
+
+/* bottom nav spacing so page content doesn't hide */
+body {
+  padding-bottom: 76px;
+}
+
+.marquee {
+  background: var(--color-accent);
+  color: white;
+}

@@ -1,21 +1,36 @@
 {
   "current": {
-    "color_ink": "#1A2545",
-    "color_frost": "#F4F7FD",
-    "color_steel": "#5A6A8A",
-    "color_paper": "#FFFFFF",
-    "color_line": "#D5DDEA",
-    "color_accent": "#C8A96E",
-    "heading_font": "assistant_n7",
-    "body_font": "assistant_n4",
+    "color_background": "#0A0A0A",
+    "color_surface": "#111111",
+    "color_card": "#181818",
+    "color_text": "#F5F5F5",
+    "color_muted": "#8B8B8B",
+    "color_accent": "#FF3B30",
+    "color_border": "#262626",
+    "heading_font": "helvetica_neue_n7",
+    "body_font": "helvetica_neue_n4",
     "favicon": "shopify://shop_images/ChatGPT_Image_May_19_2026_04_43_21_PM.png",
     "brand_logo": "shopify://shop_images/wingstone-logo.png",
     "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "message_one": "Limited drop live now",
+          "message_two": "Free shipping on prepaid orders",
+          "message_three": "Extra 10% off at checkout"
+        }
+      },
       "header": {
         "type": "header",
         "settings": {
           "logo": "shopify://shop_images/wingstone-logo.png",
-          "promo_text": "Extra 10% off with TFV10 / Free shipping on prepaid orders / New Wingstone drops live now"
+          "menu": "main-menu"
+        }
+      },
+      "mobile-menu-drawer": {
+        "type": "mobile-menu-drawer",
+        "settings": {
+          "menu": "main-menu"
         }
       },
       "footer": {
@@ -23,6 +38,22 @@
         "settings": {
           "menu": "footer"
         }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "free_shipping_threshold": 70
+        }
+      },
+      "search-overlay": {
+        "type": "search-overlay",
+        "settings": {
+          "placeholder": "Search the Wingstone archive"
+        }
+      },
+      "mobile-bottom-nav": {
+        "type": "mobile-bottom-nav",
+        "settings": {}
       }
     },
     "content_for_index": []

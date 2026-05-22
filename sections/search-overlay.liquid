@@ -1,0 +1,35 @@
+<div class="search-overlay__backdrop" data-search-backdrop hidden></div>
+<aside class="search-overlay" data-search-overlay hidden aria-hidden="true" aria-label="Search" role="dialog" aria-modal="true">
+  <div class="search-overlay__panel">
+    <div class="search-overlay__content">
+      <div class="search-overlay__top">
+        <div>
+          <p class="eyebrow">Search</p>
+          <h2 class="section-title">Find a drop</h2>
+        </div>
+        <button class="search-overlay__close" type="button" aria-label="Close search" data-close-search>
+          {% render 'icon', name: 'close' %}
+        </button>
+      </div>
+
+      <form class="search-overlay__form" action="{{ routes.search_url }}" method="get" role="search" data-search-form>
+        <input class="search-overlay__input" type="search" name="q" placeholder="{{ section.settings.placeholder }}" data-search-input>
+        <div class="search-overlay__actions">
+          <button class="button" type="submit">Search</button>
+          <button class="button button--ghost" type="button" data-close-search>Close</button>
+        </div>
+      </form>
+
+      <div class="search-overlay__results" data-search-results></div>
+    </div>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Search overlay",
+  "settings": [
+    { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "Search the Wingstone archive" }
+  ]
+}
+{% endschema %}

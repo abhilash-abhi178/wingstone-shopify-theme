@@ -1,39 +1,54 @@
 <footer class="site-footer">
-  <div class="page-width site-footer__inner site-footer__inner--accordion" data-footer-accordions>
-    <div class="site-footer__brand-block">
+  <div class="page-width site-footer__grid">
+    <div class="site-footer__panel js-reveal" data-reveal>
+      <p class="eyebrow">Wingstone</p>
       <p class="site-footer__brand">{{ shop.name | default: 'Wingstone' }}</p>
-      <p class="site-footer__philosophy">Future-focused streetwear with a quieter, more premium shopping experience.</p>
-      <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Wingstone' }}. All rights reserved.</small>
+      <p class="site-footer__copy">Cinematic streetwear storefronts, sharper product storytelling, and premium mobile conversion flows built for limited drops.</p>
+      <div class="social-list">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a>
+      </div>
     </div>
-    <div class="site-footer__accordion-group">
-      <details class="site-footer__accordion" data-footer-accordion>
-        <summary class="site-footer__summary">Get to Know Us</summary>
-        <div class="site-footer__panel">
-          <a href="{{ pages.about.url | default: routes.root_url }}">About Us</a>
-          <a href="{{ routes.root_url }}#contact">Contact Us</a>
-          <a href="{{ routes.root_url }}">Investment Opportunity</a>
-          <a href="{{ routes.root_url }}">Influencer Hiring</a>
+
+    <div class="site-footer__menus">
+      <details open>
+        <summary>Shop</summary>
+        <div class="site-footer__links">
+          <a href="{{ routes.all_products_collection_url }}">All products</a>
+          <a href="{{ routes.collections_url }}">Collections</a>
+          <a href="{{ routes.root_url }}#featured-products">Featured drop</a>
         </div>
       </details>
 
-      <details class="site-footer__accordion" data-footer-accordion>
-        <summary class="site-footer__summary">Policies</summary>
-        <div class="site-footer__panel">
-          <a href="{{ routes.cart_url }}">Track Order</a>
-          <a href="{{ routes.cart_url }}">Exchange/Return Request</a>
-          <a href="{{ routes.root_url }}">Terms and Conditions</a>
-          <a href="{{ routes.root_url }}">Privacy Policy</a>
-          <a href="{{ routes.root_url }}">Return &amp; Exchange Policy</a>
-          <a href="{{ routes.root_url }}">Shipping and Delivery Policy</a>
+      <details>
+        <summary>Support</summary>
+        <div class="site-footer__links">
+          <a href="{{ routes.root_url }}#trust">Shipping and delivery</a>
+          <a href="{{ pages.contact.url | default: routes.root_url }}">Contact us</a>
+          <a href="{{ routes.root_url }}">Returns</a>
         </div>
       </details>
 
-      <details class="site-footer__accordion" data-footer-accordion>
-        <summary class="site-footer__summary">Follow Us</summary>
-        <div class="site-footer__panel">
-          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <details>
+        <summary>Brand</summary>
+        <div class="site-footer__links">
+          <a href="{{ pages.about.url | default: routes.root_url }}">About Wingstone</a>
+          <a href="{{ routes.root_url }}#newsletter">Join the list</a>
+          <a href="{{ routes.root_url }}">Instagram</a>
         </div>
       </details>
+    </div>
+
+    <div class="footer-newsletter__panel js-reveal" data-reveal>
+      <p class="eyebrow">Newsletter</p>
+      <h2 class="section-title" style="font-size: clamp(1.8rem, 5vw, 3rem);">Private access to drops</h2>
+      <p class="site-footer__copy">A sharper, quieter list for restocks, lookbooks, and early access.</p>
+      {% form 'customer', class: 'footer-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input class="footer-newsletter__input" type="email" name="contact[email]" placeholder="Email address" required>
+        <button class="button" type="submit">Join now</button>
+      {% endform %}
+      <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Wingstone' }}. All rights reserved.</small>
     </div>
   </div>
 </footer>

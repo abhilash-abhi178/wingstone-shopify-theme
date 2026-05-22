@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="{{ settings.color_ink }}">
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="canonical" href="{{ canonical_url }}">
     {% if settings.favicon != blank %}
       <link rel="icon" href="{{ settings.favicon | image_url: width: 96, height: 96 }}" type="image/png">
@@ -22,53 +22,52 @@
 
     {{ content_for_header }}
 
-    {{ 'base.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'animations.css' | asset_url | stylesheet_tag }}
+    {{ 'responsive.css' | asset_url | stylesheet_tag }}
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'gsap.js' | asset_url }}" defer></script>
+    <script src="{{ 'cart.js' | asset_url }}" defer></script>
+    <script src="{{ 'product.js' | asset_url }}" defer></script>
+    <script src="{{ 'search.js' | asset_url }}" defer></script>
+    <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
 
     <style>
       {{ settings.heading_font | font_face: font_display: 'swap' }}
       {{ settings.body_font | font_face: font_display: 'swap' }}
 
       :root {
-        --color-ink: {{ settings.color_ink }};
-        --color-frost: {{ settings.color_frost }};
-        --color-steel: {{ settings.color_steel }};
-        --color-paper: {{ settings.color_paper }};
-        --color-line: {{ settings.color_line }};
-        --color-accent: {{ settings.color_accent }};
-        --font-heading-family: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
-        --font-body-family: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+        --background: {{ settings.color_background }};
+        --surface: {{ settings.color_surface }};
+        --card: {{ settings.color_card }};
+        --text: {{ settings.color_text }};
+        --muted: {{ settings.color_muted }};
+        --accent: {{ settings.color_accent }};
+        --border: {{ settings.color_border }};
+        --font-heading-family: "General Sans", "Satoshi", "Cabinet Grotesk", {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+        --font-body-family: "Satoshi", "General Sans", "Cabinet Grotesk", {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
       }
     </style>
   </head>
 
-  <body>
+  <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
+    {% section 'announcement-bar' %}
     {% section 'header' %}
+    {% section 'mobile-menu-drawer' %}
     <main id="MainContent" class="main" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
     {% section 'footer' %}
-
-    <div class="cart-drawer-backdrop" data-cart-drawer-backdrop hidden></div>
-    <aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Shopping cart" role="dialog" aria-modal="true" hidden>
-      <div class="cart-drawer__shell">
-        <div class="cart-drawer__header">
-          <div>
-            <p class="eyebrow">Your cart</p>
-            <h2 class="cart-drawer__title">Cart summary</h2>
-          </div>
-          <button class="cart-drawer__close" type="button" data-cart-drawer-close aria-label="Close cart">×</button>
-        </div>
-
-        <div class="cart-drawer__body" data-cart-drawer-content>
-          <p class="cart-drawer__loading">Loading cart...</p>
-        </div>
-      </div>
-    </aside>
-    <!-- Toast confirmation (global) -->
-    <div id="cartToast" class="cart-toast" role="status" aria-live="polite" hidden>
-      <div class="cart-toast__inner"><span id="cartToastMessage"></span></div>
-    </div>
+    {% section 'cart-drawer' %}
+    {% section 'search-overlay' %}
+    {% section 'mobile-bottom-nav' %}
   </body>
 </html>

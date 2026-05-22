@@ -1,0 +1,35 @@
+@media (max-width: 1200px) {
+  .page-width { width: min(var(--page-max), calc(100% - 1.5rem)); }
+}
+
+@media (max-width: 990px) {
+  .featured-collection__grid,
+  .product-grid,
+  .search-results__grid,
+  .search-overlay__results { gap: .85rem; }
+
+  .hero-banner__title,
+  .section-title,
+  .collection-banner__title,
+  .pdp__title,
+  .site-footer__brand { text-wrap: balance; }
+}
+
+@media (max-width: 720px) {
+  .site-header { inset-top: 32px; }
+  .site-header__inner { min-height: 68px; padding-inline: .25rem; }
+  .site-header__action,
+  .menu-toggle,
+  .search-toggle,
+  .cart-toggle,
+  .mobile-drawer__close,
+  .search-overlay__close,
+  .cart-drawer__close { width: 42px; height: 42px; }
+  .hero-banner__content { width: 100%; }
+  .hero-banner__actions,
+  .pdp__actions,
+  .search-overlay__actions,
+  .newsletter__actions,
+  .footer-newsletter__actions,
+  .cart-drawer__actions { display: grid; }
+}

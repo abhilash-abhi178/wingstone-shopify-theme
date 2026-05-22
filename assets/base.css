@@ -740,7 +740,7 @@ button.shopify-payment-button__button {
   border-radius: 12px;
   border: 0;
   background: linear-gradient(135deg, var(--product-accent, #ffd814), color-mix(in srgb, var(--product-accent, #f7c600), black 8%));
-  color: #111;
+  color: #ffffff;
   font-weight: 800;
   letter-spacing: .06em;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
@@ -764,7 +764,7 @@ button.shopify-payment-button__button {
   align-items: center;
   justify-content: center;
   margin-right: .8rem;
-  color: #111;
+  color: inherit;
 }
 
 .pdp-btn__label {

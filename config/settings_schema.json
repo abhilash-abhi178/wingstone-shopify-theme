@@ -4,7 +4,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Wingstone theme built around a cinematic dark palette with premium streetwear presentation."
+        "content": "Wingstone theme built around a premium navy, ice, and muted gold palette."
       }
     ]
   },
@@ -13,45 +13,39 @@
     "settings": [
       {
         "type": "color",
-        "id": "color_background",
-        "label": "Background",
-        "default": "#0A0A0A"
+        "id": "color_ink",
+        "label": "Ink navy",
+        "default": "#1A2545"
       },
       {
         "type": "color",
-        "id": "color_surface",
-        "label": "Surface",
-        "default": "#111111"
+        "id": "color_frost",
+        "label": "Ice pale",
+        "default": "#F4F7FD"
       },
       {
         "type": "color",
-        "id": "color_card",
-        "label": "Card",
-        "default": "#181818"
+        "id": "color_steel",
+        "label": "Muted text",
+        "default": "#5A6A8A"
       },
       {
         "type": "color",
-        "id": "color_text",
-        "label": "Text",
-        "default": "#F5F5F5"
+        "id": "color_paper",
+        "label": "Paper",
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
-        "id": "color_muted",
-        "label": "Muted",
-        "default": "#8B8B8B"
+        "id": "color_line",
+        "label": "Soft border",
+        "default": "#D5DDEA"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent",
-        "default": "#FF3B30"
-      },
-      {
-        "type": "color",
-        "id": "color_border",
-        "label": "Border",
-        "default": "#262626"
+        "default": "#C8A96E"
       }
     ]
   },
@@ -62,13 +56,13 @@
         "type": "font_picker",
         "id": "heading_font",
         "label": "Heading font",
-        "default": "helvetica_neue_n7"
+        "default": "assistant_n7"
       },
       {
         "type": "font_picker",
         "id": "body_font",
         "label": "Body font",
-        "default": "helvetica_neue_n4"
+        "default": "assistant_n4"
       }
     ]
   },

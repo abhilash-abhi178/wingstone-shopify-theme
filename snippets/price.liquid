@@ -1,6 +1,0 @@
-<div class="price" {% if product %}data-price-for="{{ product.id }}"{% endif %}>
-  <span class="price__current">{{ price | default: 0 | money }}</span>
-  {% if compare_at_price and compare_at_price > price %}
-    <span class="price__compare">{{ compare_at_price | money }}</span>
-  {% endif %}
-</div>

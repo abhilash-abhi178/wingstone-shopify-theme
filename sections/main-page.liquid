@@ -1,18 +1,18 @@
-<section class="section-shell page-shell">
+<section class="section page-shell">
   <div class="page-width page-shell__inner">
-    <div class="page-shell__intro js-reveal" data-reveal>
+    <div class="page-shell__intro">
       <p class="eyebrow">Wingstone</p>
-      <h1 class="page-shell__title section-title">{{ page.title }}</h1>
-      <p class="page-shell__lede section-subtext">Editorial brand pages, clear product stories, and no default Shopify clutter.</p>
+      <h1 class="section-title">{{ page.title }}</h1>
+      <p class="page-shell__lede">Editorial brand pages, clear product stories, and no default Shopify clutter.</p>
     </div>
 
-    <article class="page-shell__panel rte page-content js-reveal" data-reveal>
+    <article class="page-shell__card rte page-content">
       {{ page.content }}
     </article>
 
     <div class="page-shell__actions">
       <a class="button" href="{{ routes.root_url }}#featured-products">Shop drops</a>
-      <a class="button button--ghost" href="{{ routes.root_url }}#trust">Brand values</a>
+      <a class="button button--secondary" href="{{ routes.root_url }}#trust">Brand values</a>
     </div>
   </div>
 </section>

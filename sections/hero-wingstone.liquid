@@ -4,9 +4,7 @@
   <p class="hero__backdrop" aria-hidden="true">{{ section.settings.heading }}</p>
   <div class="page-width hero__inner">
     <div class="hero__content">
-      {% if section.settings.badge != blank %}
-        <div class="hero__badge"><span aria-hidden="true">*</span>{{ section.settings.badge }}</div>
-      {% endif %}
+      {%- comment -%} hero badge removed per request {%- endcomment -%}
       {% if section.settings.eyebrow != blank %}
         <h1 class="hero__offer">{{ section.settings.eyebrow }}</h1>
       {% endif %}
@@ -63,12 +61,7 @@
 {
   "name": "Wingstone hero",
   "settings": [
-    {
-      "type": "text",
-      "id": "badge",
-      "label": "Badge",
-      "default": "Premium essentials, trusted by style-first shoppers"
-    },
+    
     {
       "type": "text",
       "id": "eyebrow",

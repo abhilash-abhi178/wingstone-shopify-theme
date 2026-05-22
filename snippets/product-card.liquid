@@ -1,3 +1,36 @@
+{% liquid
+  assign variant = product.selected_or_first_available_variant
+%}
+
+<article class="product-card js-reveal" data-reveal>
+  <a class="product-card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {% render 'product-badge', product: product %}
+    {% if product.featured_media %}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {% endif %}
+  </a>
+  <button class="product-card__wish" type="button" aria-label="Save to wishlist">
+    {% render 'icon', name: 'wishlist' %}
+  </button>
+  <a class="product-card__view" href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+    {% render 'icon', name: 'eye' %}
+  </a>
+  <div class="product-card__content">
+    <p class="product-card__vendor">{{ product.vendor | default: shop.name }}</p>
+    <a href="{{ product.url }}"><h3 class="product-card__title">{{ product.title }}</h3></a>
+    <div class="product-card__pricing">
+      {% render 'price', price: product.price, compare_at_price: product.compare_at_price %}
+    </div>
+    <form class="product-card__form" data-ajax-cart-form>
+      <input type="hidden" name="id" value="{{ variant.id }}">
+      <button class="product-card__button" type="submit" {% unless product.available %}disabled{% endunless %}>
+        {% if product.available %}Quick add{% else %}Sold out{% endif %}
+      </button>
+    </form>
+  </div>
+</article>
 <article class="product-card">
   <a class="product-card__media-link" href="{{ product.url }}" aria-label="{{ product.title }}">
     <div class="product-card__image">

@@ -1,0 +1,16 @@
+{% liquid
+  assign tag = 'button'
+  if href != blank
+    assign tag = 'a'
+  endif
+  assign classes = 'button'
+  if variant != blank
+    assign classes = classes | append: ' button--' | append: variant
+  endif
+%}
+
+{% if tag == 'a' %}
+  <a class="{{ classes }}" href="{{ href }}" {% if target %}target="{{ target }}" rel="noopener"{% endif %}>{{ label }}</a>
+{% else %}
+  <button class="{{ classes }}" type="{{ type | default: 'button' }}">{{ label }}</button>
+{% endif %}

@@ -1,0 +1,14 @@
+{% liquid
+  assign badge_label = label
+  if badge_label == blank and product != blank
+    if product.compare_at_price > product.price
+      assign badge_label = 'Sale'
+    elsif product.tags contains 'new' or product.tags contains 'new-drop'
+      assign badge_label = 'New'
+    endif
+  endif
+%}
+
+{% if badge_label != blank %}
+  <span class="product-badge">{{ badge_label }}</span>
+{% endif %}

@@ -1,0 +1,22 @@
+<div class="announcement-bar" role="region" aria-label="Store announcement">
+  <div class="page-width announcement-bar__track-wrap">
+    <div class="announcement-bar__track">
+      {% for i in (1..3) %}
+        <span class="announcement-bar__item">{% render 'icon', name: 'badge' %} {{ section.settings.message_one }}</span>
+        <span class="announcement-bar__item">{% render 'icon', name: 'badge' %} {{ section.settings.message_two }}</span>
+        <span class="announcement-bar__item">{% render 'icon', name: 'badge' %} {{ section.settings.message_three }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    { "type": "text", "id": "message_one", "label": "Message one", "default": "Limited drop live now" },
+    { "type": "text", "id": "message_two", "label": "Message two", "default": "Free shipping on prepaid orders" },
+    { "type": "text", "id": "message_three", "label": "Message three", "default": "Extra 10% off at checkout" }
+  ]
+}
+{% endschema %}

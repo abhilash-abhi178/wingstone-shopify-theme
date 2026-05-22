@@ -868,7 +868,7 @@
   }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 901px) {
   .site-footer__links-wrapper {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -972,5 +972,106 @@
   width: 16px;
   height: 16px;
   display: block;
+}
+
+/* ── Footer Accordion Mobile Overrides & Styling ── */
+.site-footer--liquid-glass .site-footer__summary {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  font-weight: 500;
+  font-family: inherit;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0.875rem 0;
+  margin: 0;
+}
+
+.site-footer--liquid-glass .site-footer__summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-footer--liquid-glass .site-footer__links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-footer--liquid-glass .site-footer__links-list a {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: none; /* keep lowercase/sentence-case */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.site-footer--liquid-glass .site-footer__links-list a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* On mobile/tablet, show accordion borders and chevrons */
+@media (max-width: 900px) {
+  .site-footer--liquid-glass .site-footer__links-wrapper {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .site-footer--liquid-glass .site-footer__accordion {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0;
+    display: block !important;
+  }
+  .site-footer--liquid-glass .site-footer__accordion:first-child {
+    border-top: none;
+  }
+  .site-footer--liquid-glass .site-footer__summary::after {
+    content: '+';
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .site-footer--liquid-glass .site-footer__accordion[open] .site-footer__summary::after {
+    content: '−';
+  }
+  .site-footer--liquid-glass .site-footer__panel {
+    padding-bottom: 1rem;
+    padding-top: 0.25rem;
+    display: grid;
+    gap: 0.625rem;
+  }
+}
+
+/* On desktop, hide chevrons, prevent accordion borders and actions */
+@media (min-width: 901px) {
+  .site-footer--liquid-glass .site-footer__summary::after {
+    display: none !important;
+  }
+  .site-footer--liquid-glass .site-footer__accordion {
+    border: none !important;
+    padding: 0 !important;
+    pointer-events: none; /* disable toggling */
+    display: block !important;
+  }
+  .site-footer--liquid-glass .site-footer__summary {
+    cursor: default;
+    padding-top: 0;
+    padding-bottom: 0.5rem;
+  }
+  .site-footer--liquid-glass .site-footer__panel {
+    padding-top: 0;
+    display: grid;
+    gap: 0.625rem;
+  }
 }
 

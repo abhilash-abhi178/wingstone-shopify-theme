@@ -4,76 +4,72 @@
     <!-- Logo/Brand Column -->
     <div class="site-footer__brand-col">
       <div class="site-footer__brand-logo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" fill="currentColor">
-          <path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" />
-        </svg>
-        <span class="site-footer__brand-title">LUMINA</span>
+        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="WINGSTONES" class="site-footer__logo-img" style="max-height: 28px; width: auto; filter: brightness(0) invert(1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <span class="site-footer__brand-title" style="display: none;">WINGSTONES</span>
       </div>
       <p class="site-footer__brand-desc">
-        Lumina provides premium clarity on global events and cosmic wonders - shared with all for free.
+        Future-focused streetwear with a quieter, more premium shopping experience.
       </p>
     </div>
 
     <!-- Links Columns -->
     <div class="site-footer__links-wrapper">
-      <!-- Column 1: Discover -->
-      <div class="site-footer__links-col">
-        <h4 class="site-footer__links-heading">{{ linklists[section.settings.menu_1].title | default: 'Discover' }}</h4>
-        <ul class="site-footer__links-list">
+      <!-- Column 1 -->
+      <details class="site-footer__links-col site-footer__accordion" data-footer-accordion>
+        <summary class="site-footer__links-heading site-footer__summary">{{ linklists[section.settings.menu_1].title | default: 'Get to Know Us' }}</summary>
+        <ul class="site-footer__links-list site-footer__panel">
           {%- if linklists[section.settings.menu_1].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu_1].links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="#labs">Labs & Workshops</a></li>
-            <li><a href="#series">Deep Dive Series</a></li>
-            <li><a href="#circle">Global Circle</a></li>
-            <li><a href="#vault">Resource Vault</a></li>
-            <li><a href="#roadmap">Future Roadmap</a></li>
+            <li><a href="/">About Us</a></li>
+            <li><a href="/#contact">Contact Us</a></li>
+            <li><a href="/">Investment Opportunity</a></li>
+            <li><a href="/">Influencer Hiring</a></li>
           {%- endif -%}
         </ul>
-      </div>
+      </details>
 
-      <!-- Column 2: The Mission -->
-      <div class="site-footer__links-col">
-        <h4 class="site-footer__links-heading">{{ linklists[section.settings.menu_2].title | default: 'The Mission' }}</h4>
-        <ul class="site-footer__links-list">
+      <!-- Column 2 -->
+      <details class="site-footer__links-col site-footer__accordion" data-footer-accordion>
+        <summary class="site-footer__links-heading site-footer__summary">{{ linklists[section.settings.menu_2].title | default: 'Policies' }}</summary>
+        <ul class="site-footer__links-list site-footer__panel">
           {%- if linklists[section.settings.menu_2].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu_2].links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="#origin">Origin Story</a></li>
-            <li><a href="#collective">The Collective</a></li>
-            <li><a href="#newsroom">Newsroom Hub</a></li>
-            <li><a href="#careers">Join the Team</a></li>
+            <li><a href="/cart">Track Order</a></li>
+            <li><a href="/cart">Exchange/Return Request</a></li>
+            <li><a href="/">Terms and Conditions</a></li>
+            <li><a href="/">Privacy Policy</a></li>
+            <li><a href="/">Return &amp; Exchange Policy</a></li>
+            <li><a href="/">Shipping and Delivery Policy</a></li>
           {%- endif -%}
         </ul>
-      </div>
+      </details>
 
-      <!-- Column 3: Concierge -->
-      <div class="site-footer__links-col">
-        <h4 class="site-footer__links-heading">{{ linklists[section.settings.menu_3].title | default: 'Concierge' }}</h4>
-        <ul class="site-footer__links-list">
+      <!-- Column 3 -->
+      <details class="site-footer__links-col site-footer__accordion" data-footer-accordion>
+        <summary class="site-footer__links-heading site-footer__summary">{{ linklists[section.settings.menu_3].title | default: 'Follow Us' }}</summary>
+        <ul class="site-footer__links-list site-footer__panel">
           {%- if linklists[section.settings.menu_3].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu_3].links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="#contact">Get in Touch</a></li>
-            <li><a href="#privacy">Legal Privacy</a></li>
-            <li><a href="#terms">User Agreement</a></li>
-            <li><a href="#report">Report Concern</a></li>
+            <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
           {%- endif -%}
         </ul>
-      </div>
+      </details>
     </div>
   </div>
 
   <!-- Bottom Bar -->
   <div class="site-footer__bottom-bar">
     <p class="site-footer__curated">
-      Curated by @GotInGeorgiG
+      &copy; {{ 'now' | date: '%Y' }} WINGSTONES. Curated by @GotInGeorgiG
     </p>
     <div class="site-footer__socials-wrapper">
       <span class="site-footer__socials-label">Join the Journey:</span>

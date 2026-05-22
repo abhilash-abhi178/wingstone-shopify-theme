@@ -95,7 +95,7 @@ function App() {
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="currentColor" className="text-white">
               <path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" />
             </svg>
-            <span className="text-xl font-bold tracking-widest">LUMINA</span>
+            <span className="text-xl font-bold tracking-widest">WINGSTONES</span>
           </div>
           <a
             href="#explore"
@@ -169,46 +169,44 @@ function App() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" fill="currentColor">
                   <path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" />
                 </svg>
-                <span className="text-xl font-medium tracking-wider">LUMINA</span>
+                <span className="text-xl font-medium tracking-wider">WINGSTONES</span>
               </div>
               <p className="text-sm leading-relaxed max-w-sm text-white/60">
-                Lumina provides premium clarity on global events and cosmic wonders - shared with all for free.
+                Future-focused streetwear with a quieter, more premium shopping experience.
               </p>
             </div>
 
             {/* Links Columns */}
-            <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-8">
-              {/* Column 1: Discover */}
+            <div className="md:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Column 1: Get to Know Us */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-sm uppercase tracking-wider text-white font-medium">Discover</h4>
+                <h4 className="text-sm uppercase tracking-wider text-white font-medium">Get to Know Us</h4>
                 <ul className="flex flex-col gap-2.5 text-xs text-white/50">
-                  <li><a href="#labs" className="hover:text-white transition-colors duration-300">Labs & Workshops</a></li>
-                  <li><a href="#series" className="hover:text-white transition-colors duration-300">Deep Dive Series</a></li>
-                  <li><a href="#circle" className="hover:text-white transition-colors duration-300">Global Circle</a></li>
-                  <li><a href="#vault" className="hover:text-white transition-colors duration-300">Resource Vault</a></li>
-                  <li><a href="#roadmap" className="hover:text-white transition-colors duration-300">Future Roadmap</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">About Us</a></li>
+                  <li><a href="/#contact" className="hover:text-white transition-colors duration-300">Contact Us</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">Investment Opportunity</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">Influencer Hiring</a></li>
                 </ul>
               </div>
 
-              {/* Column 2: The Mission */}
+              {/* Column 2: Policies */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-sm uppercase tracking-wider text-white font-medium">The Mission</h4>
+                <h4 className="text-sm uppercase tracking-wider text-white font-medium">Policies</h4>
                 <ul className="flex flex-col gap-2.5 text-xs text-white/50">
-                  <li><a href="#origin" className="hover:text-white transition-colors duration-300">Origin Story</a></li>
-                  <li><a href="#collective" className="hover:text-white transition-colors duration-300">The Collective</a></li>
-                  <li><a href="#newsroom" className="hover:text-white transition-colors duration-300">Newsroom Hub</a></li>
-                  <li><a href="#careers" className="hover:text-white transition-colors duration-300">Join the Team</a></li>
+                  <li><a href="/cart" className="hover:text-white transition-colors duration-300">Track Order</a></li>
+                  <li><a href="/cart" className="hover:text-white transition-colors duration-300">Exchange/Return Request</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">Terms and Conditions</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">Return & Exchange Policy</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors duration-300">Shipping and Delivery Policy</a></li>
                 </ul>
               </div>
 
-              {/* Column 3: Concierge */}
+              {/* Column 3: Follow Us */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-sm uppercase tracking-wider text-white font-medium">Concierge</h4>
+                <h4 className="text-sm uppercase tracking-wider text-white font-medium">Follow Us</h4>
                 <ul className="flex flex-col gap-2.5 text-xs text-white/50">
-                  <li><a href="#contact" className="hover:text-white transition-colors duration-300">Get in Touch</a></li>
-                  <li><a href="#privacy" className="hover:text-white transition-colors duration-300">Legal Privacy</a></li>
-                  <li><a href="#terms" className="hover:text-white transition-colors duration-300">User Agreement</a></li>
-                  <li><a href="#report" className="hover:text-white transition-colors duration-300">Report Concern</a></li>
+                  <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">Instagram</a></li>
                 </ul>
               </div>
             </div>
@@ -217,7 +215,7 @@ function App() {
           {/* Bottom Bar */}
           <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
             <p className="text-[10px] uppercase tracking-widest opacity-50">
-              Curated by @GotInGeorgiG
+              &copy; {new Date().getFullYear()} WINGSTONES. Curated by @GotInGeorgiG
             </p>
             <div className="flex items-center gap-4">
               <span className="text-[10px] uppercase tracking-widest opacity-50">Join the Journey:</span>

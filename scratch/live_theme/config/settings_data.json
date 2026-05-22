@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_ink": "#1A2545",
+    "color_frost": "#F4F7FD",
+    "color_steel": "#5A6A8A",
+    "color_paper": "#FFFFFF",
+    "color_line": "#D5DDEA",
+    "color_accent": "#C8A96E",
+    "heading_font": "assistant_n7",
+    "body_font": "assistant_n4",
+    "favicon": "shopify://shop_images/ChatGPT_Image_May_19_2026_04_43_21_PM.png",
+    "brand_logo": "shopify://shop_images/wingstone-logo.png",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/wingstone-logo.png",
+          "promo_text": "Extra 10% off with TFV10 / Free shipping on prepaid orders / New Wingstone drops live now"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "menu": "footer"
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}

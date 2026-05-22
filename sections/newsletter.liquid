@@ -1,3 +1,36 @@
+<section id="newsletter" class="section-shell newsletter">
+  <div class="page-width">
+    <div class="newsletter__panel js-reveal" data-reveal>
+      <div class="newsletter__top">
+        {% if section.settings.eyebrow != blank %}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        <h2 class="section-title">{{ section.settings.heading }}</h2>
+        {% if section.settings.text != blank %}<div class="section-subtext">{{ section.settings.text }}</div>{% endif %}
+      </div>
+
+      {% form 'customer', class: 'newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input class="newsletter__input" type="email" name="contact[email]" placeholder="Email address" required>
+        <div class="newsletter__actions">
+          <button class="button" type="submit">{{ section.settings.button_label }}</button>
+          <a class="button button--ghost" href="{{ routes.collections_url }}">Browse drops</a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Private access" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get early access" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>New drops, restocks, and release notes before the storefront goes public.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}
 <section id="contact" class="section newsletter">
   <div class="page-width">
     {% if section.settings.eyebrow != blank %}

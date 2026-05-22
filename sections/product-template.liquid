@@ -1,0 +1,158 @@
+{% liquid
+  assign featured_variant = product.selected_or_first_available_variant
+  assign recommendation_collection = collections[section.settings.recommendation_collection]
+  if recommendation_collection == blank
+    assign recommendation_collection = collection
+  endif
+  if recommendation_collection == blank
+    assign recommendation_collection = collections.all
+  endif
+%}
+
+<section class="pdp" data-product-root>
+  <div class="page-width">
+    <div class="pdp__layout">
+      <div class="pdp__gallery js-reveal" data-reveal>
+        <div class="pdp__stage swiper" data-product-swiper>
+          <div class="swiper-wrapper">
+            {% for media in product.media %}
+              <div class="swiper-slide" data-product-slide>
+                {% if media.media_type == 'image' %}
+                  {{ media | image_url: width: 1600 | image_tag: loading: 'eager', alt: product.title }}
+                {% else %}
+                  {{ media | media_tag: image_size: '1600x', autoplay: true, loop: true, controls: false }}
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="pdp__thumbs swiper" data-product-thumbs>
+          <div class="swiper-wrapper">
+            {% for media in product.media %}
+              <button class="pdp__thumb swiper-slide" type="button" data-product-thumb data-index="{{ forloop.index0 }}">
+                {% if media.media_type == 'image' %}
+                  {{ media | image_url: width: 220 | image_tag: loading: 'lazy', alt: product.title }}
+                {% else %}
+                  {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', alt: product.title }}
+                {% endif %}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="pdp__info js-reveal" data-reveal>
+        <p class="eyebrow">{{ product.vendor | default: shop.name }}</p>
+        <h1 class="pdp__title">{{ product.title }}</h1>
+        {% if product.metafields.custom.short_description != blank %}
+          <p class="pdp__subtitle">{{ product.metafields.custom.short_description }}</p>
+        {% endif %}
+
+        <div class="pdp__price-row">
+          <div class="pdp__price">
+            {% render 'price', price: product.price, compare_at_price: product.compare_at_price %}
+          </div>
+          {% if product.compare_at_price > product.price %}
+            <span class="pdp__badge">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+          {% endif %}
+        </div>
+
+        <p class="pdp__stock-note">Hurry, only {{ product.variants.first.inventory_quantity | default: 9 }} items left in stock.</p>
+
+        {% form 'product', product, id: 'pdpForm', class: 'pdp__form', data_ajax_cart_form: true %}
+          <input type="hidden" name="id" value="{{ featured_variant.id }}" data-product-variant-input>
+
+          <div class="pdp__variants">
+            {% for option in product.options_with_values %}
+              <div class="pdp__variant-group" data-option-group data-option-index="{{ forloop.index0 }}">
+                <p class="pdp__variant-label"><span>{{ option.name }}</span><span data-selected-option>{{ option.selected_value }}</span></p>
+                <div class="pdp__swatches">
+                  {% for value in option.values %}
+                    <button type="button" class="pdp__swatch {% if option.selected_value == value %}is-active{% endif %}" data-option-value="{{ value }}" data-option-index="{{ forloop.parentloop.index0 }}">{{ value }}</button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="pdp__quantity">
+            <p class="pdp__variant-label"><span>Quantity</span></p>
+            <div class="pdp__quantity-row">
+              <button class="pdp__quantity-button" type="button" data-quantity-change="-1" aria-label="Decrease quantity">−</button>
+              <input class="pdp__quantity-input" type="number" name="quantity" value="1" min="1" data-quantity-input>
+              <button class="pdp__quantity-button" type="button" data-quantity-change="1" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          <div class="pdp__purchase-row">
+            <button class="pdp__action pdp__action--primary" type="submit">Add to cart</button>
+            <button class="pdp__action pdp__buy-now" type="button" data-buy-now>Buy now</button>
+          </div>
+        {% endform %}
+
+        <div class="pdp__trust-grid trust-icons__grid">
+          <div class="trust-icons__item"><div class="trust-icons__icon">{% render 'icon', name: 'truck' %}</div><h3 class="trust-icons__title">Free Shipping</h3><p class="trust-icons__copy">Calculated at checkout, made visible up front.</p></div>
+          <div class="trust-icons__item"><div class="trust-icons__icon">{% render 'icon', name: 'shield' %}</div><h3 class="trust-icons__title">Secure Payment</h3><p class="trust-icons__copy">Encrypted cart flow with familiar gateways.</p></div>
+          <div class="trust-icons__item"><div class="trust-icons__icon">{% render 'icon', name: 'return' %}</div><h3 class="trust-icons__title">Easy Returns</h3><p class="trust-icons__copy">A calmer returns path without clutter.</p></div>
+          <div class="trust-icons__item"><div class="trust-icons__icon">{% render 'icon', name: 'badge' %}</div><h3 class="trust-icons__title">Premium Quality</h3><p class="trust-icons__copy">Made to feel more collectible than generic.</p></div>
+        </div>
+
+        <div class="pdp__accordions" data-accordions>
+          <div class="pdp__accordion is-open">
+            <button class="pdp__accordion-button" type="button" data-accordion-button>Product Details {% render 'icon', name: 'chevron-down' %}</button>
+            <div class="pdp__accordion-panel"><div class="pdp__description rte">{{ product.description }}</div></div>
+          </div>
+          <div class="pdp__accordion">
+            <button class="pdp__accordion-button" type="button" data-accordion-button>Description {% render 'icon', name: 'chevron-down' %}</button>
+            <div class="pdp__accordion-panel"><p class="pdp__description">Premium streetwear with an editorial edge and a sharper mobile-first flow.</p></div>
+          </div>
+          <div class="pdp__accordion">
+            <button class="pdp__accordion-button" type="button" data-accordion-button>Shipping &amp; Delivery {% render 'icon', name: 'chevron-down' %}</button>
+            <div class="pdp__accordion-panel"><p class="pdp__description">Estimated dispatch in 24-48 hours. Delivery timing appears at checkout.</p></div>
+          </div>
+          <div class="pdp__accordion">
+            <button class="pdp__accordion-button" type="button" data-accordion-button>Returns {% render 'icon', name: 'chevron-down' %}</button>
+            <div class="pdp__accordion-panel"><p class="pdp__description">Simple exchange and return handling with clear support cues.</p></div>
+          </div>
+          <div class="pdp__accordion">
+            <button class="pdp__accordion-button" type="button" data-accordion-button>Care Instructions {% render 'icon', name: 'chevron-down' %}</button>
+            <div class="pdp__accordion-panel"><p class="pdp__description">Wash cold, dry inside out, and avoid harsh heat to preserve print quality.</p></div>
+          </div>
+        </div>
+
+        <div class="pdp__sticky-cta">
+          <p class="pdp__shipping-note">Taxes included. Shipping calculated at checkout. {% if product.metafields.custom.delivery_note != blank %}{{ product.metafields.custom.delivery_note }}{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pdp__related js-reveal" data-reveal>
+      <div class="countdown-banner__panel">
+        <p class="eyebrow">Recommended</p>
+        <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 3rem);">You may also like</h2>
+      </div>
+      <div class="swiper" data-recommendations-swiper>
+        <div class="swiper-wrapper">
+          {% for related_product in recommendation_collection.products limit: 8 %}
+            {% if related_product.id != product.id %}
+              <div class="swiper-slide">
+                {% render 'product-card', product: related_product %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-product-json>{{ product | json }}</script>
+</section>
+
+{% schema %}
+{
+  "name": "Product template",
+  "settings": [
+    { "type": "collection", "id": "recommendation_collection", "label": "Recommendation collection" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+{% liquid
+  assign countdown_target = section.settings.target_time | default: '2026-06-01T00:00:00Z'
+%}
+
+<section class="section-shell countdown-banner" data-countdown-target="{{ countdown_target }}">
+  <div class="page-width countdown-banner__shell">
+    <div class="countdown-banner__panel js-reveal" data-reveal>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      <p class="countdown-banner__copy">{{ section.settings.copy }}</p>
+      {% render 'button', label: section.settings.button_label, href: section.settings.button_link %}
+    </div>
+
+    <div class="countdown-banner__panel js-reveal" data-reveal>
+      <div class="countdown-banner__badge">{{ section.settings.badge }}</div>
+      <div class="countdown-banner__timer" data-countdown>
+        <div class="countdown-banner__unit"><span class="countdown-banner__value" data-days>00</span><span class="countdown-banner__label">Days</span></div>
+        <div class="countdown-banner__unit"><span class="countdown-banner__value" data-hours>00</span><span class="countdown-banner__label">Hours</span></div>
+        <div class="countdown-banner__unit"><span class="countdown-banner__value" data-minutes>00</span><span class="countdown-banner__label">Minutes</span></div>
+        <div class="countdown-banner__unit"><span class="countdown-banner__value" data-seconds>00</span><span class="countdown-banner__label">Seconds</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.querySelector('[data-countdown-target]');
+    const countdown = root && root.querySelector('[data-countdown]');
+    if (!root || !countdown) return;
+
+    const target = new Date(root.dataset.countdownTarget).getTime();
+    const dayEl = countdown.querySelector('[data-days]');
+    const hourEl = countdown.querySelector('[data-hours]');
+    const minuteEl = countdown.querySelector('[data-minutes]');
+    const secondEl = countdown.querySelector('[data-seconds]');
+
+    const tick = () => {
+      const distance = Math.max(0, target - Date.now());
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      if (dayEl) dayEl.textContent = String(days).padStart(2, '0');
+      if (hourEl) hourEl.textContent = String(hours).padStart(2, '0');
+      if (minuteEl) minuteEl.textContent = String(minutes).padStart(2, '0');
+      if (secondEl) secondEl.textContent = String(seconds).padStart(2, '0');
+    };
+
+    tick();
+    window.setInterval(tick, 1000);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Countdown banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Limited drop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Friend1st sale live" },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "For a limited time, the offer auto-applies in cart with a sharper mobile conversion flow." },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Limited window" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
+    { "type": "text", "id": "target_time", "label": "Target date/time", "default": "2026-06-01T00:00:00Z" }
+  ],
+  "presets": [{ "name": "Countdown banner" }]
+}
+{% endschema %}

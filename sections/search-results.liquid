@@ -1,31 +1,36 @@
-<section class="search-results section">
-  <div class="page-width">
-    <form action="/search" method="get" role="search" class="search-results__form">
-      <label for="SearchQuery" class="skip-link">Search</label>
-      <div style="display:flex;gap:.5rem;align-items:center;">
-        <input id="SearchQuery" name="q" type="search" value="{{ search.terms }}" placeholder="Search products" class="field" />
-        <button class="button" type="submit">Search</button>
-      </div>
-    </form>
+<section class="section-shell search-results">
+  <div class="page-width search-results__grid">
+    <div class="search-results__top js-reveal" data-reveal>
+      <p class="eyebrow">Search</p>
+      <h1 class="search-results__title section-title">Search results{% if search.terms %} for “{{ search.terms }}”{% endif %}</h1>
+    </div>
 
-    <h2 class="section-title">Search results{% if search.terms %} for "{{ search.terms }}"{% endif %}</h2>
-
-    {% if search.results_count > 0 %}
-      <div class="product-grid">
-        {% for result in search.results %}
-          {% if result.object_type == 'product' %}
-            {% render 'product-card', product: result %}
-          {% endif %}
-        {% endfor %}
-      </div>
-      {% if search.results_count > search.results.size %}
-        <div class="search-results__more">
-          <a class="button button--secondary" href="/search?q={{ search.terms | url_encode }}&page=2">View more results</a>
+    <div class="search-results__panel js-reveal" data-reveal>
+      <form action="/search" method="get" role="search" class="search-results__form">
+        <label for="SearchQuery" class="skip-link">Search</label>
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <input id="SearchQuery" name="q" type="search" value="{{ search.terms }}" placeholder="Search products" class="field" />
+          <button class="button" type="submit">Search</button>
         </div>
+      </form>
+
+      {% if search.results_count > 0 %}
+        <div class="product-grid">
+          {% for result in search.results %}
+            {% if result.object_type == 'product' %}
+              {% render 'product-card', product: result %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% if search.results_count > search.results.size %}
+          <div class="search-results__actions">
+            <a class="button button--secondary" href="/search?q={{ search.terms | url_encode }}&page=2">View more results</a>
+          </div>
+        {% endif %}
+      {% else %}
+        <p>No results found. Try different keywords or browse our collections.</p>
       {% endif %}
-    {% else %}
-      <p>No results found. Try different keywords or browse our collections.</p>
-    {% endif %}
+    </div>
   </div>
 </section>
 

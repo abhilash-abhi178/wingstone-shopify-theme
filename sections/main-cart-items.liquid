@@ -1,43 +1,33 @@
-<section class="section">
-  <div class="page-width">
-    <h1 class="section-title">Cart</h1>
+<section class="section-shell cart-page">
+  <div class="page-width cart-page__grid">
+    <div class="cart-page__top js-reveal" data-reveal>
+      <p class="eyebrow">Cart</p>
+      <h1 class="cart-page__title section-title">Your selection</h1>
+      <p class="section-subtext">A sharper cart that keeps quantity, subtotal, and checkout cues close together.</p>
+    </div>
 
-    {% if cart.item_count > 0 %}
-      <form action="{{ routes.cart_url }}" method="post">
-        <table class="cart-table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Quantity</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
+    <div class="cart-page__panel js-reveal" data-reveal>
+      {% if cart.item_count > 0 %}
+        <form action="{{ routes.cart_url }}" method="post" class="cart-page__form">
+          <div class="cart-page__items">
             {% for item in cart.items %}
-              <tr>
-                <td>
-                  <strong>{{ item.product.title }}</strong><br>
-                  <small>{{ item.variant.title }}</small>
-                </td>
-                <td>
-                  <input class="field" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
-                </td>
-                <td>{{ item.final_line_price | money }}</td>
-              </tr>
+              {% render 'cart-item', item: item %}
             {% endfor %}
-          </tbody>
-        </table>
-
-        <div class="cart-total">
-          <strong>{{ cart.total_price | money }}</strong>
-          <button class="button button--secondary" type="submit">Update</button>
-          <button class="button" name="checkout" type="submit">Checkout</button>
-        </div>
-      </form>
-    {% else %}
-      <p>Your cart is empty.</p>
-      <a class="button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
-    {% endif %}
+          </div>
+          <div class="cart-drawer__summary">
+            <span>Subtotal</span>
+            <strong class="cart-drawer__subtotal">{{ cart.total_price | money }}</strong>
+          </div>
+          <div class="cart-drawer__actions">
+            <button class="button button--secondary" type="submit" name="update">Update cart</button>
+            <button class="button" type="submit" name="checkout">Checkout</button>
+          </div>
+        </form>
+      {% else %}
+        <p class="cart-drawer__empty">Your cart is empty.</p>
+        <a class="button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      {% endif %}
+    </div>
   </div>
 </section>
 

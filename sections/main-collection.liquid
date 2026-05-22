@@ -1,10 +1,10 @@
-<section class="section">
-  <div class="page-width collection-toolbar">
-    <div>
+<section class="section-shell">
+  <div class="page-width">
+    <div class="page-shell__intro js-reveal" data-reveal>
       <p class="eyebrow">{{ collection.products_count }} products</p>
-      <h1 class="section-title">{{ collection.title }}</h1>
+      <h1 class="page-shell__title section-title">{{ collection.title }}</h1>
       {% if collection.description != blank %}
-        <div>{{ collection.description }}</div>
+        <p class="page-shell__lede section-subtext">{{ collection.description }}</p>
       {% endif %}
     </div>
 

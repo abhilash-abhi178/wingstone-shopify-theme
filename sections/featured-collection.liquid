@@ -1,18 +1,21 @@
-<section id="featured-products" class="section featured-products">
+<section id="featured-products" class="section-shell featured-collection">
   <div class="page-width">
-    {% if section.settings.eyebrow != blank %}
-      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-    {% endif %}
-    <h2 class="section-title">{{ section.settings.heading }}</h2>
-    {% if section.settings.subtext != blank %}
-      <p class="section-subtext">{{ section.settings.subtext }}</p>
+    <div class="featured-collection__top js-reveal" data-reveal>
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      {% if section.settings.subtext != blank %}
+        <p class="section-subtext">{{ section.settings.subtext }}</p>
+      {% endif %}
+    </div>
+
+    {% assign collection = collections[section.settings.collection] %}
+    {% if collection == blank %}
+      {% assign collection = collections.all %}
     {% endif %}
 
-    <div class="product-grid">
-      {% assign collection = collections[section.settings.collection] %}
-      {% if collection == blank %}
-        {% assign collection = collections.all %}
-      {% endif %}
+    <div class="featured-collection__grid">
       {% if collection != blank and collection.products_count > 0 %}
         {% for product in collection.products limit: section.settings.products_to_show %}
           {% render 'product-card', product: product %}
@@ -20,12 +23,11 @@
       {% else %}
         {% for i in (1..4) %}
           <article class="product-card">
-            <div class="product-card__image">
-              {{ 'product-' | append: i | placeholder_svg_tag }}
-            </div>
-            <div class="product-card__body">
-              <h3 class="product-card__title">Wingstone product</h3>
-              <div class="product-card__price">Add products in Shopify</div>
+            <div class="product-card__media">{{ 'product-' | append: i | placeholder_svg_tag }}</div>
+            <div class="product-card__content">
+              <p class="product-card__vendor">Wingstone</p>
+              <h3 class="product-card__title">Add products in Shopify</h3>
+              <div class="product-card__pricing">{{ 199900 | money }}</div>
             </div>
           </article>
         {% endfor %}
@@ -33,8 +35,8 @@
     </div>
 
     {% if collection != blank and collection.url != blank %}
-      <div class="featured-products__actions">
-        <a class="button button--secondary" href="{{ collection.url }}">View more products</a>
+      <div class="featured-collection__actions">
+        <a class="button button--secondary" href="{{ collection.url }}">View collection</a>
       </div>
     {% endif %}
   </div>

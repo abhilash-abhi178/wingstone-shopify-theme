@@ -76,26 +76,28 @@
 
   .pdp-main-img {
     flex: 1; border-radius: var(--radius-md);
-    overflow: hidden; background: #fff;
+    overflow: hidden; background: transparent;
     border: 1px solid var(--clr-border);
     aspect-ratio: 1 / 1.05;
     position: relative; cursor: zoom-in;
     width: 100%;
     max-width: 560px;
     margin-inline: auto;
+    box-shadow: 0 8px 24px rgba(10,18,30,0.06);
   }
   .pdp-main-img {
     display: flex; align-items: center; justify-content: center;
   }
   .pdp-main-img.pdp-main-img--portrait { aspect-ratio: 3 / 4; }
   .pdp-main-img.pdp-main-img--landscape { aspect-ratio: 4 / 3; }
-  .pdp-main-img img {
-    width: auto; height: auto; max-width: 100%;
-    max-height: calc(100vh - var(--pdp-vh-offset));
-    object-fit: contain; object-position: center;
-    display: block; padding: 12px;
-    transition: transform .35s ease;
-  }
+    .pdp-main-img img {
+      width: auto; height: auto; max-width: 100%;
+      max-height: calc(100vh - var(--pdp-vh-offset));
+      object-fit: contain; object-position: center;
+      display: block; padding: 6px;
+      transition: transform .35s ease;
+      background: transparent;
+    }
   .pdp-main-img:hover img { transform: scale(1.06); }
 
   .pdp-badge {
@@ -484,9 +486,12 @@
       aspect-ratio: 1 / 1;
       max-height: calc(100vh - var(--pdp-vh-offset));
       display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      box-shadow: 0 8px 20px rgba(10,18,30,0.06);
     }
     .pdp-main-img img {
-      padding: 8px; max-width: 100%; max-height: calc(100vh - var(--pdp-vh-offset));
+      padding: 6px; max-width: 100%; max-height: calc(100vh - var(--pdp-vh-offset));
+      background: transparent;
     }
     .pdp-btn { max-width: 100%; }
     .pdp-title { font-size: 18px; }

@@ -684,6 +684,12 @@
   text-decoration: line-through;
 }
 
+.product-card__price--sale {
+  font-size: .98rem;
+  font-weight: 800;
+  color: var(--color-ink, #0f172a);
+}
+
 /* ── Cinematic Banner ── */
 .cinematic-banner {
   position: relative;

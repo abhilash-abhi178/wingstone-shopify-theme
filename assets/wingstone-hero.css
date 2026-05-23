@@ -1,0 +1,558 @@
+/* ========================================
+   WINGSTONE HERO
+======================================== */
+
+.wingstone-hero * {
+  box-sizing: border-box;
+}
+
+.wingstone-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f8f8f8 0%,
+      #f7f7f7 55%,
+      #dde6f0 100%
+    );
+
+  padding: 120px 0 180px;
+}
+
+/* VIDEO */
+
+.wingstone-hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.wingstone-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  opacity: 0.14;
+
+  mix-blend-mode: soft-light;
+}
+
+.wingstone-video-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.92) 0%,
+      rgba(255,255,255,0.7) 45%,
+      rgba(221,230,240,0.62) 100%
+    );
+}
+
+/* CONTAINER */
+
+.wingstone-hero-container {
+  position: relative;
+  z-index: 5;
+
+  width: min(1400px, calc(100% - 60px));
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  align-items: center;
+
+  gap: 40px;
+}
+
+/* WATERMARK */
+
+.wingstone-watermark {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  font-size: clamp(120px, 18vw, 340px);
+
+  font-weight: 800;
+
+  color: rgba(15,23,42,0.03);
+
+  letter-spacing: -8px;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+/* LIGHT SWEEP */
+
+.wingstone-light-sweep {
+  position: absolute;
+
+  top: -10%;
+  left: 45%;
+
+  width: 260px;
+  height: 140%;
+
+  background:
+    linear-gradient(
+      to right,
+      transparent,
+      rgba(255,255,255,0.5),
+      transparent
+    );
+
+  transform: rotate(12deg);
+
+  animation: sweep 7s linear infinite;
+
+  z-index: 2;
+}
+
+@keyframes sweep {
+
+  0% {
+    transform: translateX(-200px) rotate(12deg);
+  }
+
+  100% {
+    transform: translateX(500px) rotate(12deg);
+  }
+
+}
+
+/* LEFT */
+
+.wingstone-hero-content {
+  max-width: 620px;
+}
+
+.wingstone-mini-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #7c8597;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.wingstone-hero-heading {
+  font-size: clamp(56px, 7vw, 110px);
+
+  line-height: 0.95;
+
+  letter-spacing: -4px;
+
+  color: #0f172a;
+
+  margin-bottom: 30px;
+
+  font-weight: 800;
+}
+
+.wingstone-hero-heading span {
+  color: #d4af37;
+}
+
+.wingstone-hero-description {
+  font-size: 18px;
+
+  line-height: 1.8;
+
+  color: #667085;
+
+  margin-bottom: 40px;
+
+  max-width: 520px;
+}
+
+/* BUTTONS */
+
+.wingstone-hero-buttons {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+
+  margin-bottom: 35px;
+}
+
+.wingstone-btn-primary,
+.wingstone-btn-secondary {
+  height: 62px;
+
+  padding: 0 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  letter-spacing: 2px;
+
+  transition: all 0.35s ease;
+}
+
+.wingstone-btn-primary {
+  background:
+    linear-gradient(135deg, #0f172a, #1e293b);
+
+  color: white;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 18px 40px rgba(15,23,42,0.18);
+}
+
+.wingstone-btn-primary:hover {
+  transform: translateY(-4px);
+}
+
+.wingstone-btn-secondary {
+  border:
+    1px solid rgba(15,23,42,0.12);
+
+  background:
+    rgba(255,255,255,0.5);
+
+  backdrop-filter: blur(10px);
+
+  color: #0f172a;
+
+  font-weight: 700;
+}
+
+.wingstone-btn-secondary:hover {
+  transform: translateY(-4px);
+  background: white;
+}
+
+/* TAGS */
+
+.wingstone-hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.wingstone-hero-tags span {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #7c8597;
+  font-weight: 700;
+}
+
+/* RIGHT */
+
+.wingstone-hero-visual {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wingstone-product-image {
+  width: min(100%, 680px);
+
+  position: relative;
+
+  z-index: 5;
+
+  animation: float 5s ease-in-out infinite;
+
+  filter:
+    drop-shadow(0 40px 80px rgba(15,23,42,0.12));
+}
+
+@keyframes float {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+.wingstone-orbit {
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255,255,255,0.6);
+}
+
+/* BOTTOM BAR */
+
+.wingstone-bottom-bar {
+  position: relative;
+  z-index: 10;
+
+  width: min(1400px, calc(100% - 60px));
+
+  margin: 60px auto 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+
+  background:
+    rgba(255,255,255,0.55);
+
+  backdrop-filter: blur(16px);
+
+  border-radius: 24px;
+
+  padding: 34px;
+
+  border:
+    1px solid rgba(255,255,255,0.8);
+
+  box-shadow:
+    0 20px 60px rgba(15,23,42,0.06);
+}
+
+.wingstone-bottom-item {
+  display: flex;
+  gap: 18px;
+}
+
+.wingstone-bottom-icon {
+  font-size: 24px;
+}
+
+.wingstone-bottom-item h4 {
+  font-size: 13px;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 8px;
+
+  color: #0f172a;
+}
+
+.wingstone-bottom-item p {
+  font-size: 14px;
+
+  color: #7c8597;
+}
+
+/* MOBILE */
+
+@media (max-width: 1100px) {
+
+  .wingstone-hero-container {
+    grid-template-columns: 1fr;
+
+    text-align: center;
+  }
+
+  .wingstone-hero-content {
+    margin: 0 auto;
+  }
+
+  .wingstone-hero-buttons,
+  .wingstone-hero-tags {
+    justify-content: center;
+  }
+
+  .wingstone-hero-visual {
+    order: -1;
+  }
+
+  .wingstone-product-image {
+    max-width: 520px;
+  }
+
+  .wingstone-bottom-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .wingstone-hero {
+
+    background:
+      linear-gradient(
+        180deg,
+        #f8f8f8 0%,
+        #f6f7f9 62%,
+        #edf2f7 100%
+      );
+
+    padding: 70px 0 50px;
+
+    min-height: auto;
+
+    overflow: hidden;
+  }
+
+  .wingstone-hero-content {
+
+    order: 2;
+
+    text-align: left;
+
+    align-items: flex-start;
+
+    justify-content: flex-start;
+
+    max-width: 100%;
+
+    width: 100%;
+
+    margin-top: 0;
+
+    position: relative;
+
+    z-index: 20;
+
+    padding-left: 6px;
+  }
+
+  .wingstone-hero-buttons {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+
+    margin-bottom: 24px;
+  }
+
+  .wingstone-btn-primary,
+  .wingstone-btn-secondary {
+
+    width: 100%;
+
+    justify-content: center;
+
+    height: 58px;
+
+    padding: 0 24px;
+
+    border-radius: 18px;
+
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .wingstone-hero-tags {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: flex-start;
+
+    align-items: center;
+
+    gap: 12px;
+  }
+
+  .wingstone-mini-label {
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 14px;
+
+    text-align: left;
+  }
+
+  .wingstone-hero-heading {
+
+    font-size: 48px;
+
+    line-height: 0.92;
+
+    letter-spacing: -3px;
+
+    margin-bottom: 18px;
+
+    max-width: 260px;
+
+    text-align: left;
+  }
+
+  .wingstone-hero-description {
+
+    font-size: 14px;
+
+    line-height: 1.75;
+
+    color: #6b7280;
+
+    margin-bottom: 26px;
+
+    max-width: 320px;
+
+    text-align: left;
+  }
+
+  .wingstone-bottom-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .wingstone-watermark {
+
+    font-size: 72px;
+
+    top: 28%;
+
+    opacity: 0.7;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .wingstone-hero-heading {
+    font-size: 44px;
+
+    letter-spacing: -2px;
+  }
+
+  .wingstone-mini-label {
+    letter-spacing: 2px;
+  }
+
+}

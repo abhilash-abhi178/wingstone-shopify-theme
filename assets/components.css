@@ -4,6 +4,229 @@
    ============================================================ */
 
 /* ── Hero Video Section ── */
+/* ========================================
+   WINGSTONE PREMIUM PRODUCT SECTION
+======================================== */
+
+.wingstone-product-actions {
+  margin-top: 40px;
+}
+
+.wingstone-label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.wingstone-quantity-box {
+  display: flex;
+  align-items: center;
+  width: 180px;
+  height: 62px;
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 22px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+.qty-btn {
+  width: 60px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #111827;
+}
+
+.qty-btn:hover {
+  background: rgba(15,23,42,0.04);
+}
+
+.wingstone-quantity-box input {
+  width: 60px;
+  border: none;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  background: transparent;
+  outline: none;
+  color: #111827;
+}
+
+.wingstone-buttons {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.wingstone-cart-btn {
+  position: relative;
+  height: 74px;
+  border: none;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 35%),
+    linear-gradient(135deg, #0f172a 0%, #111827 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.45s ease;
+  box-shadow:
+    0 20px 40px rgba(15,23,42,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.wingstone-cart-btn:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 25px 50px rgba(15,23,42,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.btn-icon {
+  opacity: 0.8;
+  font-size: 16px;
+}
+
+.btn-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.wingstone-cart-btn:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.shopify-payment-button__button {
+  height: 74px !important;
+  border-radius: 28px !important;
+  background:
+    linear-gradient(135deg, #d4af37 0%, #f3d58a 50%, #c89b2f 100%) !important;
+  color: #111827 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  transition: all 0.45s ease !important;
+  box-shadow:
+    0 18px 40px rgba(212,175,55,0.24) !important;
+}
+
+.shopify-payment-button__button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.03);
+}
+
+.wingstone-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.benefit-card {
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 26px;
+  padding: 28px 20px;
+  text-align: center;
+  backdrop-filter: blur(14px);
+  transition: all 0.4s ease;
+  box-shadow:
+    0 10px 25px rgba(15,23,42,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 40px rgba(15,23,42,0.08);
+}
+
+.benefit-icon {
+  font-size: 28px;
+  margin-bottom: 18px;
+  color: #d4af37;
+}
+
+.benefit-card h4 {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.benefit-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+.wingstone-mini-trust {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .wingstone-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wingstone-cart-btn,
+  .shopify-payment-button__button {
+    height: 64px !important;
+    border-radius: 22px !important;
+    font-size: 14px !important;
+    padding: 0 20px !important;
+  }
+
+  .benefit-card {
+    padding: 22px 16px;
+  }
+
+  .wingstone-mini-trust {
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+}
 .hero-video {
   position: relative;
   height: 100svh;

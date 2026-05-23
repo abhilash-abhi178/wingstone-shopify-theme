@@ -735,6 +735,9 @@
               <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M7 6h14l-2 8H9L7 6Zm0 0-1-2H2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/><circle cx="10" cy="19" r="1.4" fill="currentColor"/><circle cx="17" cy="19" r="1.4" fill="currentColor"/></svg>
             </span>
             <span class="pdp-btn__label">{% if product.available %}Add to cart{% else %}Sold out{% endif %}</span>
+            <span class="pdp-btn__end" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </span>
           </button>
           {% if product.available %}
             <div>{{ form | payment_button }}</div>
@@ -780,8 +783,19 @@
               <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M7 6h14l-2 8H9L7 6Zm0 0-1-2H2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/><circle cx="10" cy="19" r="1.4" fill="currentColor"/><circle cx="17" cy="19" r="1.4" fill="currentColor"/></svg>
             </span>
             <span class="pdp-btn__label">Add to cart</span>
+            <span class="pdp-btn__end" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </span>
           </button>
-          <button class="pdp-btn pdp-btn--buy" type="button" id="buyNowBtn">Buy now</button>
+          <button class="pdp-btn pdp-btn--buy" type="button" id="buyNowBtn">
+            <span class="pdp-btn__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M6 12s1.5-3 6-3 6 3 6 3-1.5 3-6 3-6-3-6-3z" fill="currentColor"/></svg>
+            </span>
+            <span class="pdp-btn__label">Buy now</span>
+            <span class="pdp-btn__end" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </span>
+          </button>
         </div>
         <p class="pdp-mobile-bar__note">Secure checkout • Easy returns • COD available</p>
 

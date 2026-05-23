@@ -4,7 +4,7 @@
     <!-- Logo/Brand Column -->
     <div class="site-footer__brand-col">
       <div class="site-footer__brand-logo">
-        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="WINGSTONES" class="site-footer__logo-img" style="max-height: 28px; width: auto; filter: brightness(0) invert(1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="WINGSTONES" class="site-footer__logo-img" width="1254" height="1254" style="max-height: 28px; width: auto; filter: brightness(0) invert(1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
         <span class="site-footer__brand-title" style="display: none;">WINGSTONES</span>
       </div>
       <p class="site-footer__brand-desc">
@@ -23,10 +23,10 @@
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="/">About Us</a></li>
-            <li><a href="/#contact">Contact Us</a></li>
-            <li><a href="/">Investment Opportunity</a></li>
-            <li><a href="/">Influencer Hiring</a></li>
+            <li><a href="{{ routes.root_url }}">About Us</a></li>
+            <li><a href="{{ routes.root_url }}#contact">Contact Us</a></li>
+            <li><a href="{{ routes.root_url }}">Investment Opportunity</a></li>
+            <li><a href="{{ routes.root_url }}">Influencer Hiring</a></li>
           {%- endif -%}
         </ul>
       </details>
@@ -40,12 +40,12 @@
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="/cart">Track Order</a></li>
-            <li><a href="/cart">Exchange/Return Request</a></li>
-            <li><a href="/">Terms and Conditions</a></li>
-            <li><a href="/">Privacy Policy</a></li>
-            <li><a href="/">Return &amp; Exchange Policy</a></li>
-            <li><a href="/">Shipping and Delivery Policy</a></li>
+            <li><a href="{{ routes.cart_url }}">Track Order</a></li>
+            <li><a href="{{ routes.cart_url }}">Exchange/Return Request</a></li>
+            <li><a href="{{ routes.root_url }}">Terms and Conditions</a></li>
+            <li><a href="{{ routes.root_url }}">Privacy Policy</a></li>
+            <li><a href="{{ routes.root_url }}">Return &amp; Exchange Policy</a></li>
+            <li><a href="{{ routes.root_url }}">Shipping and Delivery Policy</a></li>
           {%- endif -%}
         </ul>
       </details>

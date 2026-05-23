@@ -16,6 +16,8 @@ the section settings (use the sliders to persist changes).
               src="{{ slide_image | img_url: '2048x2048' }}"
               alt="{{ block.settings.image_alt | default: settings.image_alt }}"
               class="hero-visual__image"
+              width="{{ slide_image.width }}"
+              height="{{ slide_image.height }}"
               style="max-height: {{ settings.max_height }}px; width: auto; max-width: 100%; object-fit: {{ settings.object_fit }}; display: block;"
             />
           {% else %}
@@ -48,6 +50,8 @@ the section settings (use the sliders to persist changes).
           src="{{ settings.image | img_url: '2048x2048' }}"
           alt="{{ settings.image_alt }}"
           class="hero-visual__image"
+          width="{{ settings.image.width }}"
+          height="{{ settings.image.height }}"
           style="max-height: {{ settings.max_height }}px; width: auto; max-width: 100%; object-fit: {{ settings.object_fit }}; display: block;"
         />
       {% else %}

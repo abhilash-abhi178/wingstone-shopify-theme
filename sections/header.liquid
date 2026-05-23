@@ -47,15 +47,15 @@
 
   <div class="wingstone-menu-links">
 
-    <a href="/collections/all">SHOP</a>
+    <a href="{{ routes.all_products_collection_url }}">SHOP</a>
 
-    <a href="/collections/new">DROPS</a>
+    <a href="{{ routes.collections_url }}/new">DROPS</a>
 
-    <a href="/collections">COLLECTIONS</a>
+    <a href="{{ routes.collections_url }}">COLLECTIONS</a>
 
-    <a href="/pages/about">ABOUT</a>
+    <a href="{{ pages.about.url | default: routes.root_url }}">ABOUT</a>
 
-    <a href="/pages/lookbook">LOOKBOOK</a>
+    <a href="{{ pages.lookbook.url | default: routes.root_url }}">LOOKBOOK</a>
 
     <a href="{{ routes.cart_url }}" aria-label="Cart" data-cart-drawer-toggle> CART </a>
 
@@ -70,7 +70,7 @@
         {% elsif settings.brand_logo != blank %}
           {{ settings.brand_logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
         {% else %}
-          <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
+          <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}" width="1254" height="1254">
         {% endif %}
       </a>
 

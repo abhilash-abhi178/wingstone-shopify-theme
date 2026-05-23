@@ -48,11 +48,11 @@
 
       <div class="wingstone-hero-buttons">
 
-        <a href="/collections/all" class="wingstone-btn-primary">
+        <a href="{{ routes.all_products_collection_url }}" class="wingstone-btn-primary">
           SHOP DROP →
         </a>
 
-        <a href="/pages/about" class="wingstone-btn-secondary">
+        <a href="{{ pages.about.url | default: routes.root_url }}" class="wingstone-btn-secondary">
           EXPLORE STORY
         </a>
 

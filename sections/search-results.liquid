@@ -1,6 +1,6 @@
 <section class="search-results section">
   <div class="page-width">
-    <form action="/search" method="get" role="search" class="search-results__form">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-results__form">
       <label for="SearchQuery" class="skip-link">Search</label>
       <div style="display:flex;gap:.5rem;align-items:center;">
         <input id="SearchQuery" name="q" type="search" value="{{ search.terms }}" placeholder="Search products" class="field" />
@@ -20,7 +20,7 @@
       </div>
       {% if search.results_count > search.results.size %}
         <div class="search-results__more">
-          <a class="button button--secondary" href="/search?q={{ search.terms | url_encode }}&page=2">View more results</a>
+          <a class="button button--secondary" href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&page=2">View more results</a>
         </div>
       {% endif %}
     {% else %}

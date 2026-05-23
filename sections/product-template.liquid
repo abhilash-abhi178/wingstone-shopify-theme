@@ -24,6 +24,7 @@
     --font-head:  var(--font-heading-family);
     --font-body:  var(--font-body-family);
     --transition: .18s cubic-bezier(.4,0,.2,1);
+    --pdp-vh-offset: 160px; /* space for headers/controls when fitting image to viewport */
   }
 
   body { background: var(--clr-bg); font-family: var(--font-body); color: var(--clr-text); }
@@ -83,10 +84,16 @@
     max-width: 560px;
     margin-inline: auto;
   }
+  .pdp-main-img {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pdp-main-img.pdp-main-img--portrait { aspect-ratio: 3 / 4; }
+  .pdp-main-img.pdp-main-img--landscape { aspect-ratio: 4 / 3; }
   .pdp-main-img img {
-    width: 100%; height: 100%; object-fit: contain;
-    object-position: center;
-    display: block; padding: 16px;
+    width: auto; height: auto; max-width: 100%;
+    max-height: calc(100vh - var(--pdp-vh-offset));
+    object-fit: contain; object-position: center;
+    display: block; padding: 12px;
     transition: transform .35s ease;
   }
   .pdp-main-img:hover img { transform: scale(1.06); }
@@ -471,13 +478,15 @@
     .pdp-gallery { flex-direction: column; position: static; }
     .pdp-thumbs { flex-direction: row; max-height: none; overflow-x: auto; padding-bottom: 2px; }
     .pdp-thumb { width: 56px; height: 56px; }
+    :root { --pdp-vh-offset: calc(140px + env(safe-area-inset-bottom)); }
     .pdp-main-img {
       max-width: 100%;
       aspect-ratio: 1 / 1;
-      max-height: min(78vh, 560px);
+      max-height: calc(100vh - var(--pdp-vh-offset));
+      display: flex; align-items: center; justify-content: center;
     }
     .pdp-main-img img {
-      padding: 12px;
+      padding: 8px; max-width: 100%; max-height: calc(100vh - var(--pdp-vh-offset));
     }
     .pdp-btn { max-width: 100%; }
     .pdp-title { font-size: 18px; }
@@ -535,9 +544,9 @@
 
   <!-- Breadcrumb -->
   <nav class="pdp-breadcrumb" aria-label="Breadcrumb">
-    <a href="/">Home</a>
+    <a href="{{ routes.root_url }}">Home</a>
     <span>›</span>
-    <a href="/collections/all">{{ collection.title | default: 'All Products' }}</a>
+    <a href="{{ routes.all_products_collection_url }}">{{ collection.title | default: 'All Products' }}</a>
     <span>›</span>
     <span>{{ product.title | truncate: 40 }}</span>
   </nav>
@@ -557,7 +566,7 @@
             aria-label="View image {{ forloop.index }} of {{ product_images.size }}"
             {% if forloop.first %}aria-current="true"{% endif %}
           >
-            <img src="{{ image | image_url: width: 180 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
+            <img src="{{ image | image_url: width: 180 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy" width="{{ image.width }}" height="{{ image.height }}">
           </button>
         {% endfor %}
       </div>
@@ -572,6 +581,8 @@
           src="{{ product.featured_image | image_url: width: 1400 }}"
           alt="{{ product.title | escape }}"
           loading="eager"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
         >
       </div>
     </div><!-- /gallery -->
@@ -685,6 +696,8 @@
                       src="{% if matching_variant and matching_variant.image %}{{ matching_variant.image | image_url: width: 240, height: 240, crop: 'center' }}{% else %}{{ product.featured_image | image_url: width: 240, height: 240, crop: 'center' }}{% endif %}"
                       alt="{{ value | escape }}"
                       loading="lazy"
+                      width="240"
+                      height="240"
                     >
                     <div class="price-tag">₹{{ matching_variant.price | money_without_currency }}</div>
                   </div>
@@ -826,7 +839,9 @@
           {% for block in description_blocks %}
             {% assign block_text = block | strip_html | strip | downcase %}
             {% unless block_text contains 'product weight' or block_text contains 'ship weight' or block_text contains 'length (cm)' or block_text contains 'breadth (cm)' or block_text contains 'height (cm)' %}
-              {{ block }}{% if block != blank %}</p>{% endif %}
+              {% if block != blank %}
+                <p>{{ block }}</p>
+              {% endif %}
             {% endunless %}
           {% endfor %}
         {% endcapture %}
@@ -961,7 +976,27 @@
     if (typeof altText === 'string' && altText.length) {
       mainImg.alt = altText;
     }
+    // adjust active thumb
     setActiveThumbBySrc(src);
+
+    // adjust container for portrait/landscape images to avoid tall empty panels
+    try {
+      const probe = new Image();
+      probe.onload = function () {
+        const container = mainImg.closest('.pdp-main-img');
+        if (!container) return;
+        if (probe.naturalHeight > probe.naturalWidth) {
+          container.classList.add('pdp-main-img--portrait');
+          container.classList.remove('pdp-main-img--landscape');
+        } else {
+          container.classList.add('pdp-main-img--landscape');
+          container.classList.remove('pdp-main-img--portrait');
+        }
+      };
+      probe.src = src;
+    } catch (e) {
+      /* ignore */
+    }
   }
 
   /* ── Gallery ── */

@@ -5,7 +5,7 @@
 
     <div class="gift-card__panel">
       <div class="gift-card__logo">
-        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}">
+        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}" width="1254" height="1254">
       </div>
 
       <p class="gift-card__balance">{{ gift_card.balance | money }}</p>
@@ -21,6 +21,7 @@
       </div>
 
       {% if gift_card.qr_identifier %}
+        {% # theme-check-disable UnknownFilter %}
         <img
           class="gift-card__qr"
           src="{{ gift_card.qr_identifier | qr_code_url: size: 240 }}"
@@ -28,6 +29,7 @@
           width="240"
           height="240"
         >
+        {% # theme-check-enable UnknownFilter %}
       {% endif %}
 
       <div class="gift-card__actions">

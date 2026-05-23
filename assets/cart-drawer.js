@@ -34,15 +34,6 @@ class CartDrawer {
       this.backdrop.addEventListener('click', () => this.close());
     }
 
-    // Intercept form submissions for product adds
-    document.addEventListener('submit', (e) => {
-      const form = e.target;
-      if (form.action && form.action.includes('/cart/add')) {
-        e.preventDefault();
-        this.addProduct(form);
-      }
-    });
-
     // Delegated click handlers for items in the cart
     if (this.content) {
       this.content.addEventListener('click', (e) => {
@@ -116,6 +107,10 @@ class CartDrawer {
   }
 
   addProduct(form) {
+    if (form.id === 'pdpForm' || form.classList.contains('product-form') || form.classList.contains('product-card__form')) {
+      return;
+    }
+
     const submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) {
       submitBtn.setAttribute('disabled', 'disabled');

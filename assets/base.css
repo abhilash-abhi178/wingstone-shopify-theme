@@ -2227,11 +2227,101 @@ body.cart-drawer-open {
   color: var(--color-ink);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.6rem, 8vw, 5rem);
+.cart-drawer__item-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.cart-drawer__item-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.cart-drawer__item-variant {
+  margin: 0 0 .35rem;
+  color: var(--color-steel);
+  font-size: .82rem;
+}
+.cart-drawer__item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: .55rem;
+}
+.cart-drawer__qty-selector {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 84%);
+  border-radius: 999px;
+  background: var(--color-paper);
+}
+.cart-drawer__qty-selector button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: color-mix(in srgb, var(--color-ink), transparent 94%);
+  color: var(--color-ink);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.cart-drawer__qty-selector input {
+  width: 46px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  text-align: center;
+}
+.cart-drawer__qty-selector input::-webkit-outer-spin-button,
+.cart-drawer__qty-selector input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.cart-drawer__qty-selector input[type="number"] {
+  appearance: textfield;
+}
+.cart-drawer__item-price-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .15rem;
+  text-align: right;
+}
+.cart-drawer__item-price-compare {
+  color: var(--color-steel);
+  font-size: .78rem;
+}
+.cart-drawer__item-remove {
+  align-self: flex-start;
+  margin-top: .65rem;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--color-ink), var(--color-steel) 16%);
+  font-size: .78rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.cart-drawer__item-remove:hover,
+.cart-drawer__item-remove:focus-visible {
+  color: var(--color-ink);
+}
   font-weight: 900;
   line-height: .9;
 }
 
 .gift-card__code {
+.cart-drawer__actions .btn-primary {
+  justify-content: center;
+}
+.cart-drawer__actions .w-full {
+  width: 100%;
+}
   margin: 1.25rem auto;
   border: 1px dashed var(--color-steel);
   border-radius: 4px;

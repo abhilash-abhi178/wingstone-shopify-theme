@@ -79,9 +79,13 @@
     border: 1px solid var(--clr-border);
     aspect-ratio: 1 / 1.05;
     position: relative; cursor: zoom-in;
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
   }
   .pdp-main-img img {
     width: 100%; height: 100%; object-fit: contain;
+    object-position: center;
     display: block; padding: 16px;
     transition: transform .35s ease;
   }
@@ -467,6 +471,14 @@
     .pdp-gallery { flex-direction: column; position: static; }
     .pdp-thumbs { flex-direction: row; max-height: none; overflow-x: auto; padding-bottom: 2px; }
     .pdp-thumb { width: 56px; height: 56px; }
+    .pdp-main-img {
+      max-width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: min(78vh, 560px);
+    }
+    .pdp-main-img img {
+      padding: 12px;
+    }
     .pdp-btn { max-width: 100%; }
     .pdp-title { font-size: 18px; }
     .pdp-price-main { font-size: 28px; }
@@ -507,6 +519,12 @@
       background: #ffd814;
       color: #000000;
       box-shadow: 0 10px 24px rgba(240,172,0,.24);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .pdp-main-img {
+      max-width: min(100%, 620px);
     }
   }
 </style>
@@ -902,20 +920,55 @@
   const qtyPlus       = document.getElementById('qtyPlus');
   const mobileAddBtn  = document.querySelector('[data-mobile-add-to-cart]');
 
+  function normalizeImageKey(url) {
+    if (!url) return '';
+    try {
+      const parsed = new URL(url, window.location.origin);
+      const filename = (parsed.pathname.split('/').pop() || '').toLowerCase();
+      return filename.replace(/_(pico|icon|thumb|small|compact|medium|large|grande|original|master|[0-9]+x[0-9]*|x[0-9]+)(?=\.[^.]+$)/i, '');
+    } catch (error) {
+      return String(url).toLowerCase();
+    }
+  }
+
+  function setActiveThumbBySrc(src) {
+    if (!thumbsWrap || !src) return;
+
+    const srcKey = normalizeImageKey(src);
+    if (!srcKey) return;
+
+    let matchedThumb = null;
+    thumbsWrap.querySelectorAll('.pdp-thumb').forEach((thumb) => {
+      const thumbKey = normalizeImageKey(thumb.dataset.full);
+      if (!matchedThumb && thumbKey && thumbKey === srcKey) {
+        matchedThumb = thumb;
+      }
+    });
+
+    if (!matchedThumb) return;
+
+    thumbsWrap.querySelectorAll('.pdp-thumb').forEach((thumb) => {
+      thumb.classList.remove('is-active');
+      thumb.removeAttribute('aria-current');
+    });
+    matchedThumb.classList.add('is-active');
+    matchedThumb.setAttribute('aria-current', 'true');
+  }
+
+  function setMainImage(src, altText) {
+    if (!mainImg || !src) return;
+    mainImg.src = src;
+    if (typeof altText === 'string' && altText.length) {
+      mainImg.alt = altText;
+    }
+    setActiveThumbBySrc(src);
+  }
+
   /* ── Gallery ── */
   if (thumbsWrap) {
     thumbsWrap.querySelectorAll('.pdp-thumb').forEach(btn => {
       btn.addEventListener('click', () => {
-        thumbsWrap.querySelectorAll('.pdp-thumb').forEach(b => {
-          b.classList.remove('is-active');
-          b.removeAttribute('aria-current');
-        });
-        btn.classList.add('is-active');
-        btn.setAttribute('aria-current', 'true');
-        if (mainImg) {
-          mainImg.src = btn.dataset.full;
-          mainImg.alt = btn.dataset.alt || '';
-        }
+        setMainImage(btn.dataset.full, btn.dataset.alt || '');
       });
     });
   }
@@ -987,7 +1040,7 @@
 
     /* Main image – switch to variant image if present */
     if (v.featured_image && mainImg) {
-      mainImg.src = v.featured_image.src;
+      setMainImage(v.featured_image.src, mainImg.alt || '');
     }
   }
 
@@ -1014,16 +1067,7 @@
 
         /* Swap main image to variant image if available */
         if (card.dataset.variantImage && mainImg) {
-          mainImg.src = card.dataset.variantImage;
-          /* Also activate matching thumb */
-          if (thumbsWrap) {
-            thumbsWrap.querySelectorAll('.pdp-thumb').forEach(t => {
-              if (t.dataset.full === card.dataset.variantImage) {
-                thumbsWrap.querySelectorAll('.pdp-thumb').forEach(b => b.classList.remove('is-active'));
-                t.classList.add('is-active');
-              }
-            });
-          }
+          setMainImage(card.dataset.variantImage, val);
         }
         updateUI();
       };
@@ -1125,6 +1169,7 @@
 
   /* ── Initial render ── */
   updateUI();
+  if (mainImg) setActiveThumbBySrc(mainImg.src);
 
 })();
 </script>

@@ -181,8 +181,8 @@ cartForms.forEach((form) => {
         throw new Error('Unable to add item to cart');
       }
 
-      // Keep PDP and quick-add card submits silent so they only update cart state.
-      if (form.id === 'pdpForm' || form.classList.contains('product-card__form')) {
+      // For PDP form submissions we want a silent update (no drawer).
+      if (form.id === 'pdpForm') {
         try {
           const cartRes = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
           const cart = await cartRes.json();
@@ -223,7 +223,11 @@ cartForms.forEach((form) => {
 document.querySelectorAll('.product-form').forEach((form) => {
   const variantData = form.querySelector('[data-product-variants]');
   const idInput = form.querySelector('input[name="id"]');
+<<<<<<< HEAD
   const submit = form.querySelector('button[type="submit"], [type="submit"]');
+=======
+  const submit = form.querySelector('button[type="submit"]');
+>>>>>>> parent of df3c757 (Update theme.js)
   if (!variantData || !idInput || !submit) return;
 
   const variants = JSON.parse(variantData.textContent);

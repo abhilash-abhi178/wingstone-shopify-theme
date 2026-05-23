@@ -263,8 +263,6 @@
 }
 
 .wingstone-product-image {
-  width: min(100%, 680px);
-
   position: relative;
 
   z-index: 5;
@@ -273,6 +271,17 @@
 
   filter:
     drop-shadow(0 40px 80px rgba(15,23,42,0.12));
+
+  /* Restrict vertical size so hero doesn't dominate viewport */
+  max-height: 520px;
+  height: auto;
+
+  /* Let width flow from the image's intrinsic ratio while capping size */
+  width: auto;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
 }
 
 @keyframes float {
@@ -382,6 +391,7 @@
 
   .wingstone-product-image {
     max-width: 520px;
+    width: auto;
   }
 
   .wingstone-bottom-bar {
@@ -530,6 +540,40 @@
     opacity: 0.7;
   }
 
+}
+
+/* On narrow screens, push the visual lower and to the right so it sits in the area marked */
+@media (max-width: 768px) {
+  .wingstone-hero-visual {
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  .wingstone-product-image {
+    /* small downward offset to align with heading area */
+    margin-top: 18px;
+    margin-left: auto;
+    margin-right: 0;
+    transform: translateY(16px);
+    /* slightly cap height for narrow devices */
+    max-height: 360px;
+  }
+}
+
+/* Smaller caps for product image on narrow screens */
+@media (max-width: 1100px) {
+  .wingstone-product-image {
+    max-height: 420px;
+    width: min(100%, 520px);
+  }
+}
+
+@media (max-width: 480px) {
+  .wingstone-product-image {
+    max-height: 320px;
+    width: auto;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {

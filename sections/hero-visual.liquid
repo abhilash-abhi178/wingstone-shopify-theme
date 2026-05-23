@@ -1,0 +1,138 @@
+{% comment %}
+Hero visual section — allows the product/visual image to be placed as its own section
+with editable image, max height, and X/Y offset sliders. Includes a lightweight
+dragger in the preview so merchants can drag the image; offsets are saved via
+the section settings (use the sliders to persist changes).
+{% endcomment %}
+
+<div id="hero-visual-{{ section.id }}" class="hero-visual-section">
+  {% if section.blocks.size > 0 %}
+    <div class="hero-visual__slides" data-section-id="{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="hero-visual__slide" data-block-id="{{ block.id }}">
+          {% assign slide_image = block.settings.image | default: settings.image %}
+          {% if slide_image != blank %}
+            <img
+              src="{{ slide_image | img_url: '2048x2048' }}"
+              alt="{{ block.settings.image_alt | default: settings.image_alt }}"
+              class="hero-visual__image"
+              style="max-height: {{ settings.max_height }}px; width: auto; max-width: 100%; object-fit: {{ settings.object_fit }}; display: block;"
+            />
+          {% else %}
+            <div class="hero-visual__placeholder">Select an image for this slide</div>
+          {% endif %}
+
+          {% if block.settings.heading or block.settings.text or block.settings.link != blank %}
+            <div class="hero-visual__slide-caption">
+              {% if block.settings.heading %}
+                <h3>{{ block.settings.heading }}</h3>
+              {% endif %}
+              {% if block.settings.text %}
+                <p>{{ block.settings.text }}</p>
+              {% endif %}
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="hero-visual__slide-link">{{ block.settings.link_label }}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button class="hero-visual__prev" aria-label="Previous slide">‹</button>
+      <button class="hero-visual__next" aria-label="Next slide">›</button>
+    </div>
+  {% else %}
+    <div class="hero-visual__wrap" data-section-id="{{ section.id }}" style="transform: translate({{ settings.x_offset }}%, {{ settings.y_offset }}%);">
+      {% if settings.image != blank %}
+        <img
+          src="{{ settings.image | img_url: '2048x2048' }}"
+          alt="{{ settings.image_alt }}"
+          class="hero-visual__image"
+          style="max-height: {{ settings.max_height }}px; width: auto; max-width: 100%; object-fit: {{ settings.object_fit }}; display: block;"
+        />
+      {% else %}
+        <div class="hero-visual__placeholder">Select an image in the section settings</div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% comment %} Load the dragger/slider JS asset (only when section present) {% endcomment %}
+  <script src="{{ 'hero-visual.js' | asset_url }}" defer="defer"></script>
+</div>
+
+{% schema %}
+{
+  "name": "Hero visual (draggable)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Hero visual"
+    },
+    {
+      "type": "range",
+      "id": "x_offset",
+      "label": "Horizontal offset (%)",
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "y_offset",
+      "label": "Vertical offset (%)",
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "Max height (px)",
+      "min": 150,
+      "max": 1200,
+      "step": 10,
+      "default": 520
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "Object fit",
+      "options": [
+        {"value": "contain", "label": "Contain"},
+        {"value": "cover", "label": "Cover"}
+      ],
+      "default": "contain"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Slide image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Learn more" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero visual (draggable)",
+      "category": "Hero"
+    }
+  ]
+}
+{% endschema %}

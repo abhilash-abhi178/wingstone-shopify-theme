@@ -38,8 +38,8 @@ the section settings (use the sliders to persist changes).
         </div>
       {% endfor %}
 
-      <button class="hero-visual__prev" aria-label="Previous slide">‹</button>
-      <button class="hero-visual__next" aria-label="Next slide">›</button>
+      <button class="hero-visual__prev" aria-label="Previous slide"><span class="material-symbols-outlined">arrow_back</span></button>
+      <button class="hero-visual__next" aria-label="Next slide"><span class="material-symbols-outlined">arrow_forward</span></button>
     </div>
   {% else %}
     <div class="hero-visual__wrap" data-section-id="{{ section.id }}" style="transform: translate({{ settings.x_offset }}%, {{ settings.y_offset }}%);">

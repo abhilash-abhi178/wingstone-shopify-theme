@@ -12,12 +12,9 @@
   min-height: 100vh;
 
   background:
-    linear-gradient(
-      90deg,
-      #f8f8f8 0%,
-      #f7f7f7 55%,
-      #dde6f0 100%
-    );
+    radial-gradient(circle at 20% 50%, rgba(94,120,155,0.18), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(142,164,198,0.12), transparent 45%),
+    linear-gradient(160deg, #1D2C43 0%, #101827 60%, #0a1020 100%);
 
   padding: 120px 0 180px;
 }
@@ -35,9 +32,9 @@
   height: 100%;
   object-fit: cover;
 
-  opacity: 0.14;
+  opacity: 0.22;
 
-  mix-blend-mode: soft-light;
+  mix-blend-mode: luminosity;
 }
 
 .wingstone-video-overlay {
@@ -47,9 +44,9 @@
   background:
     linear-gradient(
       90deg,
-      rgba(255,255,255,0.92) 0%,
-      rgba(255,255,255,0.7) 45%,
-      rgba(221,230,240,0.62) 100%
+      rgba(13,20,35,0.85) 0%,
+      rgba(13,20,35,0.55) 45%,
+      rgba(29,44,67,0.40) 100%
     );
 }
 
@@ -85,7 +82,7 @@
 
   font-weight: 800;
 
-  color: rgba(15,23,42,0.03);
+  color: rgba(213,223,245,0.04);
 
   letter-spacing: -8px;
 
@@ -109,13 +106,13 @@
     linear-gradient(
       to right,
       transparent,
-      rgba(255,255,255,0.5),
+      rgba(213,223,245,0.06),
       transparent
     );
 
   transform: rotate(12deg);
 
-  animation: sweep 7s linear infinite;
+  animation: sweep 9s cubic-bezier(.22,1,.36,1) infinite;
 
   z-index: 2;
 }
@@ -141,7 +138,7 @@
 .wingstone-mini-label {
   font-size: 11px;
   letter-spacing: 4px;
-  color: #7c8597;
+  color: #8EA4C6;
   margin-bottom: 20px;
   font-weight: 700;
 }
@@ -153,7 +150,7 @@
 
   letter-spacing: -4px;
 
-  color: #0f172a;
+  color: #D5DFF5;
 
   margin-bottom: 30px;
 
@@ -169,7 +166,7 @@
 
   line-height: 1.8;
 
-  color: #667085;
+  color: #8EA4C6;
 
   margin-bottom: 40px;
 
@@ -207,38 +204,37 @@
 }
 
 .wingstone-btn-primary {
-  background:
-    linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, #D5DFF5, #8EA4C6);
 
-  color: white;
+  color: #1D2C43;
 
   font-weight: 700;
 
-  box-shadow:
-    0 18px 40px rgba(15,23,42,0.18);
+  box-shadow: 0 18px 40px rgba(213,223,245,0.15);
 }
 
 .wingstone-btn-primary:hover {
   transform: translateY(-4px);
+  box-shadow: 0 24px 50px rgba(213,223,245,0.22);
+  transition: all 0.55s cubic-bezier(.22,1,.36,1);
 }
 
 .wingstone-btn-secondary {
-  border:
-    1px solid rgba(15,23,42,0.12);
+  border: 1px solid rgba(213,223,245,0.18);
 
-  background:
-    rgba(255,255,255,0.5);
+  background: rgba(213,223,245,0.06);
 
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(16px);
 
-  color: #0f172a;
+  color: #D5DFF5;
 
   font-weight: 700;
 }
 
 .wingstone-btn-secondary:hover {
   transform: translateY(-4px);
-  background: white;
+  background: rgba(213,223,245,0.12);
+  transition: all 0.55s cubic-bezier(.22,1,.36,1);
 }
 
 /* TAGS */
@@ -252,7 +248,7 @@
 .wingstone-hero-tags span {
   font-size: 11px;
   letter-spacing: 2px;
-  color: #7c8597;
+  color: #5E789B;
   font-weight: 700;
 }
 
@@ -323,20 +319,17 @@
 
   gap: 20px;
 
-  background:
-    rgba(255,255,255,0.55);
+  background: rgba(29,44,67,0.55);
 
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
 
   border-radius: 24px;
 
   padding: 34px;
 
-  border:
-    1px solid rgba(255,255,255,0.8);
+  border: 1px solid rgba(213,223,245,0.10);
 
-  box-shadow:
-    0 20px 60px rgba(15,23,42,0.06);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
 }
 
 .wingstone-bottom-item {
@@ -355,13 +348,13 @@
 
   margin-bottom: 8px;
 
-  color: #0f172a;
+  color: #D5DFF5;
 }
 
 .wingstone-bottom-item p {
   font-size: 14px;
 
-  color: #7c8597;
+  color: #5E789B;
 }
 
 /* MOBILE */
@@ -402,16 +395,12 @@
   .wingstone-hero {
 
     background:
-      linear-gradient(
-        180deg,
-        #f8f8f8 0%,
-        #f6f7f9 62%,
-        #edf2f7 100%
-      );
+      radial-gradient(circle at 50% 30%, rgba(94,120,155,0.20), transparent 60%),
+      linear-gradient(180deg, #1D2C43 0%, #101827 100%);
 
     padding: 70px 0 50px;
 
-    min-height: auto;
+    min-height: 90vh;
 
     overflow: hidden;
   }
@@ -519,7 +508,7 @@
 
     line-height: 1.75;
 
-    color: #6b7280;
+    color: #8EA4C6;
 
     margin-bottom: 26px;
 

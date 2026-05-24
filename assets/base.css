@@ -1339,7 +1339,7 @@ button.shopify-payment-button__button {
   width: 100%;
 }
 
-.product-card:hover img {
+.product-card:hover .product-card__image img:first-child {
   transform: scale(1.04);
 }
 

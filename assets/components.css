@@ -412,6 +412,7 @@
   padding: 10%;
   box-sizing: border-box;
   mix-blend-mode: multiply;
+  opacity: 1;
   transition: transform 700ms var(--ease-luxury, ease), opacity 350ms ease;
 }
 
@@ -426,12 +427,13 @@
 /* Hover / second image */
 .product-card__image .hover-image {
   opacity: 0;
-  transform: scale(1.04);
+  transform: scale(1.02);
   transition: opacity 450ms var(--ease-luxury, ease), transform 700ms var(--ease-luxury, ease);
 }
 
 .product-card:hover .product-card__image img:first-child {
-  transform: scale(1.04);
+  opacity: 0;
+  transform: scale(1.02);
 }
 
 .product-card:hover .hover-image {

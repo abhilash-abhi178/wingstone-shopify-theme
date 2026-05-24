@@ -18,7 +18,15 @@ body {
   overscroll-behavior-y: none;
 }
 
-* {
+
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[data-cart-drawer-toggle],
+[data-menu-toggle] {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }

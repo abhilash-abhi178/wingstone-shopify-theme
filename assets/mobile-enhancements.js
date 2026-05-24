@@ -12,6 +12,7 @@
   const isTouch  = () => ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cartDrawer = document.querySelector('[data-cart-drawer]');
+  const preventDefault = (e) => { e.preventDefault(); };
 
   /* ─── 1. Remove no-js class (already in theme.js) ───── */
   document.documentElement.classList.remove('no-js');
@@ -52,6 +53,14 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
   }
+
+  const clearPageScrollLock = () => {
+    document.body.style.removeProperty('overflow');
+    document.body.classList.remove('cart-drawer-open');
+    document.body.removeEventListener('touchmove', preventDefault);
+  };
+
+  clearPageScrollLock();
 
   /* ─── 3. Smooth image gallery swipe (PDP) ───────────── */
   const mainImg = document.getElementById('pdpMainImgEl');
@@ -273,8 +282,7 @@
   /* ─── 10. Prevent body scroll when overlays open ─────── */
   const lockBodyScroll = (lock) => {
     if (isMobile()) {
-      document.body.style.removeProperty('overflow');
-      document.body.removeEventListener('touchmove', preventDefault);
+      clearPageScrollLock();
       return;
     }
 
@@ -286,8 +294,6 @@
       document.body.removeEventListener('touchmove', preventDefault);
     }
   };
-
-  const preventDefault = (e) => { e.preventDefault(); };
 
   // Watch for cart drawer
   const observer = new MutationObserver(() => {

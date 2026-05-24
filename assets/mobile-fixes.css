@@ -212,6 +212,12 @@ img, video {
   .product-card:hover img {
     transform: none !important;
   }
+  .product-card__image .hover-image {
+    display: none !important;
+  }
+  .product-card:hover .hover-image {
+    display: none !important;
+  }
   .product-card::after {
     display: none !important;
   }

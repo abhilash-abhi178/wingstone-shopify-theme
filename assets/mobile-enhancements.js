@@ -11,6 +11,7 @@
   const isMobile = () => window.innerWidth <= 640;
   const isTouch  = () => ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cartDrawer = document.querySelector('[data-cart-drawer]');
 
   /* ─── 1. Remove no-js class (already in theme.js) ───── */
   document.documentElement.classList.remove('no-js');
@@ -271,6 +272,12 @@
 
   /* ─── 10. Prevent body scroll when overlays open ─────── */
   const lockBodyScroll = (lock) => {
+    if (isMobile()) {
+      document.body.style.removeProperty('overflow');
+      document.body.removeEventListener('touchmove', preventDefault);
+      return;
+    }
+
     document.body.style.overflow = lock ? 'hidden' : '';
     // iOS fix: also prevent touchmove
     if (lock) {
@@ -291,8 +298,11 @@
   });
 
   if (cartDrawer) {
+    lockBodyScroll(cartDrawer.classList.contains('is-open'));
     observer.observe(cartDrawer, { attributes: true, attributeFilter: ['class'] });
   }
+
+  window.addEventListener('pageshow', () => lockBodyScroll(false));
 
   /* ─── 11. Smooth anchor link scrolling ───────────────── */
   document.querySelectorAll('a[href^="#"]').forEach((link) => {

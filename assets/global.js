@@ -95,16 +95,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!trigger || !drawer || !overlay) return;
 
+  const setMenuScrollLock = (lock) => {
+    if (window.innerWidth <= 768) {
+      document.body.style.removeProperty('overflow');
+      return;
+    }
+
+    document.body.style.overflow = lock ? 'hidden' : '';
+  };
+
+  drawer.classList.remove("active");
+  overlay.classList.remove("active");
+  setMenuScrollLock(false);
+
   const closeMenu = () => {
     drawer.classList.remove("active");
     overlay.classList.remove("active");
-    document.body.style.overflow = "";
+    setMenuScrollLock(false);
   };
 
   trigger.addEventListener("click", () => {
     drawer.classList.add("active");
     overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
+    setMenuScrollLock(true);
   });
 
   if (closeBtn) {

@@ -1,0 +1,135 @@
+{% comment %}
+  Simplified collection facets used by the Wingstone collection grid.
+  Expects to be rendered inside a form with id "FacetFiltersForm".
+{% endcomment %}
+
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign results_url = results.url | default: collection.url
+-%}
+
+<div class="active-facets active-facets-desktop">
+  <div class="active-facets__header">
+    <facet-remove>
+      <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
+        <span>Clear all</span>
+      </a>
+    </facet-remove>
+  </div>
+
+  {%- for filter in results.filters -%}
+    {%- for value in filter.active_values -%}
+      <facet-remove>
+        <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
+          <span class="active-facets__button-inner button button--tertiary">
+            {{ filter.label | escape }}: {{ value.label | escape }}
+            <span class="visually-hidden">Clear filter</span>
+          </span>
+        </a>
+      </facet-remove>
+    {%- endfor -%}
+
+    {%- if filter.type == 'price_range' -%}
+      {%- assign min = filter.min_value.value -%}
+      {%- assign max = filter.max_value.value -%}
+      {%- if min != null or max != null -%}
+        <facet-remove>
+          <a href="{{ filter.url_to_remove }}" class="active-facets__button active-facets__button--light">
+            <span class="active-facets__button-inner button button--tertiary">
+              {{ min | default: 0 | money }} - {{ max | default: filter.range_max | money }}
+              <span class="visually-hidden">Clear filter</span>
+            </span>
+          </a>
+        </facet-remove>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{%- for filter in results.filters -%}
+  {%- case filter.type -%}
+    {%- when 'boolean', 'list' -%}
+      <details class="facets__disclosure-vertical js-filter" id="Details-{{ filter.param_name | escape }}-{{ section.id }}" {% if forloop.first %}open{% endif %}>
+        <summary class="facets__summary caption-large focus-offset">
+          <div>
+            <span class="facets__summary-label">{{ filter.label | escape }}</span>
+            <span class="facets__selected{% if filter.active_values.size == 0 %} hidden{% endif %}">({{ filter.active_values.size }})</span>
+          </div>
+        </summary>
+
+        <div class="facets__display-vertical" id="Facet-{{ forloop.index }}-{{ section.id }}">
+          <fieldset class="facets-wrap facets-wrap-vertical">
+            <legend class="visually-hidden">{{ filter.label | escape }}</legend>
+            <ul class="facets__list list-unstyled" role="list">
+              {%- for value in filter.values -%}
+                {%- assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index -%}
+                {%- assign is_disabled = false -%}
+                {%- if value.count == 0 and value.active == false -%}
+                  {%- assign is_disabled = true -%}
+                {%- endif -%}
+                <li class="list-menu__item facets__item">
+                  <label for="{{ input_id }}" class="facets__label facet-checkbox{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}">
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      id="{{ input_id }}"
+                      {% if value.active %}checked{% endif %}
+                      {% if is_disabled %}disabled{% endif %}
+                    >
+                    <span class="facet-checkbox__text" aria-hidden="true">
+                      <span class="facet-checkbox__text-label">{{ value.label | escape }}</span>
+                      <span>({{ value.count }})</span>
+                    </span>
+                  </label>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </fieldset>
+        </div>
+      </details>
+
+    {%- when 'price_range' -%}
+      <details class="facets__disclosure-vertical js-filter" id="Details-{{ filter.param_name | escape }}-{{ section.id }}" {% if forloop.first %}open{% endif %}>
+        <summary class="facets__summary caption-large focus-offset">
+          <div>
+            <span class="facets__summary-label">{{ filter.label | escape }}</span>
+          </div>
+        </summary>
+
+        <div class="facets__display-vertical" id="Facet-{{ forloop.index }}-{{ section.id }}">
+          <price-range class="facets__price">
+            <div class="field">
+              <input
+                class="field__input"
+                name="{{ filter.min_value.param_name }}"
+                id="Filter-{{ filter.label | escape }}-GTE"
+                {% if filter.min_value.value %}value="{{ filter.min_value.value | money_without_currency }}"{% endif %}
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                data-min="0"
+                data-max="{{ filter.range_max | money_without_currency }}"
+              >
+              <label class="field__label" for="Filter-{{ filter.label | escape }}-GTE">From</label>
+            </div>
+
+            <div class="field">
+              <input
+                class="field__input"
+                name="{{ filter.max_value.param_name }}"
+                id="Filter-{{ filter.label | escape }}-LTE"
+                {% if filter.max_value.value %}value="{{ filter.max_value.value | money_without_currency }}"{% endif %}
+                type="text"
+                inputmode="decimal"
+                placeholder="{{ filter.range_max | money_without_currency }}"
+                data-min="0"
+                data-max="{{ filter.range_max | money_without_currency }}"
+              >
+              <label class="field__label" for="Filter-{{ filter.label | escape }}-LTE">To</label>
+            </div>
+          </price-range>
+        </div>
+      </details>
+  {%- endcase -%}
+{%- endfor -%}

@@ -1,0 +1,19 @@
+{% comment %}
+  Simple pagination used by the collection grid.
+{% endcomment %}
+
+{%- if paginate.pages > 1 -%}
+  <div class="pagination-wrapper" data-page="{{ paginate.current_page }}">
+    <nav class="pagination" role="navigation" aria-label="Pagination">
+      {%- if paginate.previous -%}
+        <a class="pagination__item pagination__item--prev" href="{{ paginate.previous.url }}{{ anchor }}" aria-label="Previous page">Previous</a>
+      {%- endif -%}
+
+      <span class="pagination__current">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+
+      {%- if paginate.next -%}
+        <a class="pagination__item pagination__item--next" href="{{ paginate.next.url }}{{ anchor }}" aria-label="Next page">Next</a>
+      {%- endif -%}
+    </nav>
+  </div>
+{%- endif -%}

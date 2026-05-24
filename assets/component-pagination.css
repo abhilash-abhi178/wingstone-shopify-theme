@@ -1,0 +1,27 @@
+.pagination-wrapper {
+  margin-top: 2rem;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .75rem;
+}
+
+.pagination__item,
+.pagination__current {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 .9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 84%);
+  background: var(--color-paper);
+}
+
+.pagination__item {
+  text-decoration: none;
+  color: inherit;
+}

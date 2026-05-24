@@ -1,0 +1,56 @@
+{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="collection-hero section">
+  <div class="page-width collection-hero__inner">
+    <div class="collection-hero__text-wrapper">
+      <p class="eyebrow">{{ collection.products_count }} products</p>
+      <h1 class="section-title">
+        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+        {{ collection.title | escape }}
+      </h1>
+      {%- if section.settings.show_collection_description and collection.description != blank -%}
+        <div class="collection-hero__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_collection_image and collection.image -%}
+      <div class="collection-hero__image-container">
+        <img
+          srcset="
+            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
+            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
+            {{ collection.image | image_url }} {{ collection.image.width }}w
+          "
+          src="{{ collection.image | image_url: width: 750 }}"
+          alt="{{ collection.image.alt | escape }}"
+          width="{{ collection.image.width }}"
+          height="{{ collection.image.height }}"
+          loading="lazy"
+        >
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main collection banner",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": false,
+      "label": "Show collection image"
+    }
+  ]
+}
+{% endschema %}

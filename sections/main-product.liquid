@@ -90,6 +90,33 @@
   }
   .pdp-main-img.pdp-main-img--portrait { aspect-ratio: 3 / 4; }
   .pdp-main-img.pdp-main-img--landscape { aspect-ratio: 4 / 3; }
+  .pdp-gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border: 1px solid color-mix(in srgb, var(--clr-border), white 18%);
+    border-radius: 999px;
+    background: rgba(255,255,255,.88);
+    color: var(--clr-text);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(10,18,30,.14);
+    transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+    backdrop-filter: blur(10px);
+  }
+  .pdp-gallery-nav:hover,
+  .pdp-gallery-nav:focus-visible {
+    transform: translateY(-50%) scale(1.06);
+    background: #fff;
+    box-shadow: 0 14px 28px rgba(10,18,30,.18);
+  }
+  .pdp-gallery-nav--prev { left: 14px; }
+  .pdp-gallery-nav--next { right: 14px; }
+  .pdp-gallery-nav .material-symbols-outlined { font-size: 24px; line-height: 1; }
     .pdp-main-img img {
       width: auto; height: auto; max-width: 100%;
       max-height: calc(100vh - var(--pdp-vh-offset));
@@ -476,12 +503,18 @@
 
   /* ─── Responsive adjustments ───────────────────────────────── */
   @media (max-width: 640px) {
-    .pdp { padding: 16px 14px calc(140px + env(safe-area-inset-bottom)); }
+    .pdp {
+      padding: 16px 14px calc(140px + env(safe-area-inset-bottom));
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    .pdp-layout > * { min-width: 0; }
     .pdp-gallery { flex-direction: column; position: static; }
     .pdp-thumbs { flex-direction: row; max-height: none; overflow-x: auto; padding-bottom: 2px; }
     .pdp-thumb { width: 56px; height: 56px; }
     :root { --pdp-vh-offset: calc(140px + env(safe-area-inset-bottom)); }
     .pdp-main-img {
+      width: 100%;
       max-width: 100%;
       aspect-ratio: 1 / 1;
       max-height: calc(100vh - var(--pdp-vh-offset));
@@ -490,9 +523,20 @@
       box-shadow: 0 8px 20px rgba(10,18,30,0.06);
     }
     .pdp-main-img img {
-      padding: 6px; max-width: 100%; max-height: calc(100vh - var(--pdp-vh-offset));
+      width: 100%;
+      height: 100%;
+      padding: 6px;
+      max-width: 100%;
+      max-height: calc(100vh - var(--pdp-vh-offset));
+      object-fit: contain;
       background: transparent;
     }
+    .pdp-gallery-nav {
+      width: 38px;
+      height: 38px;
+    }
+    .pdp-gallery-nav--prev { left: 10px; }
+    .pdp-gallery-nav--next { right: 10px; }
     .pdp-btn { max-width: 100%; }
     .pdp-title { font-size: 18px; }
     .pdp-price-main { font-size: 28px; }
@@ -560,8 +604,8 @@
 
     <!-- ── Gallery ── -->
     <div class="pdp-gallery">
-      <div class="pdp-thumbs" id="pdpThumbs" aria-label="Product image thumbnails">
         {% assign product_images = product.images %}
+      <div class="pdp-thumbs" id="pdpThumbs" aria-label="Product image thumbnails">
         {% for image in product_images %}
           <button
             class="pdp-thumb{% if forloop.first %} is-active{% endif %}"
@@ -580,6 +624,14 @@
         {% if product.compare_at_price_max > product.price_min %}
           {% assign save_pct = product.compare_at_price_max | minus: product.price_min | times: 100 | divided_by: product.compare_at_price_max %}
           <span class="pdp-badge">-{{ save_pct }}%</span>
+        {% endif %}
+        {% if product_images.size > 1 %}
+          <button class="pdp-gallery-nav pdp-gallery-nav--prev" type="button" id="pdpGalleryPrev" aria-label="Previous product image">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+          </button>
+          <button class="pdp-gallery-nav pdp-gallery-nav--next" type="button" id="pdpGalleryNext" aria-label="Next product image">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
         {% endif %}
         <img
           id="pdpMainImgEl"
@@ -975,6 +1027,27 @@
     }
   }
 
+  function getActiveThumbIndex() {
+    if (!thumbsWrap) return -1;
+    const thumbs = Array.from(thumbsWrap.querySelectorAll('.pdp-thumb'));
+    return thumbs.findIndex((thumb) => thumb.classList.contains('is-active'));
+  }
+
+  function moveGallery(direction) {
+    if (!thumbsWrap) return;
+    const thumbs = Array.from(thumbsWrap.querySelectorAll('.pdp-thumb'));
+    if (thumbs.length < 2) return;
+
+    const activeIndex = getActiveThumbIndex();
+    const currentIndex = activeIndex >= 0 ? activeIndex : 0;
+    const nextIndex = (currentIndex + direction + thumbs.length) % thumbs.length;
+    const nextThumb = thumbs[nextIndex];
+
+    if (nextThumb) {
+      setMainImage(nextThumb.dataset.full, nextThumb.dataset.alt || '');
+    }
+  }
+
   /* ── Gallery ── */
   if (thumbsWrap) {
     thumbsWrap.querySelectorAll('.pdp-thumb').forEach(btn => {
@@ -983,6 +1056,11 @@
       });
     });
   }
+
+  const galleryPrev = document.getElementById('pdpGalleryPrev');
+  const galleryNext = document.getElementById('pdpGalleryNext');
+  if (galleryPrev) galleryPrev.addEventListener('click', () => moveGallery(-1));
+  if (galleryNext) galleryNext.addEventListener('click', () => moveGallery(1));
 
   /* ── Variant matching ── */
   function findVariant() {

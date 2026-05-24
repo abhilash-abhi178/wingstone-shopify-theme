@@ -1,0 +1,156 @@
+<section class="section-gap collection-list-section">
+  <div class="container">
+    {% if section.settings.title != blank %}
+      <h2 class="display-text u-mb-md">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="collection-list-grid collection-list-grid--{{ section.settings.columns_desktop }}">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- assign collection = block.settings.collection -%}
+          {%- assign placeholder_index = forloop.index0 | modulo: 4 | plus: 1 -%}
+          {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_index -%}
+          <a class="collection-list-card" href="{{ collection.url | default: routes.collections_url }}" {{ block.shopify_attributes }}>
+            <div class="collection-list-card__media">
+              {%- if collection != blank and collection.featured_image -%}
+                {{ collection.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: collection.title, class: 'collection-list-card__image' }}
+              {%- else -%}
+                {{ placeholder_image | placeholder_svg_tag: 'collection-list-card__placeholder' }}
+              {%- endif -%}
+            </div>
+            <div class="collection-list-card__title-row">
+              <span class="collection-list-card__title">
+                {%- if collection != blank and collection.title != blank -%}
+                  {{ collection.title | escape }}
+                {%- else -%}
+                  Your collection's name
+                {%- endif -%}
+              </span>
+              <span class="collection-list-card__arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          {%- assign placeholder_image = 'collection-apparel-' | append: i -%}
+          <a class="collection-list-card" href="{{ routes.collections_url }}">
+            <div class="collection-list-card__media">
+              {{ placeholder_image | placeholder_svg_tag: 'collection-list-card__placeholder' }}
+            </div>
+            <div class="collection-list-card__title-row">
+              <span class="collection-list-card__title">Your collection's name</span>
+              <span class="collection-list-card__arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .collection-list-section .display-text {
+    margin-bottom: 1.5rem;
+  }
+
+  .collection-list-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 900px) {
+    .collection-list-grid--3,
+    .collection-list-grid--4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .collection-list-grid--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .collection-list-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .collection-list-card__media {
+    aspect-ratio: 1 / 1;
+    background: #f2f2f2;
+    overflow: hidden;
+  }
+
+  .collection-list-card__image,
+  .collection-list-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .collection-list-card__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .9rem 0 0;
+    font-size: 1rem;
+  }
+
+  .collection-list-card__title {
+    min-width: 0;
+  }
+
+  .collection-list-card__arrow {
+    flex: none;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collections"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Columns desktop"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

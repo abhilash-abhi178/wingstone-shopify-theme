@@ -29,6 +29,37 @@
         "products_to_show": 12
       }
     },
+    "collections": {
+      "type": "collection-list",
+      "settings": {
+        "title": "Collections",
+        "columns_desktop": 4
+      },
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {}
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {}
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {}
+        },
+        "collection_4": {
+          "type": "collection",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4"
+      ]
+    },
     "values": {
       "type": "brand-values",
       "settings": {
@@ -70,5 +101,5 @@
       }
     }
   },
-  "order": ["hero", "featured", "values", "newsletter"]
+  "order": ["hero", "featured", "collections", "values", "newsletter"]
 }

@@ -29,8 +29,66 @@
     {{ 'utilities.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     
+    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'smooth-scroll.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script>
+      window.routes = {
+        root_url: {{ routes.root_url | json }},
+        cart_url: {{ routes.cart_url | json }},
+        cart_add_url: {{ routes.cart_add_url | json }},
+        cart_change_url: {{ routes.cart_change_url | json }},
+        cart_update_url: {{ routes.cart_update_url | json }},
+        predictive_search_url: {{ routes.predictive_search_url | json }}
+      };
+      window.variantStrings = {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }}
+      };
+      window.cartStrings = {
+        error: {{ 'sections.cart.cart_error' | t | json }},
+        quantityError: {{ 'sections.cart.quantity_error' | t: quantity: '[quantity]' | json }}
+      };
+      window.quickOrderListStrings = {
+        each: {{ 'sections.quick_order_list.each' | t: money: '[money]' | json }},
+        min_error: {{ 'sections.quick_order_list.min_error' | t: min: '[min]' | json }},
+        max_error: {{ 'sections.quick_order_list.max_error' | t: max: '[max]' | json }},
+        step_error: {{ 'sections.quick_order_list.step_error' | t: step: '[step]' | json }}
+      };
+      window.accessibilityStrings = {
+        imageAvailable: {{ 'products.product.media.image_available' | t: index: '[index]' | json }},
+        countrySelectorSearchCount: {{ 'localization.country_selector.search_results' | t: count: '[count]' | json }},
+        recipientFormExpanded: {{ 'products.recipient_form.expanded' | t | json }},
+        recipientFormCollapsed: {{ 'products.recipient_form.collapsed' | t | json }}
+      };
+      window.fetchConfig = function(type = 'json') {
+        return {
+          method: 'POST',
+          headers: {
+            'Content-Type': type === 'json' ? 'application/json' : 'application/x-www-form-urlencoded',
+            Accept: 'application/json'
+          }
+        };
+      };
+      window.CartPerformance = window.CartPerformance || {
+        createStartingMarker() { return performance.now(); },
+        measureFromMarker() {},
+        measure() {},
+        measureFromEvent() {}
+      };
+    </script>
+    <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'recipient-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'product-gallery.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>

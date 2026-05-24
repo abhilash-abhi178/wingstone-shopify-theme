@@ -1,0 +1,117 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .collection-index-shell {
+    background:
+      radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent), transparent 86%) 0%, transparent 36%),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-paper), white 16%) 0%, var(--color-paper) 100%);
+  }
+
+  .collection-index-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .collection-index-title {
+    margin: 0;
+    letter-spacing: -.03em;
+  }
+
+  .collection-index-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(.9rem, 1.4vw, 1.25rem);
+  }
+
+  .collection-index-grid__item {
+    min-width: 0;
+  }
+
+  @media (min-width: 900px) {
+    .collection-index-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 749px) {
+    .collection-index-header {
+      align-items: center;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign collection_count = 0
+-%}
+
+<section class="collection-index-shell">
+  <div class="page-width isolate section-{{ section.id }}-padding">
+    <div class="collection-index-header">
+      <div>
+        <p class="eyebrow">{{ section.settings.eyebrow | default: 'Product Collections' }}</p>
+        <h1 class="collection-index-title">{{ section.settings.title | default: 'Collections' }}</h1>
+      </div>
+      <a class="button button--secondary" href="{{ routes.root_url }}">Back to home</a>
+    </div>
+
+    <div class="collection-index-grid">
+      {%- for collection in collections -%}
+        {%- if collection.handle == 'all' or collection.handle == 'frontpage' -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- if collection.products_count == 0 -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- if collection_count >= section.settings.collections_to_show -%}
+          {%- break -%}
+        {%- endif -%}
+        {%- assign collection_count = collection_count | plus: 1 -%}
+        <div class="collection-index-grid__item">
+          {% render 'card-collection', card_collection: collection, media_aspect_ratio: section.settings.image_ratio, columns: section.settings.columns_desktop %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections index",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "default": "Product Collections", "label": "Eyebrow" },
+    { "type": "text", "id": "title", "default": "Collections", "label": "Title" },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "square",
+      "label": "Image ratio"
+    },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 4, "step": 1, "default": 4, "label": "Columns desktop" },
+    { "type": "range", "id": "collections_to_show", "min": 2, "max": 20, "step": 1, "default": 12, "label": "Collections to show" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 60, "step": 4, "default": 24, "label": "Padding top" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 60, "step": 4, "default": 36, "label": "Padding bottom" }
+  ]
+}
+{% endschema %}

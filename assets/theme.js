@@ -212,7 +212,30 @@ cartForms.forEach((form) => {
           console.warn('Silent cart update failed', e);
         }
       } else {
-        await openCartDrawer();
+        // For quick-add / product-card adds, perform a silent update: refresh cart badge and show toast.
+        try {
+          const cartRes = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+          const cart = await cartRes.json();
+
+          // update header badge (create if needed)
+          let badge = document.querySelector('.site-header__badge');
+          if (!badge) {
+            const cartToggle = document.querySelector('.site-header__action--cart');
+            if (cartToggle) {
+              badge = document.createElement('span');
+              badge.className = 'site-header__badge';
+              cartToggle.appendChild(badge);
+            }
+          }
+          if (badge) badge.textContent = String(cart.item_count || 0);
+
+          // give user quick feedback
+          showToast('Added to cart');
+        } catch (e) {
+          // fallback: open drawer if silent update fails
+          console.warn('Silent cart update failed', e);
+          await openCartDrawer();
+        }
       }
     } finally {
       if (submitButton) submitButton.disabled = false;

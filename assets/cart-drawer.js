@@ -129,8 +129,10 @@ class CartDrawer {
         return res.json();
       })
       .then(item => {
+        // Show toast notification but do not auto-open the drawer.
         this.showToast(`${item.title} added to cart.`);
-        this.open();
+        // Refresh cart data and header badge silently.
+        this.fetchCart();
       })
       .catch(err => {
         console.error('Error adding product:', err);

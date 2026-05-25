@@ -12,4 +12,18 @@
       "view_all": "View all"
     }
   }
+  ,
+  "products": {
+    "facets": {
+      "product_count_simple": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "product_count": {
+        "one": "{{ product_count }} of {{ count }} product",
+        "other": "{{ product_count }} of {{ count }} products"
+      }
+    }
+  }
 }
+

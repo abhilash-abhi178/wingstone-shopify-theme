@@ -15,9 +15,9 @@
     --clr-buy:       color-mix(in srgb, var(--color-ink), var(--color-accent) 8%);
     --clr-buy-dk:    color-mix(in srgb, var(--color-ink), black 10%);
     --clr-thumb-active: var(--color-accent);
-    --radius-sm:  6px;
-    --radius-md:  10px;
-    --radius-lg:  16px;
+    --radius-sm:  14px;
+    --radius-md:  14px;
+    --radius-lg:  26px;
     --shadow-sm:  0 1px 3px rgba(0,0,0,.08);
     --shadow-md:  0 4px 16px rgba(0,0,0,.10);
     --shadow-lg:  0 12px 40px rgba(0,0,0,.14);
@@ -226,7 +226,7 @@
     display: flex; flex-wrap: wrap; gap: 8px;
   }
   .pdp-color-card {
-    width: 68px; cursor: pointer;
+    width: 120px; cursor: pointer;
     border: 2px solid var(--clr-border);
     border-radius: var(--radius-sm);
     overflow: hidden; background: #fff;
@@ -244,8 +244,8 @@
   }
   .pdp-color-card:hover { border-color: var(--clr-muted); transform: translateY(-2px); }
   .pdp-color-card.is-active {
-    border-color: var(--clr-thumb-active);
-    box-shadow: 0 0 0 1px var(--clr-thumb-active);
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.4), 0 0 0 1px #d4af37;
   }
   .pdp-color-card.is-active::after {
     content: '✓';
@@ -319,8 +319,8 @@
     transition: background var(--transition);
     display: flex; align-items: center; justify-content: center;
   }
-  .pdp-qty-btn:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); border-right: none; }
-  .pdp-qty-btn:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-left: none; }
+  .pdp-qty-btn:first-child { border-radius: 2px 0 0 2px; border-right: none; }
+  .pdp-qty-btn:last-child  { border-radius: 0 2px 2px 0; border-left: none; }
   .pdp-qty-btn:hover { background: var(--clr-border); }
   .pdp-qty-input {
     width: 52px; height: 36px; border: 1.5px solid var(--clr-border-2);
@@ -389,7 +389,7 @@
   .pdp-trust-item {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
     background: #fff; border: 1px solid var(--clr-border);
-    border-radius: var(--radius-sm); padding: 10px 4px;
+    border-radius: 26px; padding: 10px 4px;
     font-size: 10.5px; color: var(--clr-muted); text-align: center;
     font-weight: 500; line-height: 1.3;
   }

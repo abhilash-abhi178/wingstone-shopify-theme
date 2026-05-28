@@ -185,6 +185,8 @@ button.shopify-payment-button__button {
   border-color: var(--color-accent);
   color: #fff;
   box-shadow: 0 14px 40px color-mix(in srgb, var(--color-accent), transparent 78%);
+  border-radius: 28px;
+  min-height: 64px;
 }
 
 .button--gold:hover,

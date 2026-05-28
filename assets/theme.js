@@ -517,8 +517,11 @@ const footerAccordionQuery = window.matchMedia('(min-width: 901px)');
 const syncFooterAccordions = () => {
   if (!footerAccordions.length) return;
 
+  // Leave footer accordions collapsed by default so they act as clickable
+  // dropdowns on all screen sizes (desktop included). For accessibility
+  // we do not force-open them.
   footerAccordions.forEach((accordion) => {
-    accordion.open = footerAccordionQuery.matches;
+    accordion.open = false;
   });
 };
 

@@ -10,8 +10,13 @@
       muted
       loop
       playsinline
+      {% if section.settings.poster != blank %}poster="{{ section.settings.poster | image_url: width: 1800 }}"{% endif %}
     >
-      <source src="{{ 'hero-video.mp4' | asset_url }}" type="video/mp4">
+      {% if section.settings.video_url != blank %}
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      {% else %}
+        <source src="{{ 'hero-video.mp4' | asset_url }}" type="video/mp4">
+      {% endif %}
     </video>
 
     <div class="wingstone-video-overlay"></div>
@@ -32,28 +37,31 @@
     <div class="wingstone-hero-content">
 
       <p class="wingstone-mini-label">
-        FUTURISTIC STREETWEAR FOR THE NEXT ERA
+        {{ section.settings.eyebrow | default: 'DROP 01 · SS25' }}
       </p>
 
       <h1 class="wingstone-hero-heading">
-        STREETWEAR <br>
-        FOR THE <br>
-        <span>NEXT ERA</span>
+        {%- if section.settings.heading != blank -%}
+          {{ section.settings.heading }}
+        {%- else -%}
+          STREETWEAR <br>
+          FOR THE <br>
+          <span>NEXT ERA</span>
+        {%- endif -%}
       </h1>
 
       <p class="wingstone-hero-description">
-        Cinematic drops, sharp silhouettes, and a quieter premium
-        experience built for the Wingstone world.
+        {{ section.settings.description | default: 'Cinematic drops, sharp silhouettes, and a quieter premium experience built for the Wingstone world.' }}
       </p>
 
       <div class="wingstone-hero-buttons">
 
-        <a href="{{ routes.all_products_collection_url }}" class="wingstone-btn-primary">
-          SHOP DROP →
+        <a href="{{ section.settings.btn1_link | default: routes.all_products_collection_url }}" class="wingstone-btn-primary">
+          {{ section.settings.btn1_label | default: 'SHOP DROP' }} →
         </a>
 
-        <a href="{{ pages.about.url | default: routes.root_url }}" class="wingstone-btn-secondary">
-          EXPLORE STORY
+        <a href="{{ section.settings.btn2_link | default: routes.root_url }}" class="wingstone-btn-secondary">
+          {{ section.settings.btn2_label | default: 'EXPLORE STORY' }}
         </a>
 
       </div>
@@ -67,8 +75,6 @@
       </div>
 
     </div>
-
-    
 
   </div>
 
@@ -118,7 +124,58 @@
 {% schema %}
 {
   "name": "Wingstone Hero",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "DROP 01 · SS25"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "STREETWEAR FOR THE NEXT ERA"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Cinematic drops, sharp silhouettes, and a quieter premium experience built for the Wingstone world."
+    },
+    {
+      "type": "text",
+      "id": "btn1_label",
+      "label": "Button 1 label",
+      "default": "SHOP DROP"
+    },
+    {
+      "type": "url",
+      "id": "btn1_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "btn2_label",
+      "label": "Button 2 label",
+      "default": "EXPLORE STORY"
+    },
+    {
+      "type": "url",
+      "id": "btn2_link",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Hero poster image"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL fallback (Optional)"
+    }
+  ],
   "presets": [
     {
       "name": "Wingstone Hero"

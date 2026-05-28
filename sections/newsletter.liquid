@@ -10,8 +10,19 @@
 
     {% form 'customer' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
-      <input class="field" type="email" name="contact[email]" aria-label="Email" placeholder="Email address" required>
-      <button class="button" type="submit">{{ section.settings.button_label }}</button>
+      {%- if form.posted_successfully? -%}
+        <p class="newsletter-success" style="color: #1f8a5f; font-weight: 600; font-size: 14px; margin-top: 10px;">🎉 You're on the list!</p>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="newsletter-error" style="color: #c72a2a; font-size: 13px; margin-top: 10px; margin-bottom: 10px;">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; justify-content: center; width: 100%;">
+          <input class="field" type="email" name="contact[email]" aria-label="Email" placeholder="Email address" required style="max-width: 320px; flex: 1;">
+          <button class="button" type="submit">{{ section.settings.button_label }}</button>
+        </div>
+      {%- endif -%}
     {% endform %}
   </div>
 </section>

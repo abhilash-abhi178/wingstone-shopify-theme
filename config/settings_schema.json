@@ -50,6 +50,18 @@
     ]
   },
   {
+    "name": "Cart settings",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "default": 999,
+        "info": "In shop currency (e.g. 99 for $99, 999 for ₹999)"
+      }
+    ]
+  },
+  {
     "name": "Typography",
     "settings": [
       {

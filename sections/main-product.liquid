@@ -2,7 +2,7 @@
   /* ─── Reset & Base ──────────────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
+  .pdp {
     --clr-bg:        var(--color-frost);
     --clr-surface:   var(--color-paper);
     --clr-border:    color-mix(in srgb, var(--color-line), var(--color-paper) 16%);
@@ -25,9 +25,11 @@
     --font-body:  var(--font-body-family);
     --transition: .18s cubic-bezier(.4,0,.2,1);
     --pdp-vh-offset: 160px; /* space for headers/controls when fitting image to viewport */
-  }
 
-  body { background: var(--clr-bg); font-family: var(--font-body); color: var(--clr-text); }
+    background: var(--clr-bg);
+    font-family: var(--font-body);
+    color: var(--clr-text);
+  }
 
   /* ─── Section wrapper ──────────────────────────────────────── */
   .pdp { max-width: 1280px; margin: 0 auto; padding: 28px 20px 60px; }
@@ -511,7 +513,7 @@
     .pdp-gallery { flex-direction: column; position: static; }
     .pdp-thumbs { flex-direction: row; max-height: none; overflow-x: auto; padding-bottom: 2px; }
     .pdp-thumb { width: 56px; height: 56px; }
-    :root { --pdp-vh-offset: calc(140px + env(safe-area-inset-bottom)); }
+    .pdp { --pdp-vh-offset: calc(140px + env(safe-area-inset-bottom)); }
     .pdp-main-img {
       width: 100%;
       max-width: 100%;
@@ -669,6 +671,20 @@
       </div>
 
       <h1 class="pdp-title">{{ product.title }}</h1>
+
+      {% if product.metafields.reviews.rating.value != blank %}
+        <div class="pdp-rating">
+          <span class="pdp-stars">
+            {% assign rating_value = product.metafields.reviews.rating.value | round %}
+            {% for i in (1..5) %}
+              {% if i <= rating_value %}★{% else %}☆{% endif %}
+            {% endfor %}
+          </span>
+          <span class="pdp-rating-value">{{ product.metafields.reviews.rating.value }}</span>
+          <span class="pdp-rating-sep">|</span>
+          <a href="#reviews" class="pdp-rating-link">Read Reviews</a>
+        </div>
+      {% endif %}
 
       {% if product.metafields.custom.subtitle != blank %}
         <div class="pdp-subtitle">{{ product.metafields.custom.subtitle }}</div>

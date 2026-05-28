@@ -92,7 +92,7 @@
           surface: '#f9f9ff',
           text: '#091b37'
         },
-        freeShippingThreshold: 99900 /* ₹999 in paise */
+        freeShippingThreshold: {{ settings.free_shipping_threshold | times: 100 | default: 99900 }}
       };
     </script>
     <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
@@ -109,20 +109,21 @@
     <script src="{{ 'product-gallery.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'mobile-enhancements.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
 
     <style>
       /* ── Stitch Design Tokens (pinned, override Shopify settings) ── */
       :root {
-        --color-ink:    #04102f;
-        --color-frost:  #f9f9ff;
-        --color-steel:  #455373;
-        --color-paper:  #f9f9ff;
-        --color-line:   #dde3f0;
-        --color-accent: #cba72f;
+        --color-ink:    {{ settings.color_ink | default: '#04102f' }};
+        --color-frost:  {{ settings.color_frost | default: '#f9f9ff' }};
+        --color-steel:  {{ settings.color_steel | default: '#455373' }};
+        --color-paper:  {{ settings.color_paper | default: '#ffffff' }};
+        --color-line:   {{ settings.color_line | default: '#dde3f0' }};
+        --color-accent: {{ settings.color_accent | default: '#cba72f' }};
         --color-accent-dk: #8a6e18;
         --color-accent-lt: #e8d48a;
-        --color-surface: #f9f9ff;
-        --color-text:   #091b37;
+        --color-surface: {{ settings.color_frost | default: '#f9f9ff' }};
+        --color-text:   {{ settings.color_ink | default: '#091b37' }};
 
         /* Typography — Georgia system serif for headings, Assistant for body */
         --font-heading-family: Georgia, 'Times New Roman', serif;

@@ -151,8 +151,26 @@
 
     <div class="wingstone-menu-links">
       <a href="{{ routes.all_products_collection_url }}">SHOP</a>
-      <a href="{{ routes.collections_url }}">APPAREL</a>
-      <a href="{{ routes.collections_url }}">EQUIPMENT</a>
+      
+      <div class="wingstone-menu-item-with-submenu">
+        <a href="{{ routes.collections_url }}/apparel" class="wingstone-menu-link">APPAREL</a>
+        <div class="wingstone-mobile-submenu">
+          <a href="{{ routes.collections_url }}/jackets" class="wingstone-mobile-submenu-link">Jackets</a>
+          <a href="{{ routes.collections_url }}/trousers" class="wingstone-mobile-submenu-link">Trousers</a>
+          <a href="{{ routes.collections_url }}/base-layers" class="wingstone-mobile-submenu-link">Base Layers</a>
+          <a href="{{ routes.collections_url }}/accessories" class="wingstone-mobile-submenu-link">Accessories</a>
+        </div>
+      </div>
+
+      <div class="wingstone-menu-item-with-submenu">
+        <a href="{{ routes.collections_url }}/equipment" class="wingstone-menu-link">EQUIPMENT</a>
+        <div class="wingstone-mobile-submenu">
+          <a href="{{ routes.collections_url }}/packs" class="wingstone-mobile-submenu-link">Packs</a>
+          <a href="{{ routes.collections_url }}/footwear" class="wingstone-mobile-submenu-link">Footwear</a>
+          <a href="{{ routes.collections_url }}/gear" class="wingstone-mobile-submenu-link">Gear</a>
+        </div>
+      </div>
+
       <a href="{{ routes.collections_url }}/expeditions">EXPEDITIONS</a>
       <a href="{{ pages.journal.url | default: routes.root_url }}">JOURNAL</a>
       <!-- LOOKBOOK — fixed route using Shopify pages object -->
@@ -551,6 +569,28 @@
   color: var(--color-accent, #cba72f);
   padding-left: 2.25rem;
   background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 94%);
+}
+
+.wingstone-mobile-submenu {
+  background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 82%);
+  padding: 0.25rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
+}
+
+.wingstone-mobile-submenu-link {
+  display: block !important;
+  padding: 0.6rem 2.25rem !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: none !important;
+  opacity: 0.8;
+  border-bottom: none !important;
+}
+
+.wingstone-mobile-submenu-link:hover {
+  opacity: 1;
+  padding-left: 2.5rem !important;
 }
 
 .wingstone-menu-footer {

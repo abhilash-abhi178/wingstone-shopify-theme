@@ -469,44 +469,7 @@
   transition: transform .25s ease, opacity .25s ease;
 }
 
-/* Mobile menu overlay */
-.wingstone-menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(4, 16, 47, 0.5);
-  z-index: 60;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .28s ease;
-  backdrop-filter: blur(3px);
-}
 
-.wingstone-menu-overlay.is-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Mobile menu drawer */
-.wingstone-mobile-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: min(320px, 88vw);
-  background: var(--color-frost, #f9f9ff);
-  border-right: 1px solid var(--color-line, #dde3f0);
-  box-shadow: 4px 0 40px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
-  transform: translateX(-110%);
-  transition: transform .32s cubic-bezier(.2,.9,.2,1);
-  z-index: 70;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
-.wingstone-mobile-menu.is-open {
-  transform: translateX(0);
-}
 
 .wingstone-menu-header {
   display: flex;
@@ -623,42 +586,9 @@
 </style>
 
 <script>
-/* ── Mobile menu toggle ── */
+/* ── Header hide/show on scroll ── */
 (function() {
-  const trigger  = document.querySelector('.wingstone-menu-trigger');
-  const menu     = document.querySelector('.wingstone-mobile-menu');
-  const overlay  = document.querySelector('.wingstone-menu-overlay');
-  const closeBtn = document.querySelector('.wingstone-menu-close');
-  const header   = document.querySelector('.site-header');
-
-  if (!trigger || !menu) return;
-
-  const openMenu = () => {
-    menu.classList.add('is-open');
-    if (overlay) overlay.classList.add('is-open');
-    trigger.setAttribute('aria-expanded', 'true');
-    menu.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeMenu = () => {
-    menu.classList.remove('is-open');
-    if (overlay) overlay.classList.remove('is-open');
-    trigger.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  };
-
-  trigger.addEventListener('click', openMenu);
-  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-  if (overlay) overlay.addEventListener('click', closeMenu);
-
-  /* Escape key closes menu */
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
-  });
-
-  /* ── Header hide/show on scroll ── */
+  const header = document.querySelector('.site-header');
   if (header) {
     let lastY = 0;
     let ticking = false;

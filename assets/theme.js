@@ -246,11 +246,7 @@ cartForms.forEach((form) => {
 document.querySelectorAll('.product-form').forEach((form) => {
   const variantData = form.querySelector('[data-product-variants]');
   const idInput = form.querySelector('input[name="id"]');
-<<<<<<< HEAD
   const submit = form.querySelector('button[type="submit"], [type="submit"]');
-=======
-  const submit = form.querySelector('button[type="submit"]');
->>>>>>> parent of df3c757 (Update theme.js)
   if (!variantData || !idInput || !submit) return;
 
   const variants = JSON.parse(variantData.textContent);
@@ -370,46 +366,7 @@ document.querySelectorAll('.product-form').forEach((form) => {
     });
   });
 
-  // Additional wiring for Amazon-style classes if present
-  const colorCards = form.querySelectorAll('.color-card');
-  if (colorCards.length) {
-    colorCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        if (card.classList.contains('disabled')) return;
-        const group = card.closest('[data-option-group]');
-        const buttons = [...group.querySelectorAll('.color-card')];
-        buttons.forEach(b => b.classList.toggle('is-active', b === card));
-        const selectedColor = form.querySelector('#selectedColor');
-        if (selectedColor) selectedColor.textContent = card.querySelector('.variant-name') ? card.querySelector('.variant-name').innerText : card.dataset.optionValue;
-        updateVariant();
-      });
-    });
-  }
 
-  const sizeButtons = form.querySelectorAll('.size-btn');
-  if (sizeButtons.length) {
-    sizeButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('disabled')) return;
-        const group = btn.closest('[data-option-group]');
-        const buttons = [...group.querySelectorAll('.size-btn')];
-        buttons.forEach(b => b.classList.toggle('is-active', b === btn));
-        const selectedSize = form.querySelector('#selectedSize');
-        if (selectedSize) selectedSize.textContent = btn.textContent.trim();
-        updateVariant();
-      });
-    });
-  }
-
-  // Wire quantity plus/minus in Amazon layout
-  const qtyInputAlt = form.querySelector('.qty-input');
-  const plus = form.querySelector('.qty-btn.plus');
-  const minus = form.querySelector('.qty-btn.minus');
-  if (qtyInputAlt) {
-    if (plus) plus.addEventListener('click', () => { qtyInputAlt.value = String(Math.max(1, Number(qtyInputAlt.value || 0) + 1)); qtyInputAlt.dispatchEvent(new Event('change',{bubbles:true})); });
-    if (minus) minus.addEventListener('click', () => { const val = Math.max(1, Number(qtyInputAlt.value || 1) - 1); qtyInputAlt.value = String(val); qtyInputAlt.dispatchEvent(new Event('change',{bubbles:true})); });
-    qtyInputAlt.addEventListener('change', () => { qtyInputAlt.value = String(Math.max(1, Number(qtyInputAlt.value || 1))); });
-  }
 
   if (quantityInput) {
     quantityInput.addEventListener('change', () => {

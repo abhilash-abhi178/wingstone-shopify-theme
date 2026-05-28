@@ -15,37 +15,37 @@
         "type": "color",
         "id": "color_ink",
         "label": "Ink navy",
-        "default": "#1A2545"
+        "default": "#04102f"
       },
       {
         "type": "color",
         "id": "color_frost",
         "label": "Ice pale",
-        "default": "#F4F7FD"
+        "default": "#f9f9ff"
       },
       {
         "type": "color",
         "id": "color_steel",
         "label": "Muted text",
-        "default": "#5A6A8A"
+        "default": "#455373"
       },
       {
         "type": "color",
         "id": "color_paper",
         "label": "Paper",
-        "default": "#FFFFFF"
+        "default": "#f9f9ff"
       },
       {
         "type": "color",
         "id": "color_line",
         "label": "Soft border",
-        "default": "#D5DDEA"
+        "default": "#dde3f0"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent",
-        "default": "#C8A96E"
+        "default": "#cba72f"
       }
     ]
   },
@@ -56,7 +56,7 @@
         "type": "font_picker",
         "id": "heading_font",
         "label": "Heading font",
-        "default": "assistant_n7"
+        "default": "georgia_n4"
       },
       {
         "type": "font_picker",

@@ -397,15 +397,15 @@ img, video {
   }
 
   .pdp-mobile-bar .pdp-btn--cart {
-    background: #f0ac00 !important;
-    color: #111 !important;
-    box-shadow: 0 4px 14px rgba(240, 172, 0, 0.3) !important;
+    background: var(--color-ink, #04102f) !important;
+    color: var(--color-paper, #f9f9ff) !important;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--color-ink, #04102f), transparent 82%) !important;
   }
 
   .pdp-mobile-bar .pdp-btn--buy {
-    background: #1a2545 !important;
+    background: linear-gradient(135deg, #735c00 0%, var(--color-accent, #cba72f) 50%, #e8d48a 100%) !important;
     color: #fff !important;
-    box-shadow: 0 4px 14px rgba(26, 37, 69, 0.3) !important;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--color-accent, #cba72f), transparent 76%) !important;
   }
 
   /* Make room for the sticky bar */

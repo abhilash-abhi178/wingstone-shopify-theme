@@ -572,6 +572,11 @@
   display: block;
 }
 
+.product-card__signal {
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
 .product-card__title {
   margin: 0 0 6px 0;
   font-family: var(--font-heading-family), Georgia, serif;

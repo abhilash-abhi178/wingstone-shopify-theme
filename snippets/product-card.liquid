@@ -59,6 +59,7 @@
     <!-- Vendor / Category -->
     <div class="product-card__meta">
       <span class="product-card__vendor">{{ product.vendor | default: 'Wingstone' }}</span>
+      <span class="product-card__signal">{{ product.type | default: 'Wingstone collectible' | upcase }}</span>
     </div>
 
     <!-- Title -->
@@ -89,7 +90,7 @@
 
                 {%- comment -%} Check for metafield-driven swatch color first {%- endcomment -%}
                 {%- assign meta_key = 'swatch_color_' | append: swatch_handle -%}
-                {%- assign meta_swatch = product.metafields.custom[meta_key] -%}
+                {%- assign meta_swatch = product.metafields.custom[meta_key].value -%}
 
                 {%- if meta_swatch != blank -%}
                   {%- assign swatch_css = meta_swatch -%}

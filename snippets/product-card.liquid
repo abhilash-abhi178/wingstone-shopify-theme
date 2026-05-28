@@ -1,70 +1,68 @@
-<article class="product-card">
+<article class="product-card" data-product-id="{{ product.id }}">
   <div class="product-card__image">
-    <a href="{{ product.url }}" aria-label="{{ product.title }}">
+    <a href="{{ product.url }}" aria-label="{{ product.title | escape }}" tabindex="-1">
       {% if product.featured_media %}
-        {{ product.featured_media | image_url: width: 720 | image_tag: loading: 'lazy', alt: product.title, class: 'primary-image' }}
+        {{ product.featured_media | image_url: width: 720 | image_tag:
+          loading: 'lazy',
+          alt: product.title,
+          class: 'primary-image',
+          width: product.featured_media.preview_image.width,
+          height: product.featured_media.preview_image.height
+        }}
       {% else %}
         {{ 'product-1' | placeholder_svg_tag: 'img-cover' }}
       {% endif %}
-      
+
       {% if product.images.size > 1 %}
-        {{ product.images[1] | image_url: width: 720 | image_tag: loading: 'lazy', alt: product.title, class: 'hover-image' }}
+        {{ product.images[1] | image_url: width: 720 | image_tag:
+          loading: 'lazy',
+          alt: product.title,
+          class: 'hover-image'
+        }}
       {% endif %}
     </a>
 
-    <!-- Wishlist Button -->
-    <button type="button" class="product-card__wishlist-btn" aria-label="Add to wishlist" onclick="event.preventDefault(); this.classList.toggle('active');">
+    <!-- Wishlist Button (localStorage persistence) -->
+    <button
+      type="button"
+      class="product-card__wishlist-btn"
+      aria-label="Add {{ product.title | escape }} to wishlist"
+      aria-pressed="false"
+      data-wishlist-toggle
+      data-product-id="{{ product.id }}"
+    >
       {% render 'icon-heart' %}
     </button>
 
     <!-- Discount Badge -->
     {% if product.compare_at_price > product.price %}
       {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
-      <span class="product-card__discount-badge">{{ discount }}% OFF</span>
+      <span class="product-card__discount-badge" aria-label="{{ discount }}% off">{{ discount }}% OFF</span>
     {% endif %}
   </div>
 
   <div class="product-card__info">
-    <div class="product-card__badges">
+    <!-- Tag badges -->
+    <div class="product-card__badges" aria-hidden="true">
       {% if product.tags contains 'new' or product.tags contains 'new-drop' %}
-        <span class="product-card__badge">New Drop</span>
+        <span class="product-card__badge product-card__badge--new">New Drop</span>
       {% endif %}
       {% if product.tags contains 'best-seller' %}
-        <span class="product-card__badge">Best Seller</span>
-      {% endif %}
-      {% if product.compare_at_price > product.price %}
-        <span class="product-card__badge">Limited</span>
+        <span class="product-card__badge product-card__badge--best">Best Seller</span>
       {% endif %}
     </div>
 
+    <!-- Vendor / Category -->
     <div class="product-card__meta">
-      <span class="product-card__vendor">{{ product.vendor | default: 'Wingstone Drop' }}</span>
+      <span class="product-card__vendor">{{ product.vendor | default: 'Wingstone' }}</span>
     </div>
 
-    <a href="{{ product.url }}">
+    <!-- Title -->
+    <a href="{{ product.url }}" class="product-card__title-link">
       <h3 class="product-card__title">{{ product.title }}</h3>
     </a>
 
-    <!-- Star Ratings / Review Counts -->
-    {%- assign temp_id = product.id | default: 12345 -%}
-    {%- assign rating_decimal = temp_id | modulo: 5 | plus: 5 -%}
-    {%- assign rating = '4.' | append: rating_decimal -%}
-    {%- assign rating_count = temp_id | modulo: 80 | plus: 12 -%}
-    <div class="product-card__rating">
-      <div class="product-card__stars" aria-label="{{ rating }} out of 5 stars">
-        {%- render 'icon-star', filled: true -%}
-        {%- render 'icon-star', filled: true -%}
-        {%- render 'icon-star', filled: true -%}
-        {%- render 'icon-star', filled: true -%}
-        {%- if rating_decimal >= 8 -%}
-          {%- render 'icon-star', filled: true -%}
-        {%- else -%}
-          {%- render 'icon-star', filled: false -%}
-        {%- endif -%}
-      </div>
-      <span class="product-card__rating-count">{{ rating }} ({{ rating_count }})</span>
-    </div>
-
+    <!-- Pricing -->
     <div class="product-card__pricing">
       {% if product.compare_at_price > product.price %}
         <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
@@ -74,28 +72,59 @@
       {% endif %}
     </div>
 
-    <!-- Color and Size Swatches -->
+    <!-- Color & Size Swatches — fixed multi-word parser -->
     {%- if product.variants.size > 0 -%}
       <div class="product-card__variants">
         {%- for option in product.options_with_values -%}
           {%- assign option_name = option.name | downcase -%}
+
           {%- if option_name == 'color' or option_name == 'colour' -%}
-            <div class="product-card__swatches product-card__swatches--color">
+            <div class="product-card__swatches product-card__swatches--color" role="list" aria-label="{{ option.name }}">
               {%- for value in option.values limit: 5 -%}
-                {%- assign swatch_color = value | downcase -%}
-                {%- if swatch_color == 'off white' or swatch_color == 'off-white' -%}
-                  {%- assign swatch_color = '#faf9f6' -%}
+                {%- assign swatch_handle = value | handleize -%}
+
+                {%- comment -%} Check for metafield-driven swatch color first {%- endcomment -%}
+                {%- assign meta_swatch = product.metafields.custom['swatch_color_' | append: swatch_handle] -%}
+
+                {%- if meta_swatch != blank -%}
+                  {%- assign swatch_css = meta_swatch -%}
+                {%- else -%}
+                  {%- comment -%} Built-in color name map for common fashion colors {%- endcomment -%}
+                  {%- case swatch_handle -%}
+                    {%- when 'deep-navy', 'navy', 'dark-navy', 'midnight-navy' -%}{%- assign swatch_css = '#04102f' -%}
+                    {%- when 'obsidian', 'black', 'jet-black', 'onyx' -%}{%- assign swatch_css = '#0b0d12' -%}
+                    {%- when 'stone-grey', 'stone-gray', 'slate', 'charcoal' -%}{%- assign swatch_css = '#6b7280' -%}
+                    {%- when 'off-white', 'cream', 'ivory', 'chalk', 'ecru' -%}{%- assign swatch_css = '#faf9f6' -%}
+                    {%- when 'white', 'alpine-white' -%}{%- assign swatch_css = '#ffffff' -%}
+                    {%- when 'sand', 'dune', 'khaki', 'desert' -%}{%- assign swatch_css = '#c2a97a' -%}
+                    {%- when 'forest-green', 'pine', 'olive', 'sage' -%}{%- assign swatch_css = '#3a5a40' -%}
+                    {%- when 'red', 'crimson', 'scarlet', 'ruby' -%}{%- assign swatch_css = '#9e1b32' -%}
+                    {%- when 'gold', 'amber', 'bronze', 'caramel' -%}{%- assign swatch_css = '#cba72f' -%}
+                    {%- when 'cobalt', 'blue', 'royal-blue' -%}{%- assign swatch_css = '#1e3a5f' -%}
+                    {%- when 'burnt-orange', 'terracotta', 'rust' -%}{%- assign swatch_css = '#b55a30' -%}
+                    {%- else -%}
+                      {%- comment -%} Attempt raw value as CSS color — works for hex, rgb, named colors {%- endcomment -%}
+                      {%- assign swatch_css = value | downcase -%}
+                  {%- endcase -%}
                 {%- endif -%}
-                <span class="product-card__swatch product-card__swatch--color" style="background-color: {{ swatch_color }};" title="{{ value }}"></span>
+
+                <span
+                  class="product-card__swatch product-card__swatch--color"
+                  style="background-color: {{ swatch_css }};"
+                  title="{{ value }}"
+                  role="listitem"
+                  aria-label="{{ value }}"
+                ></span>
               {%- endfor -%}
               {%- if option.values.size > 5 -%}
-                <span class="product-card__swatch-more">+{{ option.values.size | minus: 5 }}</span>
+                <span class="product-card__swatch-more" aria-label="{{ option.values.size | minus: 5 }} more colors">+{{ option.values.size | minus: 5 }}</span>
               {%- endif -%}
             </div>
+
           {%- elsif option_name == 'size' -%}
-            <div class="product-card__swatches product-card__swatches--size">
+            <div class="product-card__swatches product-card__swatches--size" role="list" aria-label="{{ option.name }}">
               {%- for value in option.values limit: 4 -%}
-                <span class="product-card__swatch product-card__swatch--size" title="{{ value }}">{{ value }}</span>
+                <span class="product-card__swatch product-card__swatch--size" title="{{ value }}" role="listitem">{{ value }}</span>
               {%- endfor -%}
               {%- if option.values.size > 4 -%}
                 <span class="product-card__swatch-more">+{{ option.values.size | minus: 4 }}</span>
@@ -106,15 +135,65 @@
       </div>
     {%- endif -%}
 
+    <!-- Quick Add Form -->
     {%- assign product_form_id = 'product-form-' | append: product.id -%}
     {%- form 'product', product, id: product_form_id, class: 'product-card__form' -%}
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      <button class="product-card__quick-add" type="submit" {% unless product.available %}disabled{% endunless %}>
+      <button
+        class="product-card__quick-add"
+        type="submit"
+        aria-label="{{ product.title | escape }} — {% if product.available %}Add to cart{% else %}Sold out{% endif %}"
+        {% unless product.available %}disabled{% endunless %}
+      >
         <span>{% if product.available %}Quick Add{% else %}Sold Out{% endif %}</span>
-        {% if product.available %}
-          {% render 'icon-arrow' %}
-        {% endif %}
+        {% if product.available %}{% render 'icon-arrow' %}{% endif %}
       </button>
     {%- endform -%}
   </div>
 </article>
+
+<script>
+/* Wishlist localStorage logic — scoped to this card */
+(function() {
+  const card = document.querySelector('[data-product-id="{{ product.id }}"]');
+  if (!card) return;
+  const btn = card.querySelector('[data-wishlist-toggle]');
+  if (!btn) return;
+
+  const productId = '{{ product.id }}';
+  const key = 'wl_' + productId;
+
+  const isWishlisted = () => localStorage.getItem(key) === '1';
+
+  const updateState = (wishlisted) => {
+    btn.setAttribute('aria-pressed', wishlisted ? 'true' : 'false');
+    btn.classList.toggle('active', wishlisted);
+    btn.setAttribute('aria-label',
+      wishlisted
+        ? 'Remove {{ product.title | escape | replace: "'", "" }} from wishlist'
+        : 'Add {{ product.title | escape | replace: "'", "" }} to wishlist'
+    );
+  };
+
+  /* Init state from storage */
+  updateState(isWishlisted());
+
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const next = !isWishlisted();
+    if (next) {
+      localStorage.setItem(key, '1');
+    } else {
+      localStorage.removeItem(key);
+    }
+    updateState(next);
+
+    /* Micro-animation */
+    btn.animate([
+      { transform: 'scale(1)' },
+      { transform: 'scale(1.3)' },
+      { transform: 'scale(1)' }
+    ], { duration: 280, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' });
+  });
+})();
+</script>

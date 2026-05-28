@@ -79,7 +79,7 @@
   cursor: pointer;
   background:
     radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 35%),
-    linear-gradient(135deg, #0f172a 0%, #111827 100%);
+    linear-gradient(135deg, var(--color-ink, #04102f) 0%, color-mix(in srgb, var(--color-ink, #04102f), var(--color-steel, #455373) 18%) 100%);
   color: white;
   display: flex;
   align-items: center;
@@ -379,19 +379,40 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
+  background: var(--color-paper, #f9f9ff);
+  border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
+  border-radius: 4px;
   overflow: hidden;
   padding: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  transition: transform 300ms var(--ease-luxury, ease), box-shadow 300ms var(--ease-luxury, ease), border-color 300ms var(--ease-luxury, ease);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-ink, #04102f), transparent 93%);
+  transition:
+    transform 380ms cubic-bezier(.25,.46,.45,.94),
+    box-shadow 380ms cubic-bezier(.25,.46,.45,.94),
+    border-color 380ms ease;
+}
+
+.product-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent, #cba72f);
+  border-radius: 0;
+  transition: width 380ms cubic-bezier(.25,.46,.45,.94);
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.1);
+  transform: translateY(-7px);
+  box-shadow:
+    0 4px 8px color-mix(in srgb, var(--color-ink, #04102f), transparent 94%),
+    0 20px 48px color-mix(in srgb, var(--color-ink, #04102f), transparent 88%);
+  border-color: color-mix(in srgb, var(--color-accent, #cba72f), transparent 65%);
+}
+
+.product-card:hover::after {
+  width: 100%;
 }
 
 .product-card__image {
@@ -474,8 +495,8 @@
 
 .product-card__wishlist-btn:hover svg,
 .product-card__wishlist-btn.active svg {
-  color: #ef4444;
-  fill: #ef4444;
+  color: var(--color-accent, #cba72f);
+  fill: var(--color-accent, #cba72f);
 }
 
 /* Floating discount badge */
@@ -547,30 +568,7 @@
   letter-spacing: 0.1em;
 }
 
-.product-card__rating {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 2px;
-}
 
-.product-card__stars {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.product-card__stars svg,
-.product-card__stars svg.icon-star {
-  width: 13px;
-  height: 13px;
-  color: #ffb800;
-}
-
-.product-card__rating-count {
-  font-size: 11px;
-  color: var(--color-steel, #6b7280);
-}
 
 .product-card__variants {
   display: flex;

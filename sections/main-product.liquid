@@ -37,8 +37,8 @@
     display: flex; align-items: center; gap: 6px;
     font-size: 12px; color: var(--clr-muted); margin-bottom: 20px; flex-wrap: wrap;
   }
-  .pdp-breadcrumb a { color: #0066c0; text-decoration: none; }
-  .pdp-breadcrumb a:hover { text-decoration: underline; color: #c45500; }
+  .pdp-breadcrumb a { color: var(--clr-muted); text-decoration: none; transition: color .18s ease; }
+  .pdp-breadcrumb a:hover { text-decoration: underline; color: var(--clr-accent); }
   .pdp-breadcrumb span { color: var(--clr-muted); }
 
   /* ─── Two-column layout ────────────────────────────────────── */
@@ -144,10 +144,9 @@
   }
   .pdp-social-proof strong { color: var(--clr-text); }
 
-  /* Vendor */
   .pdp-vendor {
     font-family: var(--font-head); font-size: 13px;
-    color: #0066c0; font-weight: 500; margin-bottom: 6px;
+    color: var(--clr-accent); font-weight: 600; margin-bottom: 6px;
     text-transform: uppercase; letter-spacing: .8px;
   }
   .pdp-vendor:hover { text-decoration: underline; cursor: pointer; }
@@ -159,14 +158,14 @@
     margin-bottom: 10px;
   }
 
-  /* Rating */
+  /* Rating — placeholder for real review app integration */
   .pdp-rating {
     display: flex; align-items: center; gap: 8px;
     margin-bottom: 14px; font-size: 13px;
   }
-  .pdp-stars { color: var(--clr-gold); font-size: 15px; letter-spacing: 1px; }
-  .pdp-rating-link { color: #0066c0; text-decoration: none; }
-  .pdp-rating-link:hover { text-decoration: underline; color: #c45500; }
+  .pdp-stars { color: var(--clr-accent); font-size: 15px; letter-spacing: 1px; }
+  .pdp-rating-link { color: var(--clr-accent); text-decoration: none; }
+  .pdp-rating-link:hover { text-decoration: underline; color: var(--clr-accent-dk); }
   .pdp-rating-sep { color: var(--clr-border-2); }
 
   /* Divider */
@@ -199,7 +198,7 @@
   .pdp-shipping-note {
     font-size: 12.5px; color: var(--clr-muted); margin-top: 6px;
   }
-  .pdp-shipping-note a { color: #0066c0; text-decoration: none; }
+  .pdp-shipping-note a { color: var(--clr-accent); text-decoration: none; }
   .pdp-shipping-note a:hover { text-decoration: underline; }
 
   /* ─── Variant Options ──────────────────────────────────────── */
@@ -215,10 +214,10 @@
     font-weight: 700; color: var(--clr-text);
   }
   .pdp-option-label a {
-    margin-left: auto; font-size: 12px; color: #0066c0;
+    margin-left: auto; font-size: 12px; color: var(--clr-accent);
     text-decoration: none; font-weight: 400;
   }
-  .pdp-option-label a:hover { text-decoration: underline; color: #c45500; }
+  .pdp-option-label a:hover { text-decoration: underline; color: var(--clr-accent-dk); }
 
   /* Color cards */
   .pdp-color-grid {
@@ -291,7 +290,7 @@
   .pdp-size-btn.is-active {
     border-color: var(--clr-thumb-active);
     box-shadow: 0 0 0 1.5px var(--clr-thumb-active);
-    background: #fff4f0;
+    background: color-mix(in srgb, var(--clr-thumb-active), transparent 90%);
     color: var(--clr-thumb-active);
     font-weight: 700;
   }
@@ -356,11 +355,11 @@
   .pdp-btn--cart:hover { background: var(--clr-buy-dk); box-shadow: 0 4px 12px rgba(240,172,0,.4); }
 
   .pdp-btn--buy {
-    background: #ffd814;
-    color: #000000;
-    box-shadow: 0 2px 6px rgba(240,172,0,.3);
+    background: linear-gradient(135deg, #735c00 0%, var(--clr-accent) 50%, #e8d48a 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 28px rgba(203,167,47,.3);
   }
-  .pdp-btn--buy:hover { background: #f7c600; box-shadow: 0 4px 12px rgba(240,172,0,.38); }
+  .pdp-btn--buy:hover { filter: brightness(1.06); box-shadow: 0 12px 36px rgba(203,167,47,.38); }
 
   .pdp-btn:disabled {
     background: var(--clr-border); color: var(--clr-muted); cursor: not-allowed; box-shadow: none;
@@ -882,6 +881,141 @@
 
     </div><!-- /info -->
   </div><!-- /layout -->
+
+  <!-- ── Mobile Sticky Add-to-Cart Bar ── -->
+  <div class="pdp-mobile-sticky-atc" id="mobileSticky" aria-hidden="true">
+    <div class="pdp-mobile-sticky-atc__inner">
+      <div class="pdp-mobile-sticky-atc__info">
+        <span class="pdp-mobile-sticky-atc__title">{{ product.title | truncate: 28 }}</span>
+        <span class="pdp-mobile-sticky-atc__price" data-mobile-sticky-price>
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+      </div>
+      <button
+        class="pdp-mobile-sticky-atc__btn"
+        type="button"
+        data-mobile-add-to-cart
+        id="addToCartBtnMobile"
+        aria-label="Add {{ product.title | escape }} to cart"
+        {% unless product.available %}disabled{% endunless %}
+      >
+        {% if product.available %}ADD TO CART{% else %}SOLD OUT{% endif %}
+      </button>
+    </div>
+  </div>
+
+  <style>
+  /* Mobile Sticky ATC */
+  .pdp-mobile-sticky-atc {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    padding: .75rem 1rem calc(.75rem + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--color-frost, #f9f9ff), white 6%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--color-line, #dde3f0);
+    box-shadow: 0 -8px 30px color-mix(in srgb, var(--color-ink, #04102f), transparent 92%);
+    transform: translateY(100%);
+    transition: transform .32s cubic-bezier(.2,.9,.2,1);
+  }
+
+  @media (max-width: 860px) {
+    .pdp-mobile-sticky-atc { display: block; }
+  }
+
+  .pdp-mobile-sticky-atc.is-visible {
+    transform: translateY(0);
+  }
+
+  .pdp-mobile-sticky-atc__inner {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .pdp-mobile-sticky-atc__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    min-width: 0;
+  }
+
+  .pdp-mobile-sticky-atc__title {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--color-ink, #04102f);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pdp-mobile-sticky-atc__price {
+    font-size: .92rem;
+    font-weight: 800;
+    color: var(--color-ink, #04102f);
+  }
+
+  .pdp-mobile-sticky-atc__btn {
+    flex-shrink: 0;
+    height: 48px;
+    padding: 0 1.5rem;
+    border: none;
+    border-radius: 2px;
+    background: linear-gradient(135deg, #735c00 0%, var(--color-accent, #cba72f) 50%, #e8d48a 100%);
+    color: #fff;
+    font-family: var(--font-body-family, sans-serif);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform .18s ease, filter .18s ease;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--color-accent, #cba72f), transparent 76%);
+  }
+
+  .pdp-mobile-sticky-atc__btn:hover:not(:disabled) {
+    transform: scale(1.02);
+    filter: brightness(1.06);
+  }
+
+  .pdp-mobile-sticky-atc__btn:disabled {
+    background: var(--color-line, #dde3f0);
+    color: var(--color-steel, #455373);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  </style>
+
+  <script>
+  /* Mobile sticky ATC — show on scroll past the main ATC button */
+  (function() {
+    const sticky = document.getElementById('mobileSticky');
+    const mainAtc = document.getElementById('addToCartBtn');
+    if (!sticky || !mainAtc || window.innerWidth > 860) return;
+
+    let revealed = false;
+
+    const onScroll = () => {
+      const rect = mainAtc.getBoundingClientRect();
+      const pastBtn = rect.bottom < 0;
+      if (pastBtn !== revealed) {
+        revealed = pastBtn;
+        sticky.classList.toggle('is-visible', revealed);
+        sticky.setAttribute('aria-hidden', String(!revealed));
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
 
 </section>
 

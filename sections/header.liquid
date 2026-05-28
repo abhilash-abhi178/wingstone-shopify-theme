@@ -1,11 +1,10 @@
-<header class="site-header">
+<header class="site-header" data-site-header>
   {% if section.settings.promo_text != blank %}
     <div class="site-header__promo" aria-label="{{ section.settings.promo_text | escape }}">
       <div class="site-header__promo-track">
-        {% for i in (1..2) %}
+        {% for i in (1..4) %}
           <span>{{ section.settings.promo_text }}</span>
-          <span>{{ section.settings.promo_text }}</span>
-          <span>{{ section.settings.promo_text }}</span>
+          <span aria-hidden="true">·</span>
         {% endfor %}
       </div>
     </div>
@@ -13,80 +12,120 @@
 
   <div class="page-width site-header__shell">
     <div class="site-header__inner">
+
+      <!-- LEFT: Hamburger + Desktop Nav -->
       <div class="site-header__left">
-        <button class="wingstone-menu-trigger" type="button" aria-label="Menu">
-          ☰
+        <button class="wingstone-menu-trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="wingstone-menu-trigger__bar"></span>
+          <span class="wingstone-menu-trigger__bar"></span>
+          <span class="wingstone-menu-trigger__bar"></span>
         </button>
 
-        <nav class="site-nav" data-site-nav>
-          <a href="{{ routes.root_url }}">SHOP</a>
-          <a href="{{ routes.root_url }}#featured-products">DROPS</a>
-          <a href="{{ routes.collections_url }}">COLLECTIONS</a>
-          <a href="{{ pages.about.url | default: routes.root_url }}">ABOUT</a>
-          <a href="{{ routes.root_url }}#featured-products">LOOKBOOK</a>
+        <nav class="site-nav" aria-label="Main navigation" data-site-nav>
+          <a href="{{ routes.all_products_collection_url }}"
+             class="site-nav__link{% if request.path == routes.all_products_collection_url %} is-active{% endif %}"
+          >SHOP</a>
+
+          <!-- Apparel Dropdown -->
+          <div class="site-nav__dropdown-wrap">
+            <a href="{{ routes.collections_url }}"
+               class="site-nav__link site-nav__link--has-dropdown"
+               aria-haspopup="true"
+               aria-expanded="false"
+            >APPAREL
+              <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <div class="site-nav__dropdown" aria-hidden="true">
+              <a href="{{ routes.collections_url }}/jackets" class="site-nav__dropdown-link">Jackets</a>
+              <a href="{{ routes.collections_url }}/trousers" class="site-nav__dropdown-link">Trousers</a>
+              <a href="{{ routes.collections_url }}/base-layers" class="site-nav__dropdown-link">Base Layers</a>
+              <a href="{{ routes.collections_url }}/accessories" class="site-nav__dropdown-link">Accessories</a>
+            </div>
+          </div>
+
+          <!-- Equipment Dropdown -->
+          <div class="site-nav__dropdown-wrap">
+            <a href="{{ routes.collections_url }}"
+               class="site-nav__link site-nav__link--has-dropdown"
+               aria-haspopup="true"
+               aria-expanded="false"
+            >EQUIPMENT
+              <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <div class="site-nav__dropdown" aria-hidden="true">
+              <a href="{{ routes.collections_url }}/packs" class="site-nav__dropdown-link">Packs</a>
+              <a href="{{ routes.collections_url }}/footwear" class="site-nav__dropdown-link">Footwear</a>
+              <a href="{{ routes.collections_url }}/gear" class="site-nav__dropdown-link">Gear</a>
+            </div>
+          </div>
+
+          <a href="{{ routes.collections_url }}/expeditions"
+             class="site-nav__link"
+          >EXPEDITIONS</a>
+
+          <a href="{{ pages.journal.url | default: routes.root_url }}"
+             class="site-nav__link"
+          >JOURNAL</a>
+
+          <!-- LOOKBOOK — fixed: uses pages.lookbook Shopify page -->
+          <a href="{{ pages.lookbook.url | default: routes.root_url }}"
+             class="site-nav__link{% if request.page_type == 'page' and request.path contains 'lookbook' %} is-active{% endif %}"
+          >LOOKBOOK</a>
         </nav>
-        <!-- MOBILE MENU OVERLAY -->
-
-<div class="wingstone-menu-overlay"></div>
-
-<!-- MOBILE MENU DRAWER -->
-
-<div class="wingstone-mobile-menu">
-
-  <div class="wingstone-menu-header">
-
-    <button class="wingstone-menu-close">
-      ✕
-    </button>
-
-    <div class="wingstone-menu-logo">
-      WINGSTONE
-    </div>
-
-  </div>
-
-  <div class="wingstone-menu-links">
-
-    <a href="{{ routes.all_products_collection_url }}">SHOP</a>
-
-    <a href="{{ routes.collections_url }}/new">DROPS</a>
-
-    <a href="{{ routes.collections_url }}">COLLECTIONS</a>
-
-    <a href="{{ pages.about.url | default: routes.root_url }}">ABOUT</a>
-
-    <a href="{{ pages.lookbook.url | default: routes.root_url }}">LOOKBOOK</a>
-
-    <a href="{{ routes.cart_url }}" aria-label="Cart" data-cart-drawer-toggle> CART </a>
-
-  </div>
-
-</div>
       </div>
 
-      <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      <!-- CENTER: Brand Logo -->
+      <a class="site-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} — Home">
         {% if section.settings.logo != blank %}
-          {{ section.settings.logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
+          {{ section.settings.logo | image_url: width: 380 | image_tag:
+            class: 'site-header__logo',
+            alt: shop.name,
+            loading: 'eager',
+            width: section.settings.logo.width,
+            height: section.settings.logo.height
+          }}
         {% elsif settings.brand_logo != blank %}
-          {{ settings.brand_logo | image_url: width: 380 | image_tag: class: 'site-header__logo', alt: shop.name }}
+          {{ settings.brand_logo | image_url: width: 380 | image_tag:
+            class: 'site-header__logo',
+            alt: shop.name,
+            loading: 'eager'
+          }}
         {% else %}
-          <img class="site-header__logo" src="{{ 'wingstone-logo.png' | asset_url }}" alt="{{ shop.name | default: 'Wingstone' }}" width="1254" height="1254">
+          <img
+            class="site-header__logo"
+            src="{{ 'wingstone-logo.png' | asset_url }}"
+            alt="{{ shop.name | default: 'Wingstone' }}"
+            width="1254"
+            height="1254"
+            loading="eager"
+          >
         {% endif %}
       </a>
 
+      <!-- RIGHT: Account + Cart -->
       <div class="site-header__actions">
         {% if shop.customer_accounts_enabled %}
-          <a class="site-header__action site-header__action--account" href="{{ routes.account_url }}" aria-label="Account">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <a class="site-header__action site-header__action--account"
+             href="{{ routes.account_url }}"
+             aria-label="Account"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
               <path d="M12 12.5a4.5 4.5 0 1 0-4.5-4.5 4.5 4.5 0 0 0 4.5 4.5Zm0 2c-4.42 0-8 2.31-8 5.17V21h16v-1.33c0-2.86-3.58-5.17-8-5.17Z" fill="currentColor"/>
             </svg>
           </a>
         {% endif %}
-        <a class="site-header__action site-header__action--cart" href="{{ routes.cart_url }}" aria-label="Cart" data-cart-drawer-toggle>
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M7 6h14l-2 8H9L7 6Zm0 0-1-2H2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"/>
-            <circle cx="10" cy="19" r="1.6" fill="currentColor"/>
-            <circle cx="17" cy="19" r="1.6" fill="currentColor"/>
+        <a class="site-header__action site-header__action--cart"
+           href="{{ routes.cart_url }}"
+           aria-label="Cart ({{ cart.item_count }} items)"
+           data-cart-drawer-toggle
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 6h18M16 10a4 4 0 01-8 0" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           {% if cart.item_count > 0 %}
             <span class="site-header__badge">{{ cart.item_count }}</span>
@@ -95,7 +134,513 @@
       </div>
     </div>
   </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="wingstone-menu-overlay" data-menu-overlay aria-hidden="true"></div>
+
+  <!-- Mobile Menu Drawer -->
+  <nav class="wingstone-mobile-menu" id="mobileMenu" aria-label="Mobile navigation" aria-hidden="true" role="dialog">
+    <div class="wingstone-menu-header">
+      <button class="wingstone-menu-close" type="button" aria-label="Close menu" data-menu-close>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <span class="wingstone-menu-logo">WINGSTONE</span>
+    </div>
+
+    <div class="wingstone-menu-links">
+      <a href="{{ routes.all_products_collection_url }}">SHOP</a>
+      <a href="{{ routes.collections_url }}">APPAREL</a>
+      <a href="{{ routes.collections_url }}">EQUIPMENT</a>
+      <a href="{{ routes.collections_url }}/expeditions">EXPEDITIONS</a>
+      <a href="{{ pages.journal.url | default: routes.root_url }}">JOURNAL</a>
+      <!-- LOOKBOOK — fixed route using Shopify pages object -->
+      <a href="{{ pages.lookbook.url | default: routes.root_url }}">LOOKBOOK</a>
+    </div>
+
+    <div class="wingstone-menu-footer">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="wingstone-menu-footer-link">Account</a>
+      {% endif %}
+      <a href="{{ routes.cart_url }}" class="wingstone-menu-footer-link" data-cart-drawer-toggle>Cart ({{ cart.item_count }})</a>
+    </div>
+  </nav>
 </header>
+
+<style>
+/* ── Site Header Core ── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  gap: 0;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--color-frost, #f9f9ff), transparent 8%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 30%);
+  box-shadow: 0 4px 30px color-mix(in srgb, var(--color-ink, #04102f), transparent 95%);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
+}
+
+.site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
+}
+
+.site-header__promo,
+.site-header__shell {
+  pointer-events: auto;
+}
+
+/* Promo bar */
+.site-header__promo {
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 35%);
+  background: var(--color-ink, #04102f);
+  color: color-mix(in srgb, var(--color-paper, #f9f9ff), var(--color-accent, #cba72f) 10%);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.site-header__promo-track {
+  display: flex;
+  width: max-content;
+  gap: 1.5rem;
+  padding: .42rem 0;
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  animation: header-promo 28s linear infinite;
+}
+
+.site-header__promo-track span {
+  white-space: nowrap;
+}
+
+/* Header shell */
+.site-header__shell {
+  width: min(1180px, calc(100% - 32px));
+  background: transparent;
+  margin: 0 auto;
+}
+
+.site-header__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 72px;
+  gap: 1rem;
+  padding: 0 .9rem;
+}
+
+.site-header__left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  min-width: 0;
+}
+
+/* Brand logo */
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.site-header__logo {
+  max-width: min(118px, 30vw);
+  height: auto;
+  display: block;
+}
+
+/* Desktop nav */
+.site-nav {
+  display: none;
+  align-items: center;
+  gap: clamp(.7rem, 2vw, 1.8rem);
+}
+
+@media (min-width: 900px) {
+  .site-nav { display: flex; }
+}
+
+.site-nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .28rem;
+  color: var(--color-ink, #04102f);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .25rem 0;
+  transition: color .18s ease;
+  white-space: nowrap;
+}
+
+.site-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-accent, #cba72f);
+  border-radius: 999px;
+  transition: width .25s cubic-bezier(.25,.46,.45,.94);
+}
+
+.site-nav__link:hover,
+.site-nav__link.is-active {
+  color: var(--color-accent, #cba72f);
+}
+
+.site-nav__link:hover::after,
+.site-nav__link.is-active::after {
+  width: 100%;
+}
+
+.site-nav__chevron {
+  transition: transform .2s ease;
+  flex-shrink: 0;
+}
+
+/* Dropdown wraps */
+.site-nav__dropdown-wrap {
+  position: relative;
+}
+
+.site-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: -1rem;
+  min-width: 180px;
+  background: color-mix(in srgb, var(--color-frost, #f9f9ff), white 6%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-line, #dde3f0);
+  border-radius: 4px;
+  box-shadow: 0 16px 48px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
+  padding: .5rem 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity .22s ease, transform .22s cubic-bezier(.25,.46,.45,.94);
+  z-index: 20;
+}
+
+.site-nav__dropdown-wrap:hover .site-nav__dropdown,
+.site-nav__dropdown-wrap:focus-within .site-nav__dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.site-nav__dropdown-wrap:hover .site-nav__chevron,
+.site-nav__dropdown-wrap:focus-within .site-nav__chevron {
+  transform: rotate(180deg);
+}
+
+.site-nav__dropdown-link {
+  display: block;
+  padding: .6rem 1.25rem;
+  color: var(--color-ink, #04102f);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease, padding-left .15s ease;
+}
+
+.site-nav__dropdown-link:hover {
+  background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 90%);
+  color: var(--color-accent, #cba72f);
+  padding-left: 1.6rem;
+}
+
+/* Header actions */
+.site-header__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .6rem;
+  min-width: 0;
+}
+
+.site-header__action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 84%);
+  background: color-mix(in srgb, var(--color-paper, #f9f9ff), transparent 18%);
+  color: var(--color-ink, #04102f);
+  text-decoration: none;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.site-header__action:hover {
+  background: var(--color-ink, #04102f);
+  color: var(--color-paper, #f9f9ff);
+  border-color: var(--color-ink, #04102f);
+}
+
+.site-header__badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--color-accent, #cba72f);
+  color: var(--color-ink, #04102f);
+  font-size: .6rem;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* Hamburger trigger */
+.wingstone-menu-trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 20%);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background .18s ease;
+}
+
+@media (min-width: 900px) {
+  .wingstone-menu-trigger { display: none; }
+}
+
+.wingstone-menu-trigger:hover {
+  background: color-mix(in srgb, var(--color-ink, #04102f), transparent 94%);
+}
+
+.wingstone-menu-trigger__bar {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--color-ink, #04102f);
+  border-radius: 999px;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+/* Mobile menu overlay */
+.wingstone-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 16, 47, 0.5);
+  z-index: 60;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease;
+  backdrop-filter: blur(3px);
+}
+
+.wingstone-menu-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile menu drawer */
+.wingstone-mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(320px, 88vw);
+  background: var(--color-frost, #f9f9ff);
+  border-right: 1px solid var(--color-line, #dde3f0);
+  box-shadow: 4px 0 40px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
+  transform: translateX(-110%);
+  transition: transform .32s cubic-bezier(.2,.9,.2,1);
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.wingstone-mobile-menu.is-open {
+  transform: translateX(0);
+}
+
+.wingstone-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-line, #dde3f0);
+  flex-shrink: 0;
+}
+
+.wingstone-menu-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-line, #dde3f0);
+  background: transparent;
+  color: var(--color-ink, #04102f);
+  cursor: pointer;
+  transition: background .18s ease;
+}
+
+.wingstone-menu-close:hover {
+  background: var(--color-ink, #04102f);
+  color: var(--color-paper, #f9f9ff);
+}
+
+.wingstone-menu-logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: var(--color-ink, #04102f);
+  text-transform: uppercase;
+}
+
+.wingstone-menu-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+}
+
+.wingstone-menu-links a {
+  display: block;
+  padding: .85rem 1.75rem;
+  color: var(--color-ink, #04102f);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
+  transition: color .15s ease, padding-left .15s ease, background .15s ease;
+}
+
+.wingstone-menu-links a:hover {
+  color: var(--color-accent, #cba72f);
+  padding-left: 2.25rem;
+  background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 94%);
+}
+
+.wingstone-menu-footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 1.75rem;
+  border-top: 1px solid var(--color-line, #dde3f0);
+  flex-shrink: 0;
+}
+
+.wingstone-menu-footer-link {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-steel, #455373);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.wingstone-menu-footer-link:hover {
+  color: var(--color-ink, #04102f);
+}
+
+.main { padding-top: 104px; }
+
+@media (max-width: 899px) {
+  .main { padding-top: 88px; }
+}
+</style>
+
+<script>
+/* ── Mobile menu toggle ── */
+(function() {
+  const trigger  = document.querySelector('.wingstone-menu-trigger');
+  const menu     = document.querySelector('.wingstone-mobile-menu');
+  const overlay  = document.querySelector('.wingstone-menu-overlay');
+  const closeBtn = document.querySelector('.wingstone-menu-close');
+  const header   = document.querySelector('.site-header');
+
+  if (!trigger || !menu) return;
+
+  const openMenu = () => {
+    menu.classList.add('is-open');
+    if (overlay) overlay.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeMenu = () => {
+    menu.classList.remove('is-open');
+    if (overlay) overlay.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  trigger.addEventListener('click', openMenu);
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if (overlay) overlay.addEventListener('click', closeMenu);
+
+  /* Escape key closes menu */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
+  });
+
+  /* ── Header hide/show on scroll ── */
+  if (header) {
+    let lastY = 0;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          if (y > 120 && y > lastY + 4) {
+            header.classList.add('is-hidden');
+          } else if (y < lastY - 4 || y < 40) {
+            header.classList.remove('is-hidden');
+          }
+          header.classList.toggle('is-scrolled', y > 40);
+          lastY = y;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+})();
+</script>
 
 {% schema %}
 {

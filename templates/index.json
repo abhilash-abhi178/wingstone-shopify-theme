@@ -26,6 +26,7 @@
         "eyebrow": "Featured drop",
         "heading": "Built like a campaign, not a catalog.",
         "subtext": "Each product card should feel editorial, collectible, and clearly part of the Wingstone universe.",
+        "collection": "all",
         "products_to_show": 12
       }
     },

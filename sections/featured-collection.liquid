@@ -9,7 +9,8 @@
     {% endif %}
 
     <div class="grid-4 u-mb-lg">
-      {% assign collection = collections[section.settings.collection] %}
+      {% assign collection_handle = section.settings.collection | default: 'all' %}
+      {% assign collection = collections[collection_handle] %}
       {% if collection != blank and collection.products_count > 0 %}
         {% for product in collection.products limit: section.settings.products_to_show %}
           {% render 'product-card', product: product %}

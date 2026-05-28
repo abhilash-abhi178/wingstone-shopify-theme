@@ -8,21 +8,63 @@
       <div>{{ section.settings.text }}</div>
     {% endif %}
 
+    <style>
+      .newsletter__success {
+        color: #1e8449;
+        font-size: 14px;
+        padding: 12px 16px;
+        background: #e9f7ef;
+        border-radius: 8px;
+        border: 1px solid #a9dfbf;
+        margin-top: 10px;
+        text-align: center;
+      }
+      .newsletter__error {
+        color: #c0392b;
+        font-size: 13px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .newsletter__fields {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 14px;
+      }
+      .newsletter__fields .field {
+        max-width: 320px;
+        flex: 1;
+      }
+    </style>
+
     {% form 'customer' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
-      {%- if form.posted_successfully? -%}
-        <p class="newsletter-success" style="color: #1f8a5f; font-weight: 600; font-size: 14px; margin-top: 10px;">🎉 You're on the list!</p>
-      {%- else -%}
-        {%- if form.errors -%}
-          <div class="newsletter-error" style="color: #c72a2a; font-size: 13px; margin-top: 10px; margin-bottom: 10px;">
+      {% if form.posted_successfully? %}
+        <p class="newsletter__success" role="status">
+          ✓ You're on the list. Watch your inbox for early access.
+        </p>
+      {% else %}
+        {% if form.errors %}
+          <p class="newsletter__error" role="alert">
             {{ form.errors | default_errors }}
-          </div>
-        {%- endif -%}
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; justify-content: center; width: 100%;">
-          <input class="field" type="email" name="contact[email]" aria-label="Email" placeholder="Email address" required style="max-width: 320px; flex: 1;">
-          <button class="button" type="submit">{{ section.settings.button_label }}</button>
+          </p>
+        {% endif %}
+        <div class="newsletter__fields">
+          <input
+            class="field"
+            type="email"
+            name="contact[email]"
+            aria-label="Email address"
+            placeholder="Email address"
+            autocomplete="email"
+            required
+          >
+          <button class="button" type="submit">
+            {{ section.settings.button_label | default: 'Subscribe' }}
+          </button>
         </div>
-      {%- endif -%}
+      {% endif %}
     {% endform %}
   </div>
 </section>

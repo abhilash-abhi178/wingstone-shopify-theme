@@ -674,15 +674,9 @@
 
       {% if product.metafields.reviews.rating.value != blank %}
         <div class="pdp-rating">
-          <span class="pdp-stars">
-            {% assign rating_value = product.metafields.reviews.rating.value | round %}
-            {% for i in (1..5) %}
-              {% if i <= rating_value %}★{% else %}☆{% endif %}
-            {% endfor %}
-          </span>
-          <span class="pdp-rating-value">{{ product.metafields.reviews.rating.value }}</span>
-          <span class="pdp-rating-sep">|</span>
-          <a href="#reviews" class="pdp-rating-link">Read Reviews</a>
+          <span class="pdp-stars">★★★★★</span>
+          {{- product.metafields.reviews.rating_count.value -}} reviews
+          <a href="#reviews" class="pdp-rating-link">See reviews</a>
         </div>
       {% endif %}
 

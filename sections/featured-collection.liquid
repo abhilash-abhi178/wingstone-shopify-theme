@@ -17,8 +17,8 @@
         {% endfor %}
       {% else %}
         {% if request.design_mode %}
-          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; border: 1px dashed var(--color-line); border-radius: 4px; background: var(--color-paper); width: 100%;">
-            <p style="color: var(--color-steel); font-size: 14px; font-weight: 500; margin: 0;">Select a collection in the section settings to display products.</p>
+          <div class="featured-collection__placeholder-notice" style="grid-column: 1/-1; padding: 2rem; text-align: center; border: 2px dashed #dde3f0; border-radius: 10px; color: #455373;">
+            <p style="font-size: 14px;">Select a collection in the section settings to display products here.</p>
           </div>
         {% endif %}
       {% endif %}

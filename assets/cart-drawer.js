@@ -135,7 +135,7 @@ class CartDrawer {
       });
   }
 
-  addProduct(form) {
+  addProduct(form, openDrawer = true) {
     const submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) {
       submitBtn.setAttribute('disabled', 'disabled');
@@ -152,7 +152,11 @@ class CartDrawer {
       })
       .then(item => {
         this.showToast(`${item.title} added to cart`);
-        this.fetchCart();
+        if (openDrawer) {
+          this.open();
+        } else {
+          this.fetchCart();
+        }
       })
       .catch(err => {
         console.error('CartDrawer: add error', err);

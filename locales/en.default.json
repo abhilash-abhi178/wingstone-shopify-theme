@@ -10,9 +10,18 @@
     },
     "collection_list": {
       "view_all": "View all"
+    },
+    "cart": {
+      "cart_error": "An error occurred while updating your cart. Please try again.",
+      "quantity_error": "You can only add {{ quantity }} of this item to your cart."
+    },
+    "quick_order_list": {
+      "each": "{{ money }} each",
+      "min_error": "A minimum of {{ min }} items is required.",
+      "max_error": "A maximum of {{ max }} items is allowed.",
+      "step_error": "Must be added in multiples of {{ step }}."
     }
-  }
-  ,
+  },
   "products": {
     "facets": {
       "product_count_simple": {
@@ -23,7 +32,28 @@
         "one": "{{ product_count }} of {{ count }} product",
         "other": "{{ product_count }} of {{ count }} products"
       }
+    },
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "media": {
+        "image_available": "Image {{ index }} is now shown"
+      }
+    },
+    "recipient_form": {
+      "expanded": "Gift card form expanded",
+      "collapsed": "Gift card form collapsed"
+    }
+  },
+  "localization": {
+    "country_selector": {
+      "search_results": "{{ count }} results found"
+    }
+  },
+  "templates": {
+    "search": {
+      "results_with_count": "{{ count }} results for \"{{ terms }}\""
     }
   }
 }
-

@@ -2,152 +2,13 @@ document.documentElement.classList.remove('no-js');
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const cartDrawer = document.querySelector('[data-cart-drawer]');
-const cartDrawerBackdrop = document.querySelector('[data-cart-drawer-backdrop]');
-const cartDrawerContent = document.querySelector('[data-cart-drawer-content]');
-let _lastActiveElement = null;
-let _cartKeydownHandler = null;
-
 const formatMoney = (cents) => {
-  if (typeof Shopify !== 'undefined' && Shopify.formatMoney) {
-    return Shopify.formatMoney(cents);
+  if (window.Shopify && window.Shopify.formatMoney) {
+    return window.Shopify.formatMoney(cents, window.Shopify.money_format || '₹{{amount}}');
   }
-
   return `₹${(cents / 100).toFixed(2)}`;
 };
 
-const openCartDrawer = async () => {
-  if (!cartDrawer || !cartDrawerBackdrop || !cartDrawerContent) return;
-
-  _lastActiveElement = document.activeElement;
-
-  cartDrawer.hidden = false;
-  cartDrawerBackdrop.hidden = false;
-  cartDrawer.setAttribute('aria-hidden', 'false');
-  cartDrawerBackdrop.classList.add('is-open');
-  cartDrawer.classList.add('is-open');
-  document.body.classList.add('cart-drawer-open');
-
-  cartDrawerContent.innerHTML = '<p class="cart-drawer__loading">Loading cart...</p>';
-
-  const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
-  const cart = await response.json();
-
-  const itemsMarkup = cart.items.length
-    ? cart.items.map((item) => {
-        const imageUrl = item.image ? item.image.replace(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i, '_120x120.$1$2') : '';
-        return `
-          <div class="cart-drawer__item">
-            ${imageUrl ? `<img src="${imageUrl}" alt="${item.product_title.replace(/"/g, '&quot;')}">` : ''}
-            <div>
-              <h3 class="cart-drawer__item-title">${item.product_title}</h3>
-              <div class="cart-drawer__item-meta">${item.variant_title === 'Default Title' ? '' : item.variant_title}</div>
-              <div class="cart-drawer__item-meta">Qty ${item.quantity}</div>
-              <div class="cart-drawer__item-price">${formatMoney(item.final_line_price)}</div>
-            </div>
-          </div>`;
-      }).join('')
-    : '<p class="cart-drawer__empty">Your cart is empty.</p>';
-
-  cartDrawerContent.innerHTML = `
-    <div class="cart-drawer__content">
-      <div class="cart-drawer__items">${itemsMarkup}</div>
-    </div>
-    <div class="cart-drawer__footer">
-      <div class="cart-drawer__summary">
-        <span>Subtotal</span>
-        <strong>${formatMoney(cart.total_price)}</strong>
-      </div>
-      <div class="cart-drawer__actions">
-        <a class="button button--secondary" href="/cart">View cart</a>
-        <a class="button" href="/checkout">Checkout</a>
-      </div>
-    </div>
-  `;
-
-  // Focus management & accessible keyboard handling
-  const closeBtn = cartDrawer.querySelector('[data-cart-drawer-close]') || cartDrawer.querySelector('.cart-drawer__close');
-  if (closeBtn) {
-    closeBtn.focus();
-  }
-
-  _cartKeydownHandler = (e) => {
-    if (e.key === 'Escape') closeCartDrawer();
-    if (e.key === 'Tab') {
-      const focusable = cartDrawer.querySelectorAll('a, button, input, [tabindex]:not([tabindex="-1"])');
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  };
-
-  document.addEventListener('keydown', _cartKeydownHandler);
-};
-
-// Toast helper
-const showToast = (msg, duration = 2200) => {
-  const toast = document.getElementById('cartToast');
-  const msgEl = document.getElementById('cartToastMessage');
-  if (!toast || !msgEl) return;
-  msgEl.textContent = msg;
-  toast.hidden = false;
-  toast.classList.add('show');
-  if (toast._timeout) clearTimeout(toast._timeout);
-  toast._timeout = setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => { toast.hidden = true; }, 340);
-  }, duration);
-};
-
-const closeCartDrawer = () => {
-  if (!cartDrawer || !cartDrawerBackdrop) return;
-
-  cartDrawer.classList.remove('is-open');
-  cartDrawerBackdrop.classList.remove('is-open');
-  document.body.classList.remove('cart-drawer-open');
-  cartDrawer.setAttribute('aria-hidden', 'true');
-
-  if (_cartKeydownHandler) {
-    document.removeEventListener('keydown', _cartKeydownHandler);
-    _cartKeydownHandler = null;
-  }
-
-  window.setTimeout(() => {
-    cartDrawer.hidden = true;
-    cartDrawerBackdrop.hidden = true;
-    if (_lastActiveElement && typeof _lastActiveElement.focus === 'function') {
-      _lastActiveElement.focus();
-    }
-    _lastActiveElement = null;
-  }, prefersReducedMotion ? 0 : 280);
-};
-
-document.addEventListener('click', (event) => {
-  const cartToggle = event.target.closest('[data-cart-drawer-toggle]');
-  if (cartToggle) {
-    event.preventDefault();
-    openCartDrawer();
-    return;
-  }
-
-  const cartClose = event.target.closest('[data-cart-drawer-close]');
-  if (cartClose) {
-    closeCartDrawer();
-    return;
-  }
-
-  if (event.target.closest('[data-cart-drawer-backdrop]')) {
-    closeCartDrawer();
-    return;
-  }
-});
 
 document.addEventListener('click', (event) => {
   const toggle = event.target.closest('[data-menu-toggle]');
@@ -165,80 +26,11 @@ const cartForms = [...document.querySelectorAll('#pdpForm, .product-form, .produ
 cartForms.forEach((form) => {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    const formData = new FormData(form);
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (submitButton) submitButton.disabled = true;
-
-    try {
-      const response = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Unable to add item to cart');
-      }
-
-      // For PDP form submissions we want a silent update (no drawer).
-      if (form.id === 'pdpForm') {
-        try {
-          const cartRes = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
-          const cart = await cartRes.json();
-
-          // update header badge (create if needed)
-          let badge = document.querySelector('.site-header__badge');
-          if (!badge) {
-            const cartToggle = document.querySelector('.site-header__action--cart');
-            if (cartToggle) {
-              badge = document.createElement('span');
-              badge.className = 'site-header__badge';
-              cartToggle.appendChild(badge);
-            }
-          }
-          if (badge) badge.textContent = String(cart.item_count || 0);
-
-          // quick feedback on the submit button
-          if (submitButton) {
-            const label = submitButton.querySelector('.pdp-btn__label');
-            const original = label ? label.textContent : submitButton.textContent;
-            if (label) label.textContent = 'Added'; else submitButton.textContent = 'Added';
-            showToast('Added to cart');
-            setTimeout(() => { if (label) label.textContent = original; else submitButton.textContent = original; }, 1800);
-          }
-        } catch (e) {
-          // ignore silent update errors
-          console.warn('Silent cart update failed', e);
-        }
-      } else {
-        // For quick-add / product-card adds, perform a silent update: refresh cart badge and show toast.
-        try {
-          const cartRes = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
-          const cart = await cartRes.json();
-
-          // update header badge (create if needed)
-          let badge = document.querySelector('.site-header__badge');
-          if (!badge) {
-            const cartToggle = document.querySelector('.site-header__action--cart');
-            if (cartToggle) {
-              badge = document.createElement('span');
-              badge.className = 'site-header__badge';
-              cartToggle.appendChild(badge);
-            }
-          }
-          if (badge) badge.textContent = String(cart.item_count || 0);
-
-          // give user quick feedback
-          showToast('Added to cart');
-        } catch (e) {
-          // fallback: open drawer if silent update fails
-          console.warn('Silent cart update failed', e);
-          await openCartDrawer();
-        }
-      }
-    } finally {
-      if (submitButton) submitButton.disabled = false;
+    if (window.cartDrawer) {
+      const openDrawer = (form.id !== 'pdpForm');
+      window.cartDrawer.addProduct(form, openDrawer);
+    } else {
+      form.submit();
     }
   });
 });
@@ -523,4 +315,45 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
   }
+});
+
+// ── Dropdown Menu Accessibility ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.site-nav__dropdown-wrap').forEach(wrap => {
+    const trigger = wrap.querySelector('.site-nav__link--has-dropdown');
+    const dropdown = wrap.querySelector('.site-nav__dropdown');
+    if (!trigger || !dropdown) return;
+
+    const show = () => {
+      trigger.setAttribute('aria-expanded', 'true');
+      dropdown.setAttribute('aria-hidden', 'false');
+    };
+    const hide = () => {
+      trigger.setAttribute('aria-expanded', 'false');
+      dropdown.setAttribute('aria-hidden', 'true');
+    };
+
+    wrap.addEventListener('mouseenter', show);
+    wrap.addEventListener('mouseleave', hide);
+    wrap.addEventListener('focusin', show);
+    wrap.addEventListener('focusout', (e) => {
+      if (!wrap.contains(e.relatedTarget)) {
+        hide();
+      }
+    });
+  });
+});
+
+// ── Footer Logo Error Fallback (CSP Compliant) ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.site-footer__logo-img').forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      const fallback = img.nextElementSibling;
+      if (fallback) fallback.style.display = 'inline-block';
+    });
+    if (img.naturalWidth === 0 && img.src) {
+      img.dispatchEvent(new Event('error'));
+    }
+  });
 });

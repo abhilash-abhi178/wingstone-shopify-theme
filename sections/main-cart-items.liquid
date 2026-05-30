@@ -111,7 +111,7 @@
         <aside class="cart-page__summary" aria-label="Order summary">
 
           <!-- Free shipping progress -->
-          {%- assign free_threshold_paise = settings.free_shipping_threshold | times: 100 | default: 99900 -%}
+          {%- assign free_threshold_paise = settings.free_shipping_threshold | default: 999 | times: 100 -%}
           {%- assign total_paise = cart.total_price -%}
           {%- assign pct_to_free = total_paise | times: 100.0 | divided_by: free_threshold_paise | round -%}
           {%- if pct_to_free > 100 -%}{%- assign pct_to_free = 100 -%}{%- endif -%}

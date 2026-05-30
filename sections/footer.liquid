@@ -4,7 +4,7 @@
     <!-- Logo/Brand Column -->
     <div class="site-footer__brand-col">
       <div class="site-footer__brand-logo">
-        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="WINGSTONE" class="site-footer__logo-img" width="1254" height="1254" style="max-height: 28px; width: auto; filter: brightness(0) invert(1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <img src="{{ 'wingstone-logo.png' | asset_url }}" alt="WINGSTONE" class="site-footer__logo-img" width="1254" height="1254" style="max-height: 28px; width: auto; filter: brightness(0) invert(1);">
         <span class="site-footer__brand-title" style="display: none;">WINGSTONE</span>
       </div>
       <p class="site-footer__brand-desc">
@@ -40,8 +40,8 @@
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="{{ routes.root_url }}pages/track-order">Track Order</a></li>
-            <li><a href="{{ routes.root_url }}pages/returns">Exchange / Return Request</a></li>
+            <li><a href="{{ routes.root_url | append: '/' | replace: '//', '/' }}pages/track-order">Track Order</a></li>
+            <li><a href="{{ routes.root_url | append: '/' | replace: '//', '/' }}pages/returns">Exchange / Return Request</a></li>
             <li><a href="{{ shop.url }}/policies/terms-of-service">Terms &amp; Conditions</a></li>
             <li><a href="{{ shop.url }}/policies/privacy-policy">Privacy Policy</a></li>
             <li><a href="{{ shop.url }}/policies/refund-policy">Return &amp; Exchange Policy</a></li>

@@ -19,7 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const getWishlistKey = (id) => 'wl_' + id;
-  const isWishlisted = (id) => localStorage.getItem(getWishlistKey(id)) === '1';
+  const isWishlisted = (id) => localStorage.getItem(getWishlistKey(id)) !== null;
+
+  const updateWishlistCount = () => {
+    let count = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.key(i).startsWith('wl_')) {
+        count++;
+      }
+    }
+    document.querySelectorAll('[data-wishlist-count]').forEach(el => {
+      if (count > 0) {
+        el.textContent = count;
+        el.style.display = '';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  };
+
+  window.updateWishlistCount = updateWishlistCount;
 
   // Initialize all wishlist buttons on page load
   document.querySelectorAll('[data-wishlist-toggle]').forEach(btn => {
@@ -28,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
       updateState(btn, isWishlisted(id));
     }
   });
+
+  updateWishlistCount();
 
   // Listen to delegated clicks on wishlist buttons
   document.body.addEventListener('click', (e) => {
@@ -42,12 +63,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const next = !isWishlisted(id);
 
     if (next) {
-      localStorage.setItem(key, '1');
+      const productData = {
+        id: id,
+        handle: btn.dataset.productHandle,
+        title: btn.dataset.productTitle,
+        url: btn.dataset.productUrl,
+        img: btn.dataset.productImg,
+        price: btn.dataset.productPrice,
+        comparePrice: btn.dataset.productComparePrice || null
+      };
+      localStorage.setItem(key, JSON.stringify(productData));
     } else {
       localStorage.removeItem(key);
     }
 
     updateState(btn, next);
+    updateWishlistCount();
 
     /* Micro-animation */
     btn.animate([

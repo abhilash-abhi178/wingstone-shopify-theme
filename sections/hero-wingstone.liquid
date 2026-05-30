@@ -10,11 +10,22 @@
       muted
       loop
       playsinline
+      aria-hidden="true"
       {% if section.settings.poster_image != blank %}
         poster="{{ section.settings.poster_image | image_url: width: 1800 }}"
       {% endif %}
     >
-      <source src="{{ 'hero-video.mp4' | asset_url }}" type="video/mp4">
+      {%- if section.settings.hero_video != blank -%}
+        {%- for source in section.settings.hero_video.sources -%}
+          {%- if source.format == 'mp4' -%}
+            <source src="{{ source.url }}" type="video/mp4">
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif section.settings.hero_video_url != blank -%}
+        <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
+      {%- else -%}
+        <source src="{{ 'hero-video.mp4' | asset_url }}" type="video/mp4">
+      {%- endif -%}
     </video>
 
     <div class="wingstone-video-overlay"></div>
@@ -121,6 +132,16 @@
       "id": "poster_image",
       "label": "Hero poster image",
       "info": "Shown before the video loads and on iOS. Export a still frame from the hero video."
+    },
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Hero background video"
+    },
+    {
+      "type": "text",
+      "id": "hero_video_url",
+      "label": "Hero background video URL (alternative fallback)"
     },
     {
       "type": "text",

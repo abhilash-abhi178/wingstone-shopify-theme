@@ -1,0 +1,15 @@
+# Shopify CLI & theme configuration
+.shopify/
+config/settings_data.json.bak
+*.bak
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Python virtual environment & logs
+.venv/
+venv/
+ENV/
+*.pyc
+__pycache__/

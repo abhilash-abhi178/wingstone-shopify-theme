@@ -30,6 +30,14 @@
       aria-pressed="false"
       data-wishlist-toggle
       data-product-id="{{ product.id }}"
+      data-product-handle="{{ product.handle }}"
+      data-product-title="{{ product.title | escape }}"
+      data-product-url="{{ product.url }}"
+      data-product-img="{{ product.featured_image | image_url: width: 400 }}"
+      data-product-price="{{ product.price | money }}"
+      {% if product.compare_at_price > product.price %}
+        data-product-compare-price="{{ product.compare_at_price | money }}"
+      {% endif %}
     >
       {% render 'icon-heart' %}
     </button>

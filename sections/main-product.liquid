@@ -1,6 +1,7 @@
 <style>
   /* ─── Reset & Base ──────────────────────────────────────────── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .pdp, .pdp *, .pdp *::before, .pdp *::after { box-sizing: border-box; }
+  .pdp, .pdp * { margin: 0; padding: 0; }
 
   .pdp {
     --clr-bg:        var(--color-frost);
@@ -674,8 +675,13 @@
 
       {% if product.metafields.reviews.rating.value != blank %}
         <div class="pdp-rating">
-          <span class="pdp-stars">★★★★★</span>
-          {{- product.metafields.reviews.rating_count.value -}} reviews
+          <span class="pdp-stars" aria-label="{{ product.metafields.reviews.rating.value }} stars">
+            {% assign rating_val = product.metafields.reviews.rating.value | round %}
+            {% for i in (1..5) %}
+              {% if i <= rating_val %}★{% else %}☆{% endif %}
+            {% endfor %}
+          </span>
+          <span>{{ product.metafields.reviews.rating.value }} ({{ product.metafields.reviews.rating_count.value | default: 0 }} reviews)</span>
           <a href="#reviews" class="pdp-rating-link">See reviews</a>
         </div>
       {% endif %}
@@ -697,17 +703,13 @@
         <div class="pdp-price-row">
           {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
             <span class="pdp-price-compare" data-compare-price>
-              ₹{{ product.selected_or_first_available_variant.compare_at_price | money_without_currency }}
+              {{ product.selected_or_first_available_variant.compare_at_price | money }}
             </span>
-            <span class="pdp-price-save" data-save-label>Save ₹{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money_without_currency }}</span>
+            <span class="pdp-price-save" data-save-label>Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}</span>
           {% endif %}
-          <span class="pdp-price-currency">₹</span>
           <span class="pdp-price-main" data-price-display>
-            {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | floor }}
+            {{ product.selected_or_first_available_variant.price | money }}
           </span>
-          <sup style="font-size:14px;color:var(--clr-text);font-weight:600;align-self:flex-start;margin-top:8px">
-            {{ product.selected_or_first_available_variant.price | modulo: 100 | prepend: '.' }}
-          </sup>
         </div>
         <p class="pdp-shipping-note">
           Shipping &amp; taxes calculated at checkout
@@ -806,24 +808,25 @@
 
         <!-- Wingstone product actions (replaced variant/qty/CTA/trust block) -->
         <div class="wingstone-product-actions">
-  
-  <div class="wingstone-quantity-wrapper">
-    <label class="wingstone-label">Quantity</label>
+          <div id="pdpStock" class="pdp-stock" aria-live="polite"></div>
+          
+          <div class="wingstone-quantity-wrapper">
+            <label class="wingstone-label">Quantity</label>
 
-    <div class="wingstone-quantity-box">
-      <button class="qty-btn" name="minus" type="button">−</button>
-      <input type="number" name="quantity" value="1" min="1">
-      <button class="qty-btn" name="plus" type="button">+</button>
-    </div>
-  </div>
+            <div class="wingstone-quantity-box">
+              <button class="qty-btn" name="minus" id="qtyMinus" type="button">−</button>
+              <input type="number" name="quantity" id="qtyInput" value="1" min="1">
+              <button class="qty-btn" name="plus" id="qtyPlus" type="button">+</button>
+            </div>
+          </div>
 
-  <div class="wingstone-buttons">
+          <div class="wingstone-buttons">
 
-    <button type="submit" name="add" class="wingstone-cart-btn">
-      <span class="btn-icon">✦</span>
-      <span>Add To Cart</span>
-      <span class="btn-arrow">→</span>
-    </button>
+            <button type="submit" name="add" id="addToCartBtn" class="wingstone-cart-btn">
+              <span class="btn-icon">✦</span>
+              <span>Add To Cart</span>
+              <span class="btn-arrow">→</span>
+            </button>
 
     {{ form | payment_button }}
 
@@ -1228,7 +1231,7 @@
 
     /* Price */
     if (priceDisplay) {
-      priceDisplay.textContent = (v.price / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      priceDisplay.textContent = formatMoney(v.price);
     }
     if (comparePrice) {
       if (v.compare_at_price && v.compare_at_price > v.price) {

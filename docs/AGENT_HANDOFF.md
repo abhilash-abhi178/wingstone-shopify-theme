@@ -35,7 +35,6 @@ wingstone-shopify-theme/
 │  ├─ brand-values.liquid
 │  ├─ cinematic-banner.liquid
 │  ├─ contact-page.liquid
-│  ├─ dynamic-product.liquid
 │  ├─ editorial-grid.liquid
 │  ├─ featured-collection.liquid
 │  ├─ footer.liquid
@@ -49,7 +48,6 @@ wingstone-shopify-theme/
 │  ├─ main-page.liquid
 │  ├─ main-product.liquid
 │  ├─ newsletter.liquid
-│  ├─ product-template.liquid
 │  ├─ search-results.liquid
 │  └─ tech-specs.liquid
 ├─ snippets/
@@ -166,7 +164,7 @@ These fields drive richer product storytelling and dynamic product presentation.
 - `sections/footer.liquid` controls the site footer.
 - `sections/hero-wingstone.liquid` and `sections/hero-video.liquid` provide home-page hero presentation.
 - `sections/featured-collection.liquid` and `sections/editorial-grid.liquid` drive product discovery and editorial content.
-- `sections/product-template.liquid`, `sections/dynamic-product.liquid`, and `sections/main-product.liquid` support product detail page rendering and interactions.
+- `sections/main-product.liquid` supports product detail page rendering and interactions.
 - `sections/main-cart-items.liquid` renders the cart page.
 - `sections/main-collection.liquid`, `sections/search-results.liquid`, `sections/main-page.liquid`, `sections/contact-page.liquid`, and `sections/main-404.liquid` cover the supporting storefront pages.
 
@@ -217,7 +215,7 @@ If you are making future updates, start with the relevant owning file:
 - Header/menu changes: `sections/header.liquid`, `assets/global.js`, `assets/base.css`
 - Cart drawer changes: `assets/cart-drawer.js`, `assets/base.css`, `layout/theme.liquid`
 - Quick-add changes: `snippets/product-card.liquid`, `assets/theme.js`, `assets/components.css`
-- Product page changes: `sections/product-template.liquid`, `sections/main-product.liquid`, `assets/theme.js`
+- Product page changes: `sections/main-product.liquid`, `assets/theme.js`
 - Brand/system styling: `config/settings_schema.json`, `assets/base.css`, `assets/components.css`, `assets/utilities.css`
 - Metafield-driven product content: `docs/METAFIELDS.md`, product metafields in Shopify admin
 

@@ -14,7 +14,7 @@
 }
 
 .collection-hero__image-container {
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: 0 14px 30px rgba(10, 18, 30, .08);
 }

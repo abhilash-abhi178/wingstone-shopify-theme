@@ -12,9 +12,9 @@
   min-height: 100vh;
 
   background:
-    radial-gradient(circle at 20% 50%, rgba(94,120,155,0.18), transparent 55%),
-    radial-gradient(circle at 80% 20%, rgba(142,164,198,0.12), transparent 45%),
-    linear-gradient(160deg, #1D2C43 0%, #101827 60%, #0a1020 100%);
+    radial-gradient(circle at 20% 50%, color-mix(in srgb, var(--color-steel), transparent 82%), transparent 55%),
+    radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--color-accent), transparent 88%), transparent 45%),
+    linear-gradient(160deg, var(--color-ink) 0%, color-mix(in srgb, var(--color-ink), #000 35%) 60%, color-mix(in srgb, var(--color-ink), #000 55%) 100%);
 
   padding: 120px 0 180px;
 }
@@ -56,12 +56,12 @@
   position: relative;
   z-index: 5;
 
-  width: min(1400px, calc(100% - 60px));
+  width: min(760px, calc(100% - 60px));
 
   margin: 0 auto;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 
   align-items: center;
 
@@ -158,7 +158,7 @@
 }
 
 .wingstone-hero-heading span {
-  color: #d4af37;
+  color: var(--color-accent-lt);
 }
 
 .wingstone-hero-description {
@@ -193,7 +193,7 @@
   align-items: center;
   justify-content: center;
 
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
 
   text-decoration: none;
 
@@ -270,7 +270,7 @@
   animation: float 5s ease-in-out infinite;
 
   filter:
-    drop-shadow(0 40px 80px rgba(15,23,42,0.12));
+    drop-shadow(0 40px 80px color-mix(in srgb, var(--color-ink), transparent 88%));
 
   /* Restrict vertical size so hero doesn't dominate viewport */
   max-height: 520px;
@@ -334,7 +334,7 @@
 
   backdrop-filter: blur(20px);
 
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
 
   padding: 34px;
 
@@ -424,8 +424,8 @@
   .wingstone-hero {
 
     background:
-      radial-gradient(circle at 50% 30%, rgba(94,120,155,0.20), transparent 60%),
-      linear-gradient(180deg, #1D2C43 0%, #101827 100%);
+      radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--color-steel), transparent 80%), transparent 60%),
+      linear-gradient(180deg, var(--color-ink) 0%, color-mix(in srgb, var(--color-ink), #000 45%) 100%);
 
     padding: 70px 0 50px;
 
@@ -485,7 +485,7 @@
 
     padding: 0 24px;
 
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
 
     font-size: 11px;
 

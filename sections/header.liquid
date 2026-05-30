@@ -13,7 +13,7 @@
   <div class="page-width site-header__shell">
     <div class="site-header__inner">
 
-      <!-- LEFT: Hamburger + Desktop Nav -->
+      <!-- LEFT: Mobile trigger + Desktop Nav -->
       <div class="site-header__left">
         <button class="wingstone-menu-trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
           <span class="wingstone-menu-trigger__bar"></span>
@@ -22,59 +22,7 @@
         </button>
 
         <nav class="site-nav" aria-label="Main navigation" data-site-nav>
-          <a href="{{ routes.all_products_collection_url }}"
-             class="site-nav__link{% if request.path == routes.all_products_collection_url %} is-active{% endif %}"
-          >SHOP</a>
-
-          <!-- Apparel Dropdown -->
-          <div class="site-nav__dropdown-wrap">
-            <a href="{{ routes.collections_url }}"
-               class="site-nav__link site-nav__link--has-dropdown"
-               aria-haspopup="true"
-               aria-expanded="false"
-            >APPAREL
-              <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </a>
-            <div class="site-nav__dropdown" aria-hidden="true">
-              <a href="{{ routes.collections_url }}/jackets" class="site-nav__dropdown-link">Jackets</a>
-              <a href="{{ routes.collections_url }}/trousers" class="site-nav__dropdown-link">Trousers</a>
-              <a href="{{ routes.collections_url }}/base-layers" class="site-nav__dropdown-link">Base Layers</a>
-              <a href="{{ routes.collections_url }}/accessories" class="site-nav__dropdown-link">Accessories</a>
-            </div>
-          </div>
-
-          <!-- Equipment Dropdown -->
-          <div class="site-nav__dropdown-wrap">
-            <a href="{{ routes.collections_url }}"
-               class="site-nav__link site-nav__link--has-dropdown"
-               aria-haspopup="true"
-               aria-expanded="false"
-            >EQUIPMENT
-              <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </a>
-            <div class="site-nav__dropdown" aria-hidden="true">
-              <a href="{{ routes.collections_url }}/packs" class="site-nav__dropdown-link">Packs</a>
-              <a href="{{ routes.collections_url }}/footwear" class="site-nav__dropdown-link">Footwear</a>
-              <a href="{{ routes.collections_url }}/gear" class="site-nav__dropdown-link">Gear</a>
-            </div>
-          </div>
-
-          <a href="{{ routes.collections_url }}/expeditions"
-             class="site-nav__link"
-          >EXPEDITIONS</a>
-
-          <a href="{{ pages.journal.url | default: routes.root_url }}"
-             class="site-nav__link"
-          >JOURNAL</a>
-
-          <!-- LOOKBOOK — fixed: uses pages.lookbook Shopify page -->
-          <a href="{{ pages.lookbook.url | default: routes.root_url }}"
-             class="site-nav__link{% if request.page_type == 'page' and request.path contains 'lookbook' %} is-active{% endif %}"
-          >LOOKBOOK</a>
+          {% render 'navigation-links' %}
         </nav>
       </div>
 
@@ -104,6 +52,7 @@
             loading="eager"
           >
         {% endif %}
+        <span class="site-header__wordmark">WINGSTONE</span>
       </a>
 
       <!-- RIGHT: Account + Cart -->
@@ -147,55 +96,30 @@
     </div>
   </div>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="wingstone-menu-overlay" data-menu-overlay aria-hidden="true"></div>
-
-  <!-- Mobile Menu Drawer -->
-  <nav class="wingstone-mobile-menu" id="mobileMenu" aria-label="Mobile navigation" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="wingstone-menu-header">
-      <button class="wingstone-menu-close" type="button" aria-label="Close menu" data-menu-close>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-      <span class="wingstone-menu-logo">WINGSTONE</span>
-    </div>
-
-    <div class="wingstone-menu-links">
-      <a href="{{ routes.all_products_collection_url }}">SHOP</a>
-      
-      <div class="wingstone-menu-item-with-submenu">
-        <a href="{{ routes.collections_url }}/apparel" class="wingstone-menu-link">APPAREL</a>
-        <div class="wingstone-mobile-submenu">
-          <a href="{{ routes.collections_url }}/jackets" class="wingstone-mobile-submenu-link">Jackets</a>
-          <a href="{{ routes.collections_url }}/trousers" class="wingstone-mobile-submenu-link">Trousers</a>
-          <a href="{{ routes.collections_url }}/base-layers" class="wingstone-mobile-submenu-link">Base Layers</a>
-          <a href="{{ routes.collections_url }}/accessories" class="wingstone-mobile-submenu-link">Accessories</a>
-        </div>
+  <template data-mobile-menu-template>
+    <div class="wingstone-menu-overlay" data-menu-overlay aria-hidden="true"></div>
+    <nav class="wingstone-mobile-menu" id="mobileMenu" aria-label="Mobile navigation" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="wingstone-menu-header">
+        <button class="wingstone-menu-close" type="button" aria-label="Close menu" data-menu-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <span class="wingstone-menu-logo">WINGSTONE</span>
       </div>
 
-      <div class="wingstone-menu-item-with-submenu">
-        <a href="{{ routes.collections_url }}/equipment" class="wingstone-menu-link">EQUIPMENT</a>
-        <div class="wingstone-mobile-submenu">
-          <a href="{{ routes.collections_url }}/packs" class="wingstone-mobile-submenu-link">Packs</a>
-          <a href="{{ routes.collections_url }}/footwear" class="wingstone-mobile-submenu-link">Footwear</a>
-          <a href="{{ routes.collections_url }}/gear" class="wingstone-mobile-submenu-link">Gear</a>
-        </div>
+      <div class="wingstone-menu-links">
+        {% render 'navigation-links' %}
       </div>
 
-      <a href="{{ routes.collections_url }}/expeditions">EXPEDITIONS</a>
-      <a href="{{ pages.journal.url | default: routes.root_url }}">JOURNAL</a>
-      <!-- LOOKBOOK — fixed route using Shopify pages object -->
-      <a href="{{ pages.lookbook.url | default: routes.root_url }}">LOOKBOOK</a>
-    </div>
-
-    <div class="wingstone-menu-footer">
-      {% if shop.customer_accounts_enabled %}
-        <a href="{{ routes.account_url }}" class="wingstone-menu-footer-link">Account</a>
-      {% endif %}
-      <a href="{{ routes.cart_url }}" class="wingstone-menu-footer-link" data-cart-drawer-toggle>Cart ({{ cart.item_count }})</a>
-    </div>
-  </nav>
+      <div class="wingstone-menu-footer">
+        {% if shop.customer_accounts_enabled %}
+          <a href="{{ routes.account_url }}" class="wingstone-menu-footer-link">Account</a>
+        {% endif %}
+        <a href="{{ routes.cart_url }}" class="wingstone-menu-footer-link" data-cart-drawer-toggle>Cart ({{ cart.item_count }})</a>
+      </div>
+    </nav>
+  </template>
 </header>
 
 <style>
@@ -301,7 +225,7 @@
   gap: clamp(.7rem, 2vw, 1.8rem);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 990px) {
   .site-nav { display: flex; }
 }
 
@@ -464,7 +388,7 @@
   transition: background .18s ease;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 990px) {
   .wingstone-menu-trigger { display: none; }
 }
 
@@ -481,7 +405,48 @@
   transition: transform .25s ease, opacity .25s ease;
 }
 
+.wingstone-menu-overlay,
+.wingstone-mobile-menu {
+  display: none;
+}
 
+@media (max-width: 989px) {
+  .wingstone-menu-overlay {
+    position: fixed;
+    inset: 0;
+    display: block;
+    background: color-mix(in srgb, var(--color-ink, #04102f), transparent 62%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .28s ease, visibility .28s ease;
+    z-index: 998;
+  }
+
+  .wingstone-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .wingstone-mobile-menu {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100dvh;
+    background: color-mix(in srgb, var(--color-frost, #f9f9ff), white 4%);
+    color: var(--color-ink, #04102f);
+    transform: translateY(-100%);
+    transition: transform .32s cubic-bezier(.25,.46,.45,.94);
+    z-index: 999;
+  }
+
+  .wingstone-mobile-menu.active {
+    transform: translateY(0);
+  }
+}
 
 .wingstone-menu-header {
   display: flex;
@@ -525,6 +490,7 @@
   display: flex;
   flex-direction: column;
   padding: 1.5rem 0;
+  overflow-y: auto;
 }
 
 .wingstone-menu-links a {
@@ -546,26 +512,35 @@
   background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 94%);
 }
 
-.wingstone-mobile-submenu {
-  background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 82%);
-  padding: 0.25rem 0;
+.wingstone-menu-links .site-nav__dropdown-wrap {
   border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
 }
 
-.wingstone-mobile-submenu-link {
-  display: block !important;
-  padding: 0.6rem 2.25rem !important;
-  font-size: 0.76rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: none !important;
-  opacity: 0.8;
-  border-bottom: none !important;
+.wingstone-menu-links .site-nav__dropdown {
+  position: static;
+  min-width: 0;
+  background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 82%);
+  border: 0;
+  box-shadow: none;
+  padding: .25rem 0 .5rem;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
 }
 
-.wingstone-mobile-submenu-link:hover {
+.wingstone-menu-links .site-nav__dropdown-link {
+  padding: .6rem 2.25rem;
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: none;
+  opacity: .8;
+  border-bottom: 0;
+}
+
+.wingstone-menu-links .site-nav__dropdown-link:hover {
   opacity: 1;
-  padding-left: 2.5rem !important;
+  padding-left: 2.5rem;
 }
 
 .wingstone-menu-footer {
@@ -592,7 +567,7 @@
 
 .main { padding-top: 104px; }
 
-@media (max-width: 899px) {
+@media (max-width: 989px) {
   .main { padding-top: 88px; }
 }
 </style>

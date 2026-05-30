@@ -1,0 +1,33 @@
+<a href="{{ routes.all_products_collection_url }}" class="site-nav__link{% if request.path == routes.all_products_collection_url %} is-active{% endif %}">SHOP</a>
+
+<div class="site-nav__dropdown-wrap">
+  <a href="{{ routes.collections_url }}/apparel" class="site-nav__link site-nav__link--has-dropdown" aria-haspopup="true" aria-expanded="false">
+    APPAREL
+    <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+      <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </a>
+  <div class="site-nav__dropdown" aria-hidden="true">
+    <a href="{{ routes.collections_url }}/jackets" class="site-nav__dropdown-link">Jackets</a>
+    <a href="{{ routes.collections_url }}/trousers" class="site-nav__dropdown-link">Trousers</a>
+    <a href="{{ routes.collections_url }}/base-layers" class="site-nav__dropdown-link">Base Layers</a>
+    <a href="{{ routes.collections_url }}/accessories" class="site-nav__dropdown-link">Accessories</a>
+  </div>
+</div>
+
+<div class="site-nav__dropdown-wrap">
+  <a href="{{ routes.collections_url }}/equipment" class="site-nav__link site-nav__link--has-dropdown" aria-haspopup="true" aria-expanded="false">
+    EQUIPMENT
+    <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+      <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </a>
+  <div class="site-nav__dropdown" aria-hidden="true">
+    <a href="{{ routes.collections_url }}/packs" class="site-nav__dropdown-link">Packs</a>
+    <a href="{{ routes.collections_url }}/footwear" class="site-nav__dropdown-link">Footwear</a>
+    <a href="{{ routes.collections_url }}/gear" class="site-nav__dropdown-link">Gear</a>
+  </div>
+</div>
+
+<a href="{{ routes.collections_url }}/expeditions" class="site-nav__link">EXPEDITIONS</a>
+<a href="{{ pages.journal.url | default: routes.root_url }}" class="site-nav__link">JOURNAL</a>

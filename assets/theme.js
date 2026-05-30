@@ -10,24 +10,13 @@ const formatMoney = (cents) => {
 };
 
 
-document.addEventListener('click', (event) => {
-  const toggle = event.target.closest('[data-menu-toggle]');
-  if (!toggle) return;
-
-  const nav = document.querySelector('[data-site-nav]');
-  if (!nav) return;
-
-  const isOpen = nav.classList.toggle('is-open');
-  toggle.setAttribute('aria-expanded', String(isOpen));
-});
-
 const cartForms = [...document.querySelectorAll('#pdpForm, .product-form, .product-card__form')];
 
 cartForms.forEach((form) => {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (window.cartDrawer) {
-      const openDrawer = (form.id !== 'pdpForm');
+      const openDrawer = false;
       window.cartDrawer.addProduct(form, openDrawer);
     } else {
       form.submit();

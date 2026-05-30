@@ -18,7 +18,7 @@
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--color-steel);
+  color: #6b7280;
   font-weight: 600;
 }
 
@@ -28,12 +28,12 @@
   width: 180px;
   height: 62px;
   background: rgba(255,255,255,0.82);
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 92%);
-  border-radius: var(--radius-lg, 20px);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 22px;
   overflow: hidden;
   backdrop-filter: blur(12px);
   box-shadow:
-    0 10px 30px color-mix(in srgb, var(--color-ink), transparent 95%),
+    0 10px 30px rgba(15,23,42,0.05),
     inset 0 1px 0 rgba(255,255,255,0.7);
 }
 
@@ -45,11 +45,11 @@
   font-size: 24px;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: var(--color-ink);
+  color: #111827;
 }
 
 .qty-btn:hover {
-  background: color-mix(in srgb, var(--color-ink), transparent 96%);
+  background: rgba(15,23,42,0.04);
 }
 
 .wingstone-quantity-box input {
@@ -60,7 +60,7 @@
   font-weight: 600;
   background: transparent;
   outline: none;
-  color: var(--color-ink);
+  color: #111827;
 }
 
 .wingstone-buttons {
@@ -74,7 +74,7 @@
   position: relative;
   height: 74px;
   border: none;
-  border-radius: var(--radius-lg, 20px);
+  border-radius: 28px;
   overflow: hidden;
   cursor: pointer;
   background:
@@ -91,14 +91,14 @@
   text-transform: uppercase;
   transition: all 0.45s ease;
   box-shadow:
-    0 20px 40px color-mix(in srgb, var(--color-ink), transparent 82%),
+    0 20px 40px rgba(15,23,42,0.18),
     inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .wingstone-cart-btn:hover {
   transform: translateY(-3px);
   box-shadow:
-    0 25px 50px color-mix(in srgb, var(--color-ink), transparent 76%),
+    0 25px 50px rgba(15,23,42,0.24),
     inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
@@ -124,17 +124,17 @@
 
 .shopify-payment-button__button {
   height: 74px !important;
-  border-radius: var(--radius-lg, 20px) !important;
+  border-radius: 28px !important;
   background:
-    linear-gradient(135deg, var(--color-accent-dk) 0%, var(--color-accent) 50%, var(--color-accent-lt) 100%) !important;
-  color: var(--color-ink) !important;
+    linear-gradient(135deg, #d4af37 0%, #f3d58a 50%, #c89b2f 100%) !important;
+  color: #111827 !important;
   font-size: 16px !important;
   font-weight: 700 !important;
   letter-spacing: 3px !important;
   text-transform: uppercase !important;
   transition: all 0.45s ease !important;
   box-shadow:
-    0 18px 40px color-mix(in srgb, var(--color-accent), transparent 76%) !important;
+    0 18px 40px rgba(212,175,55,0.24) !important;
 }
 
 .shopify-payment-button__button:hover {
@@ -151,27 +151,27 @@
 
 .benefit-card {
   background: rgba(255,255,255,0.72);
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 92%);
-  border-radius: var(--radius-lg, 20px);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 26px;
   padding: 28px 20px;
   text-align: center;
   backdrop-filter: blur(14px);
   transition: all 0.4s ease;
   box-shadow:
-    0 10px 25px color-mix(in srgb, var(--color-ink), transparent 96%),
+    0 10px 25px rgba(15,23,42,0.04),
     inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
 .benefit-card:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 18px 40px color-mix(in srgb, var(--color-ink), transparent 92%);
+    0 18px 40px rgba(15,23,42,0.08);
 }
 
 .benefit-icon {
   font-size: 28px;
   margin-bottom: 18px;
-  color: var(--color-accent-lt);
+  color: #d4af37;
 }
 
 .benefit-card h4 {
@@ -179,13 +179,13 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 10px;
-  color: var(--color-ink);
+  color: #111827;
 }
 
 .benefit-card p {
   font-size: 13px;
   line-height: 1.7;
-  color: var(--color-steel);
+  color: #6b7280;
 }
 
 .wingstone-mini-trust {
@@ -196,7 +196,7 @@
   flex-wrap: wrap;
   font-size: 11px;
   letter-spacing: 4px;
-  color: var(--color-steel);
+  color: #6b7280;
   text-transform: uppercase;
 }
 
@@ -211,7 +211,7 @@
   .wingstone-cart-btn,
   .shopify-payment-button__button {
     height: 64px !important;
-    border-radius: var(--radius-lg, 20px) !important;
+    border-radius: 22px !important;
     font-size: 14px !important;
     padding: 0 20px !important;
   }
@@ -253,8 +253,8 @@
   background:
     linear-gradient(
       105deg,
-      color-mix(in srgb, var(--color-paper), transparent 8%) 0%,
-      color-mix(in srgb, var(--color-paper), transparent 55%) 45%,
+      color-mix(in srgb, var(--color-paper, #f5f5f3), transparent 8%) 0%,
+      color-mix(in srgb, var(--color-paper, #f5f5f3), transparent 55%) 45%,
       transparent 75%
     );
   z-index: 1;
@@ -268,7 +268,7 @@
   left: 0;
   right: 0;
   height: 35%;
-  background: linear-gradient(to top, var(--color-paper) 0%, transparent 100%);
+  background: linear-gradient(to top, var(--color-paper, #f5f5f3) 0%, transparent 100%);
 }
 
 /* Hero content positioning */
@@ -286,7 +286,7 @@
 
 .hero-subtitle {
   margin: 0 0 1.1rem;
-  color: var(--color-steel);
+  color: var(--color-steel, #6b7280);
   font-size: clamp(.62rem, .7vw, .78rem);
   font-weight: 800;
   letter-spacing: .24em;
@@ -300,17 +300,17 @@
   font-weight: 600;
   line-height: .92;
   letter-spacing: -.04em;
-  color: var(--color-ink);
+  color: var(--color-ink, #111827);
 }
 
 .hero-title span {
-  color: color-mix(in srgb, var(--color-steel), white 12%);
+  color: var(--color-steel, #94a3b8);
 }
 
 .hero-description {
   margin: 0 0 2.2rem;
   max-width: 440px;
-  color: var(--color-steel);
+  color: var(--color-steel, #4b5563);
   font-size: clamp(.9rem, 1.1vw, 1.1rem);
   line-height: 1.65;
 }
@@ -326,16 +326,16 @@
   display: inline-flex;
   align-items: center;
   gap: .65rem;
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-ink, #0f172a);
+  color: var(--color-paper, #f5f5f3);
   padding: .9rem 2rem;
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid var(--color-ink);
-  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--color-ink, #0f172a);
+  border-radius: 2px;
   transition:
     background 300ms var(--ease-luxury, ease),
     color 300ms var(--ease-luxury, ease),
@@ -345,7 +345,7 @@
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-ink), transparent 78%);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-ink, #0f172a), transparent 78%);
 }
 
 .btn-secondary {
@@ -353,15 +353,15 @@
   align-items: center;
   gap: .65rem;
   background: transparent;
-  color: var(--color-ink);
+  color: var(--color-ink, #111827);
   padding: .9rem 2rem;
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 72%);
-  border-radius: var(--radius-sm, 4px);
+  border: 1px solid color-mix(in srgb, var(--color-ink, #111827), transparent 72%);
+  border-radius: 2px;
   transition:
     border-color 300ms var(--ease-luxury, ease),
     background 300ms var(--ease-luxury, ease),
@@ -369,8 +369,8 @@
 }
 
 .btn-secondary:hover {
-  border-color: var(--color-ink);
-  background: color-mix(in srgb, var(--color-ink), transparent 96%);
+  border-color: var(--color-ink, #111827);
+  background: color-mix(in srgb, var(--color-ink, #111827), transparent 96%);
   transform: translateY(-2px);
 }
 
@@ -380,8 +380,8 @@
   display: flex;
   flex-direction: column;
   background: var(--color-paper, #ffffff);
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 90%);
-  border-radius: var(--radius-md, 10px);
+  border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
+  border-radius: 14px;
   overflow: hidden;
   padding: 16px;
   box-shadow: none;
@@ -398,14 +398,14 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--color-accent);
+  background: var(--color-accent, #cba72f);
   transition: width 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .product-card:hover {
   transform: translateY(-6px);
-  border-color: var(--color-accent);
-  box-shadow: 0 16px 36px color-mix(in srgb, var(--color-ink), transparent 94%);
+  border-color: var(--color-accent, #cba72f);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--color-ink, #04102f), transparent 94%);
 }
 
 .product-card:hover::after {
@@ -417,13 +417,13 @@
   overflow: hidden;
   background: var(--color-frost, #f9f9ff);
   aspect-ratio: 3 / 4;
-  border-radius: var(--radius-md, 10px);
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 94%);
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 94%);
   transition: border-color 0.3s ease;
 }
 
 .product-card:hover .product-card__image {
-  border-color: color-mix(in srgb, var(--color-accent), transparent 40%);
+  border-color: color-mix(in srgb, var(--color-accent, #cba72f), transparent 40%);
 }
 
 /* Primary and hover image transitions */
@@ -476,16 +476,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--color-paper), transparent 60%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-ink), transparent 94%);
+  box-shadow: 0 4px 12px rgba(4, 16, 47, 0.06);
   transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), background-color 250ms ease, border-color 250ms ease;
 }
 
 .product-card__wishlist-btn svg {
   width: 14px;
   height: 14px;
-  color: var(--color-steel);
+  color: var(--color-steel, #455373);
   fill: none;
   transition: transform 200ms ease, fill 200ms ease, color 200ms ease;
 }
@@ -493,13 +493,13 @@
 .product-card__wishlist-btn:hover {
   transform: scale(1.1);
   background: rgba(255, 255, 255, 0.9);
-  border-color: var(--color-accent);
+  border-color: var(--color-accent, #cba72f);
 }
 
 .product-card__wishlist-btn:hover svg,
 .product-card__wishlist-btn.active svg {
-  color: var(--color-accent);
-  fill: var(--color-accent);
+  color: var(--color-accent, #cba72f);
+  fill: var(--color-accent, #cba72f);
 }
 
 /* Floating discount badge */
@@ -508,8 +508,8 @@
   top: 12px;
   left: 12px;
   z-index: 5;
-  background: var(--color-accent);
-  color: var(--color-ink);
+  background: var(--color-accent, #cba72f);
+  color: var(--color-ink, #04102f);
   font-family: var(--font-body-family), sans-serif;
   font-size: 9px;
   font-weight: 700;
@@ -547,13 +547,13 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent, #cba72f);
 }
 
 .product-card__archive-id {
   font-family: monospace, monospace;
   font-size: 9px;
-  color: var(--color-steel);
+  color: var(--color-steel, #455373);
   letter-spacing: 0.05em;
   opacity: 0.8;
 }
@@ -568,23 +568,13 @@
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-steel);
+  color: var(--color-steel, #455373);
   display: block;
 }
 
 .product-card__signal {
-  display: inline-block;
-  width: fit-content;
   margin-top: 6px;
   margin-bottom: 8px;
-  padding: .18rem .42rem;
-  border-radius: var(--radius-sm, 4px);
-  background: color-mix(in srgb, var(--color-accent), transparent 82%);
-  color: var(--color-ink);
-  font-size: .68rem;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
 }
 
 .product-card__title {
@@ -592,7 +582,7 @@
   font-family: var(--font-heading-family), Georgia, serif;
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--color-ink);
+  color: var(--color-ink, #04102f);
   line-height: 1.3;
   display: -webkit-box;
   line-clamp: 2;
@@ -604,7 +594,7 @@
 }
 
 .product-card:hover .product-card__title {
-  color: var(--color-accent);
+  color: var(--color-accent, #cba72f);
 }
 
 .product-card__pricing {
@@ -618,13 +608,13 @@
   font-family: var(--font-heading-family), Georgia, serif;
   font-size: 1.05rem;
   font-weight: 500;
-  color: var(--color-ink);
+  color: var(--color-ink, #04102f);
 }
 
 .product-card__price--compare {
   font-family: var(--font-heading-family), Georgia, serif;
   font-size: 0.85rem;
-  color: var(--color-steel);
+  color: var(--color-steel, #455373);
   text-decoration: line-through;
   opacity: 0.7;
 }
@@ -633,7 +623,7 @@
   font-family: var(--font-heading-family), Georgia, serif;
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent, #cba72f);
 }
 
 .product-card__variants {
@@ -642,7 +632,7 @@
   gap: 8px;
   margin-top: auto;
   padding: 12px 0;
-  border-top: 1px solid color-mix(in srgb, var(--color-line), transparent 50%);
+  border-top: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
   margin-bottom: 12px;
 }
 
@@ -658,15 +648,15 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 85%);
+  border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 85%);
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .product-card__swatch--color:hover {
   transform: scale(1.2);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
+  border-color: var(--color-accent, #cba72f);
+  box-shadow: 0 0 0 1px var(--color-accent, #cba72f);
 }
 
 .product-card__swatch--size {
@@ -676,12 +666,12 @@
   min-width: 24px;
   height: 20px;
   padding: 0 4px;
-  border-radius: var(--radius-sm, 4px);
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 85%);
+  border-radius: 0px;
+  border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 85%);
   font-family: var(--font-body-family), sans-serif;
   font-size: 9px;
   font-weight: 600;
-  color: var(--color-steel);
+  color: var(--color-steel, #455373);
   background: transparent;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -689,8 +679,8 @@
 }
 
 .product-card__swatch--size:hover {
-  border-color: var(--color-ink);
-  color: var(--color-ink);
+  border-color: var(--color-ink, #04102f);
+  color: var(--color-ink, #04102f);
   background: var(--color-frost, #f9f9ff);
 }
 
@@ -698,7 +688,7 @@
   font-family: var(--font-body-family), sans-serif;
   font-size: 9px;
   font-weight: 600;
-  color: var(--color-steel);
+  color: var(--color-steel, #455373);
   margin-left: 2px;
 }
 
@@ -714,9 +704,9 @@
   width: 100%;
   padding: 11px 16px;
   background: transparent;
-  color: var(--color-ink);
-  border: 1px solid var(--color-ink);
-  border-radius: var(--radius-sm, 4px);
+  color: var(--color-ink, #04102f);
+  border: 1px solid var(--color-ink, #04102f);
+  border-radius: 0px;
   font-family: var(--font-body-family), sans-serif;
   font-size: 11px;
   font-weight: 700;
@@ -727,14 +717,14 @@
 }
 
 .product-card__quick-add:hover:not(:disabled) {
-  background: var(--color-ink);
+  background: var(--color-ink, #04102f);
   color: #ffffff;
 }
 
 .product-card__quick-add:disabled {
   background: transparent;
-  border-color: color-mix(in srgb, var(--color-ink), transparent 85%);
-  color: color-mix(in srgb, var(--color-ink), transparent 60%);
+  border-color: color-mix(in srgb, var(--color-ink, #04102f), transparent 85%);
+  color: color-mix(in srgb, var(--color-ink, #04102f), transparent 60%);
   cursor: not-allowed;
 }
 
@@ -827,7 +817,7 @@
 .tech-specs__eyebrow {
   display: block;
   margin-bottom: .7rem;
-  color: var(--color-steel);
+  color: var(--color-steel, #6b7280);
   font-size: .66rem;
   font-weight: 800;
   letter-spacing: .22em;
@@ -840,7 +830,7 @@
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 600;
   letter-spacing: -.03em;
-  color: var(--color-ink);
+  color: var(--color-ink, #111827);
 }
 
 .tech-specs__track {
@@ -858,21 +848,21 @@
 .tech-spec-card {
   flex: 0 0 220px;
   padding: 2rem 1.6rem;
-  border: 1px solid color-mix(in srgb, var(--color-ink), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--color-ink, #111827), transparent 90%);
   border-radius: 2px;
-  background: color-mix(in srgb, var(--color-paper), white 8%);
+  background: color-mix(in srgb, var(--color-paper, #f5f5f3), white 8%);
   scroll-snap-align: start;
 }
 
 .tech-spec-card__icon {
   margin-bottom: 1.2rem;
-  color: var(--color-steel);
+  color: var(--color-steel, #6b7280);
 }
 
 .tech-spec-card__label {
   display: block;
   margin-bottom: .3rem;
-  color: var(--color-steel);
+  color: var(--color-steel, #6b7280);
   font-size: .62rem;
   font-weight: 800;
   letter-spacing: .2em;
@@ -881,7 +871,7 @@
 
 .tech-spec-card__value {
   display: block;
-  color: var(--color-ink);
+  color: var(--color-ink, #111827);
   font-family: var(--font-heading-family, Georgia, serif);
   font-size: 1.35rem;
   font-weight: 600;
@@ -905,7 +895,7 @@
 .editorial-cell {
   position: relative;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-steel), transparent 60%);
+  background: color-mix(in srgb, var(--color-steel, #6b7280), transparent 60%);
   border-radius: 2px;
   cursor: pointer;
 }
@@ -1011,7 +1001,7 @@
   font-family: var(--font-heading-family, Georgia, serif);
   font-size: 5rem;
   font-weight: 900;
-  color: var(--color-ink);
+  color: var(--color-ink, #111827);
   letter-spacing: -.05em;
   animation: loader-pulse 1.8s var(--ease-luxury, ease) infinite;
 }
@@ -1024,7 +1014,7 @@
 .collection-header__eyebrow {
   display: block;
   margin-bottom: .7rem;
-  color: var(--color-steel);
+  color: var(--color-steel, #6b7280);
   font-size: .66rem;
   font-weight: 800;
   letter-spacing: .22em;
@@ -1038,12 +1028,12 @@
   font-weight: 600;
   line-height: 1;
   letter-spacing: -.03em;
-  color: var(--color-ink);
+  color: var(--color-ink, #111827);
 }
 
 .collection-header__desc {
   max-width: 560px;
-  color: var(--color-steel);
+  color: var(--color-steel, #6b7280);
   font-size: .95rem;
   line-height: 1.65;
 }
@@ -1052,8 +1042,8 @@
 .liquid-glass {
   background: rgba(255, 255, 255, 0.01);
   background-blend-mode: luminosity;
-  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border: none;
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
   position: relative;
@@ -1083,9 +1073,9 @@
   color: rgba(255, 255, 255, 0.7);
   margin-top: 8rem;
   box-sizing: border-box;
-  background: color-mix(in srgb, var(--color-ink), transparent 15%);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 @media (min-width: 768px) {

@@ -89,119 +89,56 @@ function onKeyUpEscape(event) {
 document.addEventListener("DOMContentLoaded", () => {
 
   const trigger = document.querySelector(".wingstone-menu-trigger");
-  const header = document.querySelector(".site-header");
-  const template = document.querySelector("[data-mobile-menu-template]");
-  const mobileQuery = window.matchMedia("(max-width: 989px)");
-  let drawer = null;
-  let overlay = null;
-  let closeBtn = null;
-  let cleanupHandlers = [];
+  const drawer = document.querySelector(".wingstone-mobile-menu");
+  const overlay = document.querySelector(".wingstone-menu-overlay");
+  const closeBtn = document.querySelector(".wingstone-menu-close");
 
-  if (!trigger || !header || !template) return;
+  if (!trigger || !drawer || !overlay) return;
 
   const setMenuScrollLock = (lock) => {
     document.body.style.overflow = lock ? 'hidden' : '';
   };
 
+  drawer.classList.remove("active");
+  overlay.classList.remove("active");
+  setMenuScrollLock(false);
+
   const closeMenu = () => {
-    if (!drawer || !overlay) return;
     drawer.classList.remove("active");
     overlay.classList.remove("active");
-    drawer.setAttribute("aria-hidden", "true");
-    overlay.setAttribute("aria-hidden", "true");
-    trigger.setAttribute("aria-expanded", "false");
     setMenuScrollLock(false);
   };
 
-  const openMenu = () => {
-    if (!drawer || !overlay || !mobileQuery.matches) return;
+  trigger.addEventListener("click", () => {
     drawer.classList.add("active");
     overlay.classList.add("active");
-    drawer.setAttribute("aria-hidden", "false");
-    overlay.setAttribute("aria-hidden", "false");
-    trigger.setAttribute("aria-expanded", "true");
     setMenuScrollLock(true);
-  };
+  });
 
-  const addBoundListener = (target, eventName, handler, options) => {
-    target.addEventListener(eventName, handler, options);
-    cleanupHandlers.push(() => target.removeEventListener(eventName, handler, options));
-  };
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeMenu);
+  }
 
-  const bindMobileMenu = () => {
-    addBoundListener(trigger, "click", openMenu);
+  overlay.addEventListener("click", closeMenu);
 
-    if (closeBtn) {
-      addBoundListener(closeBtn, "click", closeMenu);
+  drawer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  window.addEventListener("scroll", () => {
+    if (drawer.classList.contains("active")) {
+      closeMenu();
     }
+  }, { passive: true });
 
-    addBoundListener(overlay, "click", closeMenu);
+  document.addEventListener("click", (event) => {
+    const cartToggle = event.target.closest("[data-cart-drawer-toggle]");
+    const searchToggle = event.target.closest("[data-search-toggle], [data-search-open], [href*='/search']");
 
-    drawer.querySelectorAll("a").forEach((link) => {
-      addBoundListener(link, "click", closeMenu);
-    });
-
-    addBoundListener(window, "scroll", () => {
-      if (drawer && drawer.classList.contains("active")) {
-        closeMenu();
-      }
-    }, { passive: true });
-
-    addBoundListener(document, "click", (event) => {
-      if (!drawer) return;
-      const cartToggle = event.target.closest("[data-cart-drawer-toggle]");
-      const searchToggle = event.target.closest("[data-search-toggle], [data-search-open], [href*='/search']");
-
-      if (cartToggle || searchToggle) {
-        closeMenu();
-      }
-    }, true);
-  };
-
-  const unmountMobileMenu = () => {
-    closeMenu();
-    cleanupHandlers.forEach((cleanup) => cleanup());
-    cleanupHandlers = [];
-    if (drawer) drawer.remove();
-    if (overlay) overlay.remove();
-    drawer = null;
-    overlay = null;
-    closeBtn = null;
-  };
-
-  const mountMobileMenu = () => {
-    if (drawer || !mobileQuery.matches) return;
-    header.appendChild(template.content.cloneNode(true));
-    drawer = header.querySelector(".wingstone-mobile-menu");
-    overlay = header.querySelector(".wingstone-menu-overlay");
-    closeBtn = header.querySelector(".wingstone-menu-close");
-
-    if (!drawer || !overlay) {
-      unmountMobileMenu();
-      return;
+    if (cartToggle || searchToggle) {
+      closeMenu();
     }
-
-    drawer.classList.remove("active");
-    overlay.classList.remove("active");
-    drawer.setAttribute("aria-hidden", "true");
-    overlay.setAttribute("aria-hidden", "true");
-    trigger.setAttribute("aria-expanded", "false");
-    bindMobileMenu();
-  };
-
-  const syncMenuMode = () => {
-    const isMobile = mobileQuery.matches;
-    trigger.hidden = !isMobile;
-    if (isMobile) {
-      mountMobileMenu();
-    } else {
-      unmountMobileMenu();
-      setMenuScrollLock(false);
-    }
-  };
-
-  mobileQuery.addEventListener('change', syncMenuMode);
-  syncMenuMode();
+  }, true);
 
 });
-
+

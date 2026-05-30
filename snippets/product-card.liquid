@@ -61,7 +61,7 @@
           <span class="product-card__badge product-card__badge--archive">ARCHIVE</span>
         {% endif %}
       </div>
-      <span class="product-card__archive-id">WN-{{ product.id | append: '' | slice: -4, 4 | upcase }}</span>
+      <span class="product-card__archive-id">WN-{{ product.id | slice: -4, 4 | upcase }}</span>
     </div>
 
     <!-- Vendor / Category -->

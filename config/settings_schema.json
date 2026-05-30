@@ -27,19 +27,19 @@
         "type": "color",
         "id": "color_steel",
         "label": "Muted text",
-        "default": "#5a6a8a"
+        "default": "#455373"
       },
       {
         "type": "color",
         "id": "color_paper",
         "label": "Paper",
-        "default": "#ffffff"
+        "default": "#f9f9ff"
       },
       {
         "type": "color",
         "id": "color_line",
         "label": "Soft border",
-        "default": "#D5DDEA"
+        "default": "#dde3f0"
       },
       {
         "type": "color",

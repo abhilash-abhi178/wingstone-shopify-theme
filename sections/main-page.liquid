@@ -25,7 +25,7 @@
 
         <p>
           Can't find your order? Email
-          <a href="mailto:support@wingstone.studio">support@wingstone.studio</a>
+          <a href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.support_email }}</a>
           with your order number or
           <a href="{{ routes.account_login_url }}">log in to your account</a>.
         </p>
@@ -41,6 +41,13 @@
 {% schema %}
 {
   "name": "Main page",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "support@wingstone.studio"
+    }
+  ]
 }
 {% endschema %}

@@ -564,13 +564,13 @@
   background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 82%);
   padding: 0;
   border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
-  max-height: 0;
+  max-height: var(--submenu-max-height, 0);
   overflow: hidden;
   transition: max-height .25s ease;
 }
 
 .wingstone-mobile-submenu.is-open {
-  max-height: 300px;
+  --submenu-max-height: 320px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -620,6 +620,7 @@
 .main { padding-top: 104px; }
 
 .wingstone-mobile-menu {
+  height: 100vh;
   height: 100dvh;
 }
 
@@ -665,10 +666,17 @@
         if (otherToggle === toggle) return;
         const otherSubmenu = otherToggle.nextElementSibling;
         otherToggle.setAttribute('aria-expanded', 'false');
-        if (otherSubmenu) otherSubmenu.classList.remove('is-open');
+        if (otherSubmenu) {
+          otherSubmenu.style.setProperty('--submenu-max-height', '0px');
+          otherSubmenu.classList.remove('is-open');
+        }
       });
       toggle.setAttribute('aria-expanded', String(!isOpen));
+      submenu.style.setProperty('--submenu-max-height', `${submenu.scrollHeight}px`);
       submenu.classList.toggle('is-open', !isOpen);
+      if (isOpen) {
+        submenu.style.setProperty('--submenu-max-height', '0px');
+      }
     });
   });
 })();

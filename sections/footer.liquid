@@ -70,7 +70,7 @@
               {% if pages['returns'].id %}
                 <a href="{{ pages['returns'].url }}">Exchange / Return Request</a>
               {% else %}
-                <a href="mailto:support@wingstone.studio">Exchange / Return Request</a>
+                <a href="mailto:{{ section.settings.support_email | escape }}">Exchange / Return Request</a>
               {% endif %}
             </li>
             <li><a href="{{ shop.url }}/policies/terms-of-service">Terms &amp; Conditions</a></li>
@@ -188,6 +188,12 @@
       "type": "url",
       "id": "social_instagram",
       "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "support@wingstone.studio"
     }
   ]
 }

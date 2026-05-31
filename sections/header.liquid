@@ -666,10 +666,7 @@
         if (otherToggle === toggle) return;
         const otherSubmenu = otherToggle.nextElementSibling;
         otherToggle.setAttribute('aria-expanded', 'false');
-        if (otherSubmenu) {
-          otherSubmenu.style.setProperty('--submenu-max-height', '0px');
-          otherSubmenu.classList.remove('is-open');
-        }
+        if (otherSubmenu) otherSubmenu.classList.remove('is-open');
       });
       toggle.setAttribute('aria-expanded', String(!isOpen));
       submenu.style.setProperty('--submenu-max-height', `${submenu.scrollHeight}px`);

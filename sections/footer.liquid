@@ -92,8 +92,8 @@
           {%- else -%}
             {% if section.settings.social_instagram != blank %}
               <li><a href="{{ section.settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a></li>
-            {% else %}
-              <li>Set Instagram URL in theme editor</li>
+            {% elsif request.design_mode %}
+              <li><span class="site-footer__socials-hint">Set Instagram URL in theme editor</span></li>
             {% endif %}
           {%- endif -%}
         </ul>
@@ -138,7 +138,7 @@
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
             </svg>
           </a>
-        {%- else -%}
+        {%- elsif request.design_mode -%}
           <span class="site-footer__socials-hint">Set Instagram URL in theme editor</span>
         {%- endif -%}
       </div>

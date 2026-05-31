@@ -161,7 +161,7 @@
       <a href="{{ routes.all_products_collection_url }}">SHOP</a>
       
       <div class="wingstone-menu-item-with-submenu">
-        <button class="wingstone-menu-link wingstone-menu-link--button" type="button" data-mobile-submenu-toggle aria-expanded="false">APPAREL</button>
+        <button class="wingstone-menu-link wingstone-menu-link--button" type="button" data-mobile-submenu-toggle aria-expanded="false" aria-label="Toggle Apparel submenu">APPAREL</button>
         <div class="wingstone-mobile-submenu">
           <a href="{{ routes.collections_url }}/fashion" class="wingstone-mobile-submenu-link">Fashion</a>
           <a href="{{ routes.collections_url }}/t-shirts" class="wingstone-mobile-submenu-link">T-Shirts</a>
@@ -170,7 +170,7 @@
       </div>
 
       <div class="wingstone-menu-item-with-submenu">
-        <button class="wingstone-menu-link wingstone-menu-link--button" type="button" data-mobile-submenu-toggle aria-expanded="false">FOOTWEAR</button>
+        <button class="wingstone-menu-link wingstone-menu-link--button" type="button" data-mobile-submenu-toggle aria-expanded="false" aria-label="Toggle Footwear submenu">FOOTWEAR</button>
         <div class="wingstone-mobile-submenu">
           <a href="{{ routes.collections_url }}/sandals" class="wingstone-mobile-submenu-link">Sandals</a>
         </div>
@@ -573,6 +573,12 @@
   max-height: 300px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .wingstone-mobile-submenu {
+    transition: none;
+  }
+}
+
 .wingstone-mobile-submenu-link {
   display: block !important;
   padding: 0.6rem 2.25rem !important;
@@ -655,6 +661,12 @@
       const submenu = toggle.nextElementSibling;
       if (!submenu) return;
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggles.forEach((otherToggle) => {
+        if (otherToggle === toggle) return;
+        const otherSubmenu = otherToggle.nextElementSibling;
+        otherToggle.setAttribute('aria-expanded', 'false');
+        if (otherSubmenu) otherSubmenu.classList.remove('is-open');
+      });
       toggle.setAttribute('aria-expanded', String(!isOpen));
       submenu.classList.toggle('is-open', !isOpen);
     });

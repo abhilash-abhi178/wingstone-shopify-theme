@@ -10,6 +10,31 @@
       <p class="site-footer__brand-desc">
         Future-focused streetwear with a quieter, more premium shopping experience.
       </p>
+      <div class="site-footer__newsletter">
+        <span class="site-footer__socials-label">Join the Journey:</span>
+        {% form 'customer', class: 'site-footer__newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,footer">
+          {% if form.posted_successfully? %}
+            <p class="site-footer__newsletter-success">Thanks for subscribing.</p>
+          {% else %}
+            <label class="visually-hidden" for="FooterNewsletterEmail-{{ section.id }}">Email address</label>
+            <input
+              id="FooterNewsletterEmail-{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              value="{{ form.email }}"
+              required
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              placeholder="Email address"
+            >
+            <button type="submit" aria-label="Subscribe">
+              →
+            </button>
+          {% endif %}
+        {% endform %}
+      </div>
     </div>
 
     <!-- Links Columns -->
@@ -41,7 +66,13 @@
             {%- endfor -%}
           {%- else -%}
             <li><a href="{{ routes.root_url | append: '/' | replace: '//', '/' }}pages/track-order">Track Order</a></li>
-            <li><a href="{{ routes.root_url | append: '/' | replace: '//', '/' }}pages/returns">Exchange / Return Request</a></li>
+            <li>
+              {% if pages['returns'].id %}
+                <a href="{{ pages['returns'].url }}">Exchange / Return Request</a>
+              {% else %}
+                <a href="mailto:support@wingstone.studio">Exchange / Return Request</a>
+              {% endif %}
+            </li>
             <li><a href="{{ shop.url }}/policies/terms-of-service">Terms &amp; Conditions</a></li>
             <li><a href="{{ shop.url }}/policies/privacy-policy">Privacy Policy</a></li>
             <li><a href="{{ shop.url }}/policies/refund-policy">Return &amp; Exchange Policy</a></li>
@@ -59,7 +90,11 @@
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+            {% if section.settings.social_instagram != blank %}
+              <li><a href="{{ section.settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a></li>
+            {% else %}
+              <li>Set Instagram URL in theme editor</li>
+            {% endif %}
           {%- endif -%}
         </ul>
       </details>
@@ -72,7 +107,6 @@
       &copy; {{ 'now' | date: '%Y' }} WINGSTONE. All rights reserved.
     </p>
     <div class="site-footer__socials-wrapper">
-      <span class="site-footer__socials-label">Join the Journey:</span>
       <div class="site-footer__social-icons">
         {%- if section.settings.social_facebook != blank -%}
           <a href="{{ section.settings.social_facebook }}" class="site-footer__social-icon-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
@@ -104,6 +138,8 @@
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
             </svg>
           </a>
+        {%- else -%}
+          <span class="site-footer__socials-hint">Set Instagram URL in theme editor</span>
         {%- endif -%}
       </div>
     </div>

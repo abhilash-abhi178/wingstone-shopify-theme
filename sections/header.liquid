@@ -28,7 +28,7 @@
 
           <!-- Apparel Dropdown -->
           <div class="site-nav__dropdown-wrap">
-            <a href="{{ routes.collections_url }}"
+            <a href="{{ routes.collections_url }}/fashion"
                class="site-nav__link site-nav__link--has-dropdown"
                aria-haspopup="true"
                aria-expanded="false"
@@ -38,43 +38,39 @@
               </svg>
             </a>
             <div class="site-nav__dropdown" aria-hidden="true">
-              <a href="{{ routes.collections_url }}/jackets" class="site-nav__dropdown-link">Jackets</a>
-              <a href="{{ routes.collections_url }}/trousers" class="site-nav__dropdown-link">Trousers</a>
-              <a href="{{ routes.collections_url }}/base-layers" class="site-nav__dropdown-link">Base Layers</a>
-              <a href="{{ routes.collections_url }}/accessories" class="site-nav__dropdown-link">Accessories</a>
+              <a href="{{ routes.collections_url }}/fashion" class="site-nav__dropdown-link">Fashion</a>
+              <a href="{{ routes.collections_url }}/t-shirts" class="site-nav__dropdown-link">T-Shirts</a>
+              <a href="{{ routes.collections_url }}/shirts" class="site-nav__dropdown-link">Shirts</a>
             </div>
           </div>
 
-          <!-- Equipment Dropdown -->
+          <!-- Footwear -->
           <div class="site-nav__dropdown-wrap">
-            <a href="{{ routes.collections_url }}"
+            <a href="{{ routes.collections_url }}/sandals"
                class="site-nav__link site-nav__link--has-dropdown"
                aria-haspopup="true"
                aria-expanded="false"
-            >EQUIPMENT
+            >FOOTWEAR
               <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
                 <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </a>
             <div class="site-nav__dropdown" aria-hidden="true">
-              <a href="{{ routes.collections_url }}/packs" class="site-nav__dropdown-link">Packs</a>
-              <a href="{{ routes.collections_url }}/footwear" class="site-nav__dropdown-link">Footwear</a>
-              <a href="{{ routes.collections_url }}/gear" class="site-nav__dropdown-link">Gear</a>
+              <a href="{{ routes.collections_url }}/sandals" class="site-nav__dropdown-link">Sandals</a>
             </div>
           </div>
 
-          <a href="{{ routes.collections_url }}/expeditions"
-             class="site-nav__link"
-          >EXPEDITIONS</a>
+          {% if pages.journal.id %}
+            <a href="{{ pages.journal.url }}"
+               class="site-nav__link"
+            >JOURNAL</a>
+          {% endif %}
 
-          <a href="{{ pages.journal.url | default: routes.root_url }}"
-             class="site-nav__link"
-          >JOURNAL</a>
-
-          <!-- LOOKBOOK — fixed: uses pages.lookbook Shopify page -->
-          <a href="{{ pages.lookbook.url | default: routes.root_url }}"
-             class="site-nav__link{% if request.page_type == 'page' and request.path contains 'lookbook' %} is-active{% endif %}"
-          >LOOKBOOK</a>
+          {% if pages.lookbook.id %}
+            <a href="{{ pages.lookbook.url }}"
+               class="site-nav__link{% if request.page_type == 'page' and request.path contains 'lookbook' %} is-active{% endif %}"
+            >LOOKBOOK</a>
+          {% endif %}
         </nav>
       </div>
 
@@ -127,7 +123,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
-          <span class="site-header__badge" data-wishlist-count style="display: none;">0</span>
+          <span class="site-header__badge" data-wishlist-count style="display: none;"></span>
         </a>
 
         <a class="site-header__action site-header__action--cart"
@@ -165,28 +161,27 @@
       <a href="{{ routes.all_products_collection_url }}">SHOP</a>
       
       <div class="wingstone-menu-item-with-submenu">
-        <a href="{{ routes.collections_url }}/apparel" class="wingstone-menu-link">APPAREL</a>
+        <button class="wingstone-menu-link wingstone-menu-link--button" type="button" data-mobile-submenu-toggle aria-expanded="false">APPAREL</button>
         <div class="wingstone-mobile-submenu">
-          <a href="{{ routes.collections_url }}/jackets" class="wingstone-mobile-submenu-link">Jackets</a>
-          <a href="{{ routes.collections_url }}/trousers" class="wingstone-mobile-submenu-link">Trousers</a>
-          <a href="{{ routes.collections_url }}/base-layers" class="wingstone-mobile-submenu-link">Base Layers</a>
-          <a href="{{ routes.collections_url }}/accessories" class="wingstone-mobile-submenu-link">Accessories</a>
+          <a href="{{ routes.collections_url }}/fashion" class="wingstone-mobile-submenu-link">Fashion</a>
+          <a href="{{ routes.collections_url }}/t-shirts" class="wingstone-mobile-submenu-link">T-Shirts</a>
+          <a href="{{ routes.collections_url }}/shirts" class="wingstone-mobile-submenu-link">Shirts</a>
         </div>
       </div>
 
       <div class="wingstone-menu-item-with-submenu">
-        <a href="{{ routes.collections_url }}/equipment" class="wingstone-menu-link">EQUIPMENT</a>
+        <button class="wingstone-menu-link wingstone-menu-link--button" type="button" data-mobile-submenu-toggle aria-expanded="false">FOOTWEAR</button>
         <div class="wingstone-mobile-submenu">
-          <a href="{{ routes.collections_url }}/packs" class="wingstone-mobile-submenu-link">Packs</a>
-          <a href="{{ routes.collections_url }}/footwear" class="wingstone-mobile-submenu-link">Footwear</a>
-          <a href="{{ routes.collections_url }}/gear" class="wingstone-mobile-submenu-link">Gear</a>
+          <a href="{{ routes.collections_url }}/sandals" class="wingstone-mobile-submenu-link">Sandals</a>
         </div>
       </div>
 
-      <a href="{{ routes.collections_url }}/expeditions">EXPEDITIONS</a>
-      <a href="{{ pages.journal.url | default: routes.root_url }}">JOURNAL</a>
-      <!-- LOOKBOOK — fixed route using Shopify pages object -->
-      <a href="{{ pages.lookbook.url | default: routes.root_url }}">LOOKBOOK</a>
+      {% if pages.journal.id %}
+        <a href="{{ pages.journal.url }}">JOURNAL</a>
+      {% endif %}
+      {% if pages.lookbook.id %}
+        <a href="{{ pages.lookbook.url }}">LOOKBOOK</a>
+      {% endif %}
     </div>
 
     <div class="wingstone-menu-footer">
@@ -490,6 +485,10 @@
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--color-line, #dde3f0);
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--color-paper, #f9f9ff);
+  z-index: 1;
 }
 
 .wingstone-menu-close {
@@ -527,7 +526,8 @@
   padding: 1.5rem 0;
 }
 
-.wingstone-menu-links a {
+.wingstone-menu-links a,
+.wingstone-menu-link--button {
   display: block;
   padding: .85rem 1.75rem;
   color: var(--color-ink, #04102f);
@@ -540,16 +540,37 @@
   transition: color .15s ease, padding-left .15s ease, background .15s ease;
 }
 
-.wingstone-menu-links a:hover {
+.wingstone-menu-links a:hover,
+.wingstone-menu-link--button:hover {
   color: var(--color-accent, #cba72f);
   padding-left: 2.25rem;
   background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 94%);
 }
 
+.wingstone-menu-link--button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.wingstone-menu-link--button[aria-expanded="true"] {
+  color: var(--color-accent, #cba72f);
+  background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 94%);
+}
+
 .wingstone-mobile-submenu {
   background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 82%);
-  padding: 0.25rem 0;
+  padding: 0;
   border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .25s ease;
+}
+
+.wingstone-mobile-submenu.is-open {
+  max-height: 300px;
 }
 
 .wingstone-mobile-submenu-link {
@@ -592,6 +613,10 @@
 
 .main { padding-top: 104px; }
 
+.wingstone-mobile-menu {
+  height: 100dvh;
+}
+
 @media (max-width: 899px) {
   .main { padding-top: 88px; }
 }
@@ -621,6 +646,19 @@
       }
     }, { passive: true });
   }
+})();
+
+(function() {
+  const toggles = document.querySelectorAll('[data-mobile-submenu-toggle]');
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const submenu = toggle.nextElementSibling;
+      if (!submenu) return;
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      submenu.classList.toggle('is-open', !isOpen);
+    });
+  });
 })();
 </script>
 

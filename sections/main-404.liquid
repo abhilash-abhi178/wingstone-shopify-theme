@@ -1,11 +1,75 @@
-<section class="section">
-  <div class="page-width">
-    <p class="eyebrow">404</p>
-    <h1 class="section-title">Page not found</h1>
-    <p>The page you were looking for does not exist.</p>
-    <a class="button" href="{{ routes.root_url }}">Return home</a>
+<section class="section wingstone-404">
+  <div class="page-width wingstone-404__inner">
+    <p class="wingstone-404__ghost" aria-hidden="true">404</p>
+    <p class="eyebrow">Lost in transit</p>
+    <h1 class="section-title">This page took a wrong turn.</h1>
+    <p>Use one of the paths below to get back to Wingstone.</p>
+    <div class="wingstone-404__cards">
+      <a href="{{ routes.root_url }}" class="wingstone-404__card">
+        <strong>Homepage</strong>
+        <span>Return to the main storefront.</span>
+      </a>
+      <a href="{{ routes.all_products_collection_url }}" class="wingstone-404__card">
+        <strong>Shop all products</strong>
+        <span>Browse every available drop.</span>
+      </a>
+      <a href="{{ routes.root_url | append: '/pages/track-order' }}" class="wingstone-404__card">
+        <strong>Track your order</strong>
+        <span>Need delivery help? Start here.</span>
+      </a>
+    </div>
   </div>
 </section>
+
+<style>
+.wingstone-404__inner {
+  position: relative;
+  text-align: center;
+}
+
+.wingstone-404__ghost {
+  margin: 0;
+  font-size: clamp(5rem, 20vw, 12rem);
+  line-height: .9;
+  color: color-mix(in srgb, var(--color-ink, #04102f), transparent 88%);
+  letter-spacing: .08em;
+}
+
+.wingstone-404__cards {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 900px) {
+  .wingstone-404__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.wingstone-404__card {
+  display: grid;
+  gap: .45rem;
+  border: 1px solid var(--color-line, #dde3f0);
+  border-radius: 10px;
+  padding: 1.1rem;
+  text-align: left;
+  text-decoration: none;
+  color: var(--color-ink, #04102f);
+  background: color-mix(in srgb, var(--color-paper, #fff), transparent 8%);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.wingstone-404__card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--color-accent, #cba72f), transparent 35%);
+  box-shadow: 0 14px 24px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
+}
+
+.wingstone-404__card span {
+  color: var(--color-steel, #455373);
+}
+</style>
 
 {% schema %}
 {

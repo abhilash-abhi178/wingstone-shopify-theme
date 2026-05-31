@@ -3,17 +3,38 @@
     <div class="page-shell__intro">
       <p class="eyebrow">Wingstone</p>
       <h1 class="section-title">{{ page.title }}</h1>
-      <p class="page-shell__lede">Editorial brand pages, clear product stories, and no default Shopify clutter.</p>
     </div>
 
-    <article class="page-shell__card rte page-content">
-      {{ page.content }}
-    </article>
+    {% if page.handle == 'track-order' %}
+      <div class="page-shell__card">
+        <p>Enter your order details and we'll send a status update.</p>
+        {% form 'contact', class: 'page-track-order-form' %}
+          {% if form.posted_successfully? %}
+            <p>Thanks! Our team will email your latest tracking status shortly.</p>
+          {% else %}
+            <label for="TrackOrderNumber-{{ section.id }}">Order number</label>
+            <input id="TrackOrderNumber-{{ section.id }}" type="text" name="contact[order_number]" required>
 
-    <div class="page-shell__actions">
-      <a class="button" href="{{ routes.root_url }}#featured-products">Shop drops</a>
-      <a class="button button--secondary" href="{{ routes.root_url }}#trust">Brand values</a>
-    </div>
+            <label for="TrackOrderEmail-{{ section.id }}">Email used at checkout</label>
+            <input id="TrackOrderEmail-{{ section.id }}" type="email" name="contact[email]" required>
+
+            <input type="hidden" name="contact[body]" value="Track order request">
+            <button class="button" type="submit">Track order</button>
+          {% endif %}
+        {% endform %}
+
+        <p>
+          Can't find your order? Email
+          <a href="mailto:support@wingstone.studio">support@wingstone.studio</a>
+          with your order number or
+          <a href="{{ routes.account_login_url }}">log in to your account</a>.
+        </p>
+      </div>
+    {% else %}
+      <article class="page-shell__card rte page-content">
+        {{ page.content }}
+      </article>
+    {% endif %}
   </div>
 </section>
 

@@ -1,3 +1,4 @@
+{% assign instagram_hint = 'Set Instagram URL in theme editor' %}
 <footer class="site-footer site-footer--liquid-glass liquid-glass page-width">
   <!-- Top Grid -->
   <div class="site-footer__top-grid">
@@ -93,7 +94,7 @@
             {% if section.settings.social_instagram != blank %}
               <li><a href="{{ section.settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a></li>
             {% elsif request.design_mode %}
-              <li><span class="site-footer__socials-hint">Set Instagram URL in theme editor</span></li>
+              <li><span class="site-footer__socials-hint">{{ instagram_hint }}</span></li>
             {% endif %}
           {%- endif -%}
         </ul>
@@ -139,7 +140,7 @@
             </svg>
           </a>
         {%- elsif request.design_mode -%}
-          <span class="site-footer__socials-hint">Set Instagram URL in theme editor</span>
+          <span class="site-footer__socials-hint">{{ instagram_hint }}</span>
         {%- endif -%}
       </div>
     </div>

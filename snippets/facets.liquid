@@ -53,7 +53,7 @@
         <summary class="facets__summary caption-large focus-offset">
           <div>
             <span class="facets__summary-label">{{ filter.label | escape }}</span>
-            <span class="facets__selected{% if filter.active_values.size | plus: 0 == 0 %} hidden{% endif %}">({{ filter.active_values.size }})</span>
+            <span class="facets__selected{% if filter.active_values.size == 0 %} hidden{% endif %}">({{ filter.active_values.size }})</span>
           </div>
         </summary>
 

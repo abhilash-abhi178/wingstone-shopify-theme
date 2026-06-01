@@ -18,7 +18,7 @@
       <details class="site-footer__links-col site-footer__accordion" data-footer-accordion>
         <summary class="site-footer__links-heading site-footer__summary">{{ linklists[section.settings.menu_1].title | default: 'Get to Know Us' }}</summary>
         <ul class="site-footer__links-list site-footer__panel">
-          {%- if linklists[section.settings.menu_1] and linklists[section.settings.menu_1].links.size | plus: 0 > 0 -%}
+          {%- if linklists[section.settings.menu_1].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu_1].links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
@@ -35,7 +35,7 @@
       <details class="site-footer__links-col site-footer__accordion" data-footer-accordion>
         <summary class="site-footer__links-heading site-footer__summary">{{ linklists[section.settings.menu_2].title | default: 'Policies' }}</summary>
         <ul class="site-footer__links-list site-footer__panel">
-          {%- if linklists[section.settings.menu_2] and linklists[section.settings.menu_2].links.size | plus: 0 > 0 -%}
+          {%- if linklists[section.settings.menu_2].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu_2].links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
@@ -54,7 +54,7 @@
       <details class="site-footer__links-col site-footer__accordion" data-footer-accordion>
         <summary class="site-footer__links-heading site-footer__summary">{{ linklists[section.settings.menu_3].title | default: 'Follow Us' }}</summary>
         <ul class="site-footer__links-list site-footer__panel">
-          {%- if linklists[section.settings.menu_3] and linklists[section.settings.menu_3].links.size | plus: 0 > 0 -%}
+          {%- if linklists[section.settings.menu_3].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu_3].links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}

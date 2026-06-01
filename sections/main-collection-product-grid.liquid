@@ -53,7 +53,7 @@
     </facet-filters-form>
 
     <div class="page-width product-grid-shell" id="ProductGridContainer">
-      {%- if collection.products and collection.products.size | plus: 0 == 0 -%}
+      {%- if collection.products.size == 0 -%}
         <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
           <div class="title-wrapper center">
             <h2 class="title title--primary">No products found in this collection.</h2>

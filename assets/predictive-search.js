@@ -175,7 +175,7 @@ class PredictiveSearch extends SearchForm {
         if (!response.ok) {
           var error = new Error(response.status);
           this.close();
-          console.error(error); // Silently catch so the UI doesn't crash
+          throw error;
         }
 
         return response.text();

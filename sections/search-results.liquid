@@ -10,7 +10,7 @@
 
     <h2 class="section-title">Search results{% if search.terms %} for "{{ search.terms }}"{% endif %}</h2>
 
-    {% if search.results_count | plus: 0 > 0 %}
+    {% if search.results_count > 0 %}
       <div class="product-grid">
         {% for result in search.results %}
           {% if result.object_type == 'product' %}
@@ -18,7 +18,7 @@
           {% endif %}
         {% endfor %}
       </div>
-      {% if search.results_count | plus: 0 > search.results.size | plus: 0 %}
+      {% if search.results_count > search.results.size %}
         <div class="search-results__more">
           <a class="button button--secondary" href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&page=2">View more results</a>
         </div>

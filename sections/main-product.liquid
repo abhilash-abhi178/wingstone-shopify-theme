@@ -627,7 +627,7 @@
           {% assign save_pct = product.compare_at_price_max | minus: product.price_min | times: 100 | divided_by: product.compare_at_price_max %}
           <span class="pdp-badge">-{{ save_pct }}%</span>
         {% endif %}
-        {% if product_images and product_images.size | plus: 0 > 1 %}
+        {% if product_images.size > 1 %}
           <button class="pdp-gallery-nav pdp-gallery-nav--prev" type="button" id="pdpGalleryPrev" aria-label="Previous product image">
             <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
           </button>
@@ -653,7 +653,7 @@
 
       <!-- Dynamic badges -->
       <div class="pdp-badges">
-        {% assign inv = product.selected_or_first_available_variant.inventory_quantity | default: 0 | plus: 0 %}
+        {% assign inv = product.selected_or_first_available_variant.inventory_quantity | default: 0 %}
         {% if product.selected_or_first_available_variant.available and inv != nil and inv <= 10 and inv > 0 %}
           <span class="pdp-flag pdp-flag--lowstock">LOW STOCK</span>
         {% endif %}

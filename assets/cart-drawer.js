@@ -147,7 +147,7 @@ class CartDrawer {
 
     fetch('/cart/add.js', { method: 'POST', body: formData })
       .then(r => {
-        if (!r.ok) return Promise.reject(new Error('Cart add failed'));
+        if (!r.ok) throw new Error('Cart add failed');
         return r.json();
       })
       .then(item => {

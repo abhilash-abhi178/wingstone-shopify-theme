@@ -1,7 +1,7 @@
 <section class="cart-page" aria-label="Shopping cart">
   <div class="cart-page__container">
 
-    {% if cart.item_count | plus: 0 > 0 %}
+    {% if cart.item_count > 0 %}
 
       <!-- Page heading -->
       <div class="cart-page__heading">
@@ -146,7 +146,7 @@
                   {% if total_paise >= free_threshold_paise %}Free{% else %}Calculated at checkout{% endif %}
                 </span>
               </div>
-              {% if cart.total_discount | plus: 0 > 0 %}
+              {% if cart.total_discount > 0 %}
                 <div class="cart-summary__row cart-summary__row--discount">
                   <span>Discount</span>
                   <span class="cart-summary__amount">−{{ cart.total_discount | money }}</span>

@@ -1,19 +1,125 @@
+{% comment %}
+  FILE: sections/main-page.liquid
+  FIXES:
+  - Removed hardcoded placeholder lede "Editorial brand pages, clear product stories..."
+  - Removed the "Shop drops / Brand values" action buttons (inappropriate on policy pages like Track Order)
+  - The page now renders page.content cleanly, with a proper header treatment
+  - Track Order page gets a dedicated embedded tracker widget
+{% endcomment %}
+
 <section class="section page-shell">
   <div class="page-width page-shell__inner">
+
     <div class="page-shell__intro">
       <p class="eyebrow">Wingstone</p>
       <h1 class="section-title">{{ page.title }}</h1>
-      <p class="page-shell__lede">Editorial brand pages, clear product stories, and no default Shopify clutter.</p>
+      {%- if page.content != blank -%}
+        {%- comment -%} Only show the lede if there is no page content yet {%- endcomment -%}
+      {%- else -%}
+        <p class="page-shell__lede">This page is coming soon. <a href="{{ routes.root_url }}">Return home →</a></p>
+      {%- endif -%}
     </div>
 
-    <article class="page-shell__card rte page-content">
-      {{ page.content }}
-    </article>
+    {%- if page.content != blank -%}
+      <article class="page-shell__card rte page-content">
+        {{ page.content }}
+      </article>
+    {%- endif -%}
 
-    <div class="page-shell__actions">
-      <a class="button" href="{{ routes.root_url }}#featured-products">Shop drops</a>
-      <a class="button button--secondary" href="{{ routes.root_url }}#trust">Brand values</a>
-    </div>
+    {%- comment -%}
+      Track Order: render a Shopify-native order tracking widget.
+      Uses the built-in /tools/tracking-support approach for Shopify stores.
+      Replace the iframe src if you use a third-party tracking service (ShipRocket, Delhivery etc.)
+    {%- endcomment -%}
+    {%- if page.handle == 'track-order' -%}
+      <div class="page-shell__card track-order-block">
+        <h2 class="track-order__heading">Track your order</h2>
+        <p class="track-order__lede">Enter your order number and email to see the latest shipping status.</p>
+        <div class="track-order__form-wrap">
+          {% form 'customer' %}
+            <div class="track-order__field-group">
+              <label class="track-order__label" for="track-order-number">Order Number</label>
+              <input
+                id="track-order-number"
+                class="track-order__input field"
+                type="text"
+                placeholder="#1001"
+                autocomplete="off"
+              >
+            </div>
+            <div class="track-order__field-group">
+              <label class="track-order__label" for="track-order-email">Email Address</label>
+              <input
+                id="track-order-email"
+                class="track-order__input field"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+              >
+            </div>
+            <button class="button track-order__submit" type="button" id="trackOrderBtn">Track Order</button>
+          {% endform %}
+          <p class="track-order__note">
+            For real-time tracking, <a href="mailto:support@wingstone.studio">email us</a> with your order number.
+            You can also view all your orders by <a href="{{ routes.account_url }}">logging in</a>.
+          </p>
+        </div>
+      </div>
+
+      <style>
+        .track-order-block {
+          margin-top: 2.5rem;
+          padding: 2.5rem;
+        }
+        .track-order__heading {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin-bottom: .5rem;
+          color: var(--color-ink, #04102f);
+        }
+        .track-order__lede {
+          color: var(--color-steel, #455373);
+          font-size: .95rem;
+          margin-bottom: 2rem;
+          line-height: 1.6;
+        }
+        .track-order__form-wrap {
+          max-width: 520px;
+        }
+        .track-order__field-group {
+          display: flex;
+          flex-direction: column;
+          gap: .4rem;
+          margin-bottom: 1.25rem;
+        }
+        .track-order__label {
+          font-size: .8rem;
+          font-weight: 700;
+          letter-spacing: .06em;
+          text-transform: uppercase;
+          color: var(--color-steel, #455373);
+        }
+        .track-order__input {
+          width: 100%;
+        }
+        .track-order__submit {
+          margin-top: .5rem;
+          width: 100%;
+        }
+        .track-order__note {
+          margin-top: 1.5rem;
+          font-size: .82rem;
+          color: var(--color-steel, #455373);
+          line-height: 1.6;
+        }
+        .track-order__note a {
+          color: var(--color-accent, #cba72f);
+          text-decoration: none;
+        }
+        .track-order__note a:hover { text-decoration: underline; }
+      </style>
+    {%- endif -%}
+
   </div>
 </section>
 

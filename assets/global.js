@@ -84,19 +84,25 @@ function onKeyUpEscape(event) {
 
 /* ========================================
    WINGSTONE MOBILE MENU
+   Primary binding lives in sections/header.liquid inline <script>.
+   This is a deduplication-safe fallback using data-menuBound guard.
 ======================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   const trigger = document.querySelector(".wingstone-menu-trigger");
-  const drawer = document.querySelector(".wingstone-mobile-menu");
+  const drawer  = document.querySelector(".wingstone-mobile-menu");
   const overlay = document.querySelector(".wingstone-menu-overlay");
   const closeBtn = document.querySelector(".wingstone-menu-close");
 
   if (!trigger || !drawer || !overlay) return;
 
+  /* Skip if header.liquid inline script already bound it */
+  if (trigger.dataset.menuBound) return;
+  trigger.dataset.menuBound = "1";
+
   const setMenuScrollLock = (lock) => {
-    document.body.style.overflow = lock ? 'hidden' : '';
+    document.body.style.overflow = lock ? "hidden" : "";
   };
 
   drawer.classList.remove("active");
@@ -106,39 +112,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeMenu = () => {
     drawer.classList.remove("active");
     overlay.classList.remove("active");
+    trigger.setAttribute("aria-expanded", "false");
     setMenuScrollLock(false);
   };
 
-  trigger.addEventListener("click", () => {
+  const openMenu = (e) => {
+    if (e && e.cancelable) e.preventDefault();
     drawer.classList.add("active");
     overlay.classList.add("active");
+    trigger.setAttribute("aria-expanded", "true");
     setMenuScrollLock(true);
-  });
+  };
+
+  /* click (desktop) + touchend (iOS/Android — avoids 300ms ghost-click delay) */
+  trigger.addEventListener("click", openMenu);
+  trigger.addEventListener("touchend", (e) => { e.preventDefault(); openMenu(e); }, { passive: false });
 
   if (closeBtn) {
     closeBtn.addEventListener("click", closeMenu);
+    closeBtn.addEventListener("touchend", (e) => { e.preventDefault(); closeMenu(); }, { passive: false });
   }
 
   overlay.addEventListener("click", closeMenu);
+  overlay.addEventListener("touchend", (e) => { e.preventDefault(); closeMenu(); }, { passive: false });
 
   drawer.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeMenu);
   });
 
   window.addEventListener("scroll", () => {
-    if (drawer.classList.contains("active")) {
-      closeMenu();
-    }
+    if (drawer.classList.contains("active")) closeMenu();
   }, { passive: true });
 
-  document.addEventListener("click", (event) => {
-    const cartToggle = event.target.closest("[data-cart-drawer-toggle]");
-    const searchToggle = event.target.closest("[data-search-toggle], [data-search-open], [href*='/search']");
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("active")) closeMenu();
+  });
 
-    if (cartToggle || searchToggle) {
-      closeMenu();
-    }
+  document.addEventListener("click", (event) => {
+    const cartToggle   = event.target.closest("[data-cart-drawer-toggle]");
+    const searchToggle = event.target.closest("[data-search-toggle], [data-search-open], [href*='/search']");
+    if (cartToggle || searchToggle) closeMenu();
   }, true);
 
 });
-
+

@@ -1,113 +1,11 @@
-{% comment %}
-  FILE: sections/main-404.liquid
-  FIXES:
-  - Replaced bare minimal 404 with an on-brand, helpful experience
-  - Added quick navigation links so users don't dead-end
-  - Consistent Wingstone visual language
-{% endcomment %}
-
-<section class="section page-shell page-404">
-  <div class="page-width page-404__inner">
-
-    <div class="page-404__eyebrow">
-      <span class="eyebrow">404</span>
-    </div>
-
-    <h1 class="page-404__heading">This page doesn't exist.</h1>
-    <p class="page-404__lede">
-      The link may have moved, been removed, or never existed.<br>
-      Here are some places you can go from here:
-    </p>
-
-    <div class="page-404__grid">
-      <a class="page-404__card" href="{{ routes.all_products_collection_url }}">
-        <span class="page-404__card-icon" aria-hidden="true">◈</span>
-        <span class="page-404__card-label">Shop All Drops</span>
-        <span class="page-404__card-desc">Browse every item in the Wingstone catalog</span>
-      </a>
-
-      <a class="page-404__card" href="{{ routes.collections_url }}/fashion">
-        <span class="page-404__card-icon" aria-hidden="true">✦</span>
-        <span class="page-404__card-label">Fashion</span>
-        <span class="page-404__card-desc">Hoodies, tees, and seasonal drops</span>
-      </a>
-
-      <a class="page-404__card" href="{{ routes.root_url }}">
-        <span class="page-404__card-icon" aria-hidden="true">◎</span>
-        <span class="page-404__card-label">Return Home</span>
-        <span class="page-404__card-desc">Back to the Wingstone homepage</span>
-      </a>
-    </div>
-
+<section class="section">
+  <div class="page-width">
+    <p class="eyebrow">404</p>
+    <h1 class="section-title">Page not found</h1>
+    <p>The page you were looking for does not exist.</p>
+    <a class="button" href="{{ routes.root_url }}">Return home</a>
   </div>
 </section>
-
-<style>
-  .page-404 { padding: 80px 0 120px; }
-  .page-404__inner { text-align: center; }
-  .page-404__eyebrow .eyebrow {
-    font-size: clamp(4rem, 12vw, 9rem);
-    font-weight: 800;
-    letter-spacing: -.04em;
-    color: color-mix(in srgb, var(--color-ink, #04102f), transparent 88%);
-    line-height: 1;
-    display: block;
-    margin-bottom: 1.5rem;
-  }
-  .page-404__heading {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 700;
-    color: var(--color-ink, #04102f);
-    margin-bottom: 1rem;
-  }
-  .page-404__lede {
-    color: var(--color-steel, #455373);
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-  }
-  .page-404__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.25rem;
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: left;
-  }
-  .page-404__card {
-    display: flex;
-    flex-direction: column;
-    gap: .4rem;
-    padding: 1.5rem;
-    border: 1px solid var(--color-line, #dde3f0);
-    border-radius: 12px;
-    text-decoration: none;
-    background: var(--color-frost, #f9f9ff);
-    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
-  }
-  .page-404__card:hover {
-    border-color: var(--color-accent, #cba72f);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(4,16,47,.08);
-  }
-  .page-404__card-icon {
-    font-size: 1.4rem;
-    color: var(--color-accent, #cba72f);
-    margin-bottom: .25rem;
-  }
-  .page-404__card-label {
-    font-size: .85rem;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--color-ink, #04102f);
-  }
-  .page-404__card-desc {
-    font-size: .8rem;
-    color: var(--color-steel, #455373);
-    line-height: 1.5;
-  }
-</style>
 
 {% schema %}
 {

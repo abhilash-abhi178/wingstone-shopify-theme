@@ -21,7 +21,9 @@
       },
       "footer": {
         "type": "footer",
-        "settings": {}
+        "settings": {
+          "menu": "footer"
+        }
       }
     },
     "content_for_index": []

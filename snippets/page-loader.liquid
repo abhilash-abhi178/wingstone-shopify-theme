@@ -5,12 +5,35 @@
 </div>
 
 <script>
-  window.addEventListener('load', () => {
-    const loader = document.getElementById('pageLoader');
-    if (loader) {
-      setTimeout(() => {
-        loader.classList.add('hide');
-      }, 750); // Premium slow transition reveal
+  (function () {
+    var loader = document.getElementById('pageLoader');
+    if (!loader) return;
+
+    function hideLoader() {
+      loader.classList.add('hide');
     }
-  });
+
+    /* 1. Primary: fire on window load (all resources done) */
+    window.addEventListener('load', function () {
+      setTimeout(hideLoader, 400);
+    });
+
+    /* 2. Safety net A: if DOM is ready and load hasn't fired within 3s, force-hide.
+          This catches slow/stalled asset loads (e.g. zero-byte hero-video.mp4 that
+          the browser keeps retrying) that would otherwise leave the loader covering
+          the page forever and making the entire UI untappable on mobile. */
+    var safetyTimer = setTimeout(hideLoader, 3000);
+
+    /* 3. Safety net B: hide as soon as DOM is interactive — users can act immediately */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        clearTimeout(safetyTimer);
+        setTimeout(hideLoader, 600);
+      });
+    } else {
+      /* DOM already ready (script running late) */
+      clearTimeout(safetyTimer);
+      setTimeout(hideLoader, 600);
+    }
+  })();
 </script>

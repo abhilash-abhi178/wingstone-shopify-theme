@@ -22,13 +22,14 @@
         </button>
 
         <nav class="site-nav" aria-label="Main navigation" data-site-nav>
+          <!-- SHOP: always works, links to all products -->
           <a href="{{ routes.all_products_collection_url }}"
              class="site-nav__link{% if request.path == routes.all_products_collection_url %} is-active{% endif %}"
           >SHOP</a>
 
-          <!-- Apparel Dropdown -->
+          <!-- APPAREL Dropdown -->
           <div class="site-nav__dropdown-wrap">
-            <a href="{{ routes.collections_url }}"
+            <a href="{{ routes.all_products_collection_url }}"
                class="site-nav__link site-nav__link--has-dropdown"
                aria-haspopup="true"
                aria-expanded="false"
@@ -38,43 +39,39 @@
               </svg>
             </a>
             <div class="site-nav__dropdown" aria-hidden="true">
-              <a href="{{ routes.collections_url }}/jackets" class="site-nav__dropdown-link">Jackets</a>
-              <a href="{{ routes.collections_url }}/trousers" class="site-nav__dropdown-link">Trousers</a>
-              <a href="{{ routes.collections_url }}/base-layers" class="site-nav__dropdown-link">Base Layers</a>
-              <a href="{{ routes.collections_url }}/accessories" class="site-nav__dropdown-link">Accessories</a>
+              <a href="{{ routes.all_products_collection_url }}" class="site-nav__dropdown-link">All Products</a>
+              <a href="{{ routes.all_products_collection_url }}?sort_by=created-descending" class="site-nav__dropdown-link">New Drops</a>
+              {%- if linklists['main-menu'].links.size > 0 -%}
+                {%- for link in linklists['main-menu'].links -%}
+                  <a href="{{ link.url }}" class="site-nav__dropdown-link">{{ link.title }}</a>
+                {%- endfor -%}
+              {%- else -%}
+                <a href="{{ routes.collections_url }}/fashion" class="site-nav__dropdown-link">Fashion</a>
+                <a href="{{ routes.collections_url }}/hoodies" class="site-nav__dropdown-link">Hoodies</a>
+              {%- endif -%}
             </div>
           </div>
 
-          <!-- Equipment Dropdown -->
-          <div class="site-nav__dropdown-wrap">
-            <a href="{{ routes.collections_url }}"
-               class="site-nav__link site-nav__link--has-dropdown"
-               aria-haspopup="true"
-               aria-expanded="false"
-            >EQUIPMENT
-              <svg class="site-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </a>
-            <div class="site-nav__dropdown" aria-hidden="true">
-              <a href="{{ routes.collections_url }}/packs" class="site-nav__dropdown-link">Packs</a>
-              <a href="{{ routes.collections_url }}/footwear" class="site-nav__dropdown-link">Footwear</a>
-              <a href="{{ routes.collections_url }}/gear" class="site-nav__dropdown-link">Gear</a>
-            </div>
-          </div>
+          <!-- FOOTWEAR: links to sandals collection if it exists and has products -->
+          {%- if collections['sandals'] and collections['sandals'].products_count > 0 -%}
+            <a href="{{ collections['sandals'].url }}" class="site-nav__link">FOOTWEAR</a>
+          {%- else -%}
+            <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">FOOTWEAR</a>
+          {%- endif -%}
 
-          <a href="{{ routes.collections_url }}/expeditions"
-             class="site-nav__link"
-          >EXPEDITIONS</a>
+          <!-- JOURNAL: only show if page exists AND has content (not an empty shell) -->
+          {%- if pages['journal'].id and pages['journal'].content != blank -%}
+            <a href="{{ pages['journal'].url }}"
+               class="site-nav__link{% if request.page_type == 'page' and request.path contains 'journal' %} is-active{% endif %}"
+            >JOURNAL</a>
+          {%- endif -%}
 
-          <a href="{{ pages.journal.url | default: routes.root_url }}"
-             class="site-nav__link"
-          >JOURNAL</a>
-
-          <!-- LOOKBOOK — fixed: uses pages.lookbook Shopify page -->
-          <a href="{{ pages.lookbook.url | default: routes.root_url }}"
-             class="site-nav__link{% if request.page_type == 'page' and request.path contains 'lookbook' %} is-active{% endif %}"
-          >LOOKBOOK</a>
+          <!-- LOOKBOOK: only show if page exists AND has content -->
+          {%- if pages['lookbook'].id and pages['lookbook'].content != blank -%}
+            <a href="{{ pages['lookbook'].url }}"
+               class="site-nav__link{% if request.page_type == 'page' and request.path contains 'lookbook' %} is-active{% endif %}"
+            >LOOKBOOK</a>
+          {%- endif -%}
         </nav>
       </div>
 
@@ -106,19 +103,20 @@
         {% endif %}
       </a>
 
-      <!-- RIGHT: Account + Cart -->
+      <!-- RIGHT: Account + Wishlist + Cart -->
       <div class="site-header__actions">
         {% if shop.customer_accounts_enabled %}
           <a class="site-header__action site-header__action--account"
              href="{{ routes.account_url }}"
-             aria-label="Account"
+             aria-label="My Account"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
               <path d="M12 12.5a4.5 4.5 0 1 0-4.5-4.5 4.5 4.5 0 0 0 4.5 4.5Zm0 2c-4.42 0-8 2.31-8 5.17V21h16v-1.33c0-2.86-3.58-5.17-8-5.17Z" fill="currentColor"/>
             </svg>
           </a>
         {% endif %}
-        <!-- Wishlist -->
+
+        <!-- FIX: Wishlist badge hidden by default, shown by JS only when items exist -->
         <a class="site-header__action site-header__action--wishlist"
            href="/pages/wishlist"
            aria-label="Wishlist"
@@ -127,7 +125,8 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
-          <span class="site-header__badge" data-wishlist-count style="display: none;">0</span>
+          <!-- FIX: Badge starts hidden, JS shows it when count > 0 -->
+          <span class="site-header__badge" data-wishlist-count style="display: none;"></span>
         </a>
 
         <a class="site-header__action site-header__action--cart"
@@ -162,37 +161,53 @@
     </div>
 
     <div class="wingstone-menu-links">
-      <a href="{{ routes.all_products_collection_url }}">SHOP</a>
-      
+
+      <a href="{{ routes.all_products_collection_url }}">SHOP ALL</a>
+
       <div class="wingstone-menu-item-with-submenu">
-        <a href="{{ routes.collections_url }}/apparel" class="wingstone-menu-link">APPAREL</a>
-        <div class="wingstone-mobile-submenu">
-          <a href="{{ routes.collections_url }}/jackets" class="wingstone-mobile-submenu-link">Jackets</a>
-          <a href="{{ routes.collections_url }}/trousers" class="wingstone-mobile-submenu-link">Trousers</a>
-          <a href="{{ routes.collections_url }}/base-layers" class="wingstone-mobile-submenu-link">Base Layers</a>
-          <a href="{{ routes.collections_url }}/accessories" class="wingstone-mobile-submenu-link">Accessories</a>
+        <button class="wingstone-menu-link wingstone-menu-accordion-trigger" aria-expanded="false">
+          APPAREL
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="wingstone-menu-chevron">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="wingstone-mobile-submenu" aria-hidden="true">
+          <a href="{{ routes.all_products_collection_url }}" class="wingstone-mobile-submenu-link">All Products</a>
+          {%- if collections['fashion'] and collections['fashion'].products_count > 0 -%}
+            <a href="{{ collections['fashion'].url }}" class="wingstone-mobile-submenu-link">Fashion</a>
+          {%- endif -%}
+          {%- if collections['hoodies'] and collections['hoodies'].products_count > 0 -%}
+            <a href="{{ collections['hoodies'].url }}" class="wingstone-mobile-submenu-link">Hoodies</a>
+          {%- endif -%}
+          {%- if collections['t-shirts'] and collections['t-shirts'].products_count > 0 -%}
+            <a href="{{ collections['t-shirts'].url }}" class="wingstone-mobile-submenu-link">T-Shirts</a>
+          {%- endif -%}
         </div>
       </div>
 
-      <div class="wingstone-menu-item-with-submenu">
-        <a href="{{ routes.collections_url }}/equipment" class="wingstone-menu-link">EQUIPMENT</a>
-        <div class="wingstone-mobile-submenu">
-          <a href="{{ routes.collections_url }}/packs" class="wingstone-mobile-submenu-link">Packs</a>
-          <a href="{{ routes.collections_url }}/footwear" class="wingstone-mobile-submenu-link">Footwear</a>
-          <a href="{{ routes.collections_url }}/gear" class="wingstone-mobile-submenu-link">Gear</a>
-        </div>
-      </div>
+      {%- if collections['sandals'] and collections['sandals'].products_count > 0 -%}
+        <a href="{{ collections['sandals'].url }}">FOOTWEAR</a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">FOOTWEAR</a>
+      {%- endif -%}
 
-      <a href="{{ routes.collections_url }}/expeditions">EXPEDITIONS</a>
-      <a href="{{ pages.journal.url | default: routes.root_url }}">JOURNAL</a>
-      <!-- LOOKBOOK — fixed route using Shopify pages object -->
-      <a href="{{ pages.lookbook.url | default: routes.root_url }}">LOOKBOOK</a>
+      {%- if pages['journal'].id and pages['journal'].content != blank -%}
+        <a href="{{ pages['journal'].url }}">JOURNAL</a>
+      {%- endif -%}
+
+      {%- if pages['lookbook'].id and pages['lookbook'].content != blank -%}
+        <a href="{{ pages['lookbook'].url }}">LOOKBOOK</a>
+      {%- endif -%}
+
+      <a href="{{ routes.root_url }}#contact">CONTACT</a>
+
     </div>
 
     <div class="wingstone-menu-footer">
       {% if shop.customer_accounts_enabled %}
         <a href="{{ routes.account_url }}" class="wingstone-menu-footer-link">Account</a>
       {% endif %}
+      <a href="/pages/wishlist" class="wingstone-menu-footer-link">Wishlist</a>
       <a href="{{ routes.cart_url }}" class="wingstone-menu-footer-link" data-cart-drawer-toggle>Cart ({{ cart.item_count }})</a>
     </div>
   </nav>
@@ -217,18 +232,19 @@
   transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
 }
 
-.site-header.is-hidden {
-  transform: translateY(-100%);
-}
-
-.site-header.is-scrolled {
-  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%);
-}
-
+.site-header.is-hidden { transform: translateY(-100%); }
+.site-header.is-scrolled { box-shadow: 0 8px 40px color-mix(in srgb, var(--color-ink, #04102f), transparent 90%); }
+/* Restore pointer-events all the way down the header chain.
+   .site-header is pointer-events:none so the transparent backdrop doesn't
+   block page scrolling, but every interactive child must opt back in.
+   On mobile WebKit, pointer-events inheritance can break so we set it
+   explicitly on every container level rather than relying on inheritance. */
 .site-header__promo,
-.site-header__shell {
-  pointer-events: auto;
-}
+.site-header__shell,
+.site-header__inner,
+.site-header__left,
+.site-header__actions,
+.site-header__brand { pointer-events: auto; }
 
 /* Promo bar */
 .site-header__promo {
@@ -251,10 +267,7 @@
   text-transform: uppercase;
   animation: header-promo 28s linear infinite;
 }
-
-.site-header__promo-track span {
-  white-space: nowrap;
-}
+.site-header__promo-track span { white-space: nowrap; }
 
 /* Header shell */
 .site-header__shell {
@@ -262,7 +275,6 @@
   background: transparent;
   margin: 0 auto;
 }
-
 .site-header__inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -271,7 +283,6 @@
   gap: 1rem;
   padding: 0 .9rem;
 }
-
 .site-header__left {
   display: flex;
   align-items: center;
@@ -287,7 +298,6 @@
   justify-content: center;
   min-width: 0;
 }
-
 .site-header__logo {
   max-width: min(118px, 30vw);
   height: auto;
@@ -300,10 +310,7 @@
   align-items: center;
   gap: clamp(.7rem, 2vw, 1.8rem);
 }
-
-@media (min-width: 900px) {
-  .site-nav { display: flex; }
-}
+@media (min-width: 900px) { .site-nav { display: flex; } }
 
 .site-nav__link {
   position: relative;
@@ -320,39 +327,24 @@
   transition: color .18s ease;
   white-space: nowrap;
 }
-
 .site-nav__link::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1.5px;
+  bottom: 0; left: 0;
+  width: 0; height: 1.5px;
   background: var(--color-accent, #cba72f);
   border-radius: 999px;
   transition: width .25s cubic-bezier(.25,.46,.45,.94);
 }
-
 .site-nav__link:hover,
-.site-nav__link.is-active {
-  color: var(--color-accent, #cba72f);
-}
-
+.site-nav__link.is-active { color: var(--color-accent, #cba72f); }
 .site-nav__link:hover::after,
-.site-nav__link.is-active::after {
-  width: 100%;
-}
+.site-nav__link.is-active::after { width: 100%; }
 
-.site-nav__chevron {
-  transition: transform .2s ease;
-  flex-shrink: 0;
-}
+.site-nav__chevron { transition: transform .2s ease; flex-shrink: 0; }
 
 /* Dropdown wraps */
-.site-nav__dropdown-wrap {
-  position: relative;
-}
-
+.site-nav__dropdown-wrap { position: relative; }
 .site-nav__dropdown {
   position: absolute;
   top: calc(100% + 12px);
@@ -371,18 +363,14 @@
   transition: opacity .22s ease, transform .22s cubic-bezier(.25,.46,.45,.94);
   z-index: 20;
 }
-
 .site-nav__dropdown-wrap:hover .site-nav__dropdown,
 .site-nav__dropdown-wrap:focus-within .site-nav__dropdown {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
-
 .site-nav__dropdown-wrap:hover .site-nav__chevron,
-.site-nav__dropdown-wrap:focus-within .site-nav__chevron {
-  transform: rotate(180deg);
-}
+.site-nav__dropdown-wrap:focus-within .site-nav__chevron { transform: rotate(180deg); }
 
 .site-nav__dropdown-link {
   display: block;
@@ -394,7 +382,6 @@
   text-decoration: none;
   transition: background .15s ease, color .15s ease, padding-left .15s ease;
 }
-
 .site-nav__dropdown-link:hover {
   background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 90%);
   color: var(--color-accent, #cba72f);
@@ -409,14 +396,12 @@
   gap: .6rem;
   min-width: 0;
 }
-
 .site-header__action {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--color-ink, #04102f), transparent 84%);
   background: color-mix(in srgb, var(--color-paper, #f9f9ff), transparent 18%);
@@ -424,27 +409,21 @@
   text-decoration: none;
   transition: background .18s ease, border-color .18s ease, color .18s ease;
 }
-
 .site-header__action:hover {
   background: var(--color-ink, #04102f);
   color: var(--color-paper, #f9f9ff);
   border-color: var(--color-ink, #04102f);
 }
-
 .site-header__badge {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  min-width: 18px;
-  height: 18px;
+  top: -5px; right: -5px;
+  min-width: 18px; height: 18px;
   padding: 0 4px;
   border-radius: 999px;
   background: var(--color-accent, #cba72f);
   color: var(--color-ink, #04102f);
-  font-size: .6rem;
-  font-weight: 800;
-  line-height: 18px;
-  text-align: center;
+  font-size: .6rem; font-weight: 800;
+  line-height: 18px; text-align: center;
 }
 
 /* Hamburger trigger */
@@ -454,34 +433,64 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
+  width: 44px; height: 44px;     /* increased from 40px — bigger tap target on mobile */
   border: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 20%);
   border-radius: 6px;
   background: transparent;
   cursor: pointer;
   padding: 0;
   transition: background .18s ease;
+  pointer-events: auto;          /* explicit — never let parent none bleed through */
+  touch-action: manipulation;    /* prevents 300ms delay on iOS tap */
+  -webkit-tap-highlight-color: transparent;
+  position: relative;            /* ensures stacking context for tap recognition */
+  z-index: 10;
 }
-
-@media (min-width: 900px) {
-  .wingstone-menu-trigger { display: none; }
-}
-
-.wingstone-menu-trigger:hover {
-  background: color-mix(in srgb, var(--color-ink, #04102f), transparent 94%);
-}
-
+@media (min-width: 900px) { .wingstone-menu-trigger { display: none; } }
+.wingstone-menu-trigger:hover { background: color-mix(in srgb, var(--color-ink, #04102f), transparent 94%); }
 .wingstone-menu-trigger__bar {
   display: block;
-  width: 18px;
-  height: 1.5px;
+  width: 18px; height: 1.5px;
   background: var(--color-ink, #04102f);
   border-radius: 999px;
-  transition: transform .25s ease, opacity .25s ease;
+  transition: transform .25s ease, opacity .25s ease, width .25s ease;
 }
 
-
+/* Mobile menu drawer */
+.wingstone-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .38s ease, visibility .38s ease;
+  z-index: 998;
+}
+.wingstone-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.wingstone-mobile-menu {
+  position: fixed;
+  top: 0; left: 0;
+  width: min(88%, 340px);
+  height: 100dvh;
+  background: #ffffff;
+  border-right: 1px solid rgba(4,16,47,0.08);
+  box-shadow: 24px 0 80px rgba(4,16,47,0.18);
+  transform: translateX(-100%);
+  transition: transform .42s cubic-bezier(.77,0,.18,1);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Subtle brand gradient at the bottom */
+  background-image: linear-gradient(to bottom, #ffffff 80%, rgba(4,16,47,0.02) 100%);
+}
+.wingstone-mobile-menu.active { transform: translateX(0); }
 
 .wingstone-menu-header {
   display: flex;
@@ -490,82 +499,100 @@
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--color-line, #dde3f0);
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 2;
 }
-
 .wingstone-menu-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
   border-radius: 50%;
   border: 1px solid var(--color-line, #dde3f0);
   background: transparent;
   color: var(--color-ink, #04102f);
   cursor: pointer;
-  transition: background .18s ease;
+  transition: background .18s ease, color .18s ease;
 }
-
 .wingstone-menu-close:hover {
   background: var(--color-ink, #04102f);
-  color: var(--color-paper, #f9f9ff);
+  color: #fff;
 }
-
 .wingstone-menu-logo {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: .08em;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: .15em;
   color: var(--color-ink, #04102f);
   text-transform: uppercase;
 }
-
 .wingstone-menu-links {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 0;
+  padding: .75rem 0;
 }
-
-.wingstone-menu-links a {
+.wingstone-menu-links > a {
   display: block;
-  padding: .85rem 1.75rem;
+  padding: 1rem 1.75rem;
   color: var(--color-ink, #04102f);
-  font-size: .82rem;
-  font-weight: 700;
-  letter-spacing: .14em;
+  font-size: .78rem; font-weight: 800;
+  letter-spacing: .16em;
   text-transform: uppercase;
   text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
-  transition: color .15s ease, padding-left .15s ease, background .15s ease;
+  border-bottom: 1px solid rgba(4,16,47,0.07);
+  transition: color .15s ease, padding-left .2s ease, background .15s ease;
 }
-
-.wingstone-menu-links a:hover {
+.wingstone-menu-links > a:hover,
+.wingstone-menu-links > a:active {
   color: var(--color-accent, #cba72f);
   padding-left: 2.25rem;
+  background: rgba(203,167,47,0.06);
+}
+
+/* Mobile accordion sub-menus */
+.wingstone-menu-item-with-submenu { border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%); }
+.wingstone-menu-accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .9rem 1.75rem;
+  background: transparent;
+  border: none;
+  color: var(--color-ink, #04102f);
+  font-size: .82rem; font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  transition: color .15s ease, background .15s ease;
+}
+.wingstone-menu-accordion-trigger:hover {
+  color: var(--color-accent, #cba72f);
   background: color-mix(in srgb, var(--color-accent, #cba72f), transparent 94%);
 }
+.wingstone-menu-accordion-trigger[aria-expanded="true"] .wingstone-menu-chevron { transform: rotate(180deg); }
+.wingstone-menu-chevron { transition: transform .22s ease; flex-shrink: 0; }
 
 .wingstone-mobile-submenu {
-  background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 82%);
-  padding: 0.25rem 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-line, #dde3f0), transparent 50%);
+  background: color-mix(in srgb, var(--color-line, #dde3f0), transparent 70%);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .3s ease;
 }
-
+.wingstone-mobile-submenu.is-open { max-height: 300px; }
 .wingstone-mobile-submenu-link {
-  display: block !important;
-  padding: 0.6rem 2.25rem !important;
-  font-size: 0.76rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: none !important;
-  opacity: 0.8;
-  border-bottom: none !important;
+  display: block;
+  padding: .65rem 2.25rem;
+  color: var(--color-ink, #04102f);
+  font-size: .76rem; font-weight: 600;
+  letter-spacing: .06em;
+  text-decoration: none;
+  transition: color .15s ease, padding-left .15s ease;
 }
-
 .wingstone-mobile-submenu-link:hover {
-  opacity: 1;
-  padding-left: 2.5rem !important;
+  color: var(--color-accent, #cba72f);
+  padding-left: 2.6rem;
 }
 
 .wingstone-menu-footer {
@@ -574,52 +601,135 @@
   padding: 1.25rem 1.75rem;
   border-top: 1px solid var(--color-line, #dde3f0);
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
-
 .wingstone-menu-footer-link {
-  font-size: .72rem;
-  font-weight: 700;
+  font-size: .72rem; font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--color-steel, #455373);
   text-decoration: none;
   transition: color .15s ease;
 }
+.wingstone-menu-footer-link:hover { color: var(--color-ink, #04102f); }
 
-.wingstone-menu-footer-link:hover {
-  color: var(--color-ink, #04102f);
-}
-
+/* Main content offset for fixed header */
 .main { padding-top: 104px; }
-
-@media (max-width: 899px) {
-  .main { padding-top: 88px; }
-}
+@media (max-width: 899px) { .main { padding-top: 88px; } }
 </style>
 
 <script>
-/* ── Header hide/show on scroll ── */
+/* ── Header scroll hide/show ── */
 (function() {
   const header = document.querySelector('.site-header');
-  if (header) {
-    let lastY = 0;
-    let ticking = false;
+  if (!header) return;
+  let lastY = 0, ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (y > 120 && y > lastY + 4) header.classList.add('is-hidden');
+        else if (y < lastY - 4 || y < 40) header.classList.remove('is-hidden');
+        header.classList.toggle('is-scrolled', y > 40);
+        lastY = y;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+
+/* ── Mobile menu: bulletproof trigger binding ──
+   Runs immediately AND on DOMContentLoaded to handle both
+   synchronous script execution and deferred DOM readiness.
+   Uses both 'click' and 'touchend' to fix iOS tap delays. */
+(function initMobileMenu() {
+  function bind() {
+    const trigger = document.querySelector('.wingstone-menu-trigger');
+    const drawer  = document.querySelector('.wingstone-mobile-menu');
+    const overlay = document.querySelector('.wingstone-menu-overlay');
+    const closeBtn = document.querySelector('.wingstone-menu-close');
+
+    /* Elements not in DOM yet — will retry on DOMContentLoaded */
+    if (!trigger || !drawer || !overlay) return false;
+
+    /* Prevent double-binding if already initialized */
+    if (trigger.dataset.menuBound) return true;
+    trigger.dataset.menuBound = '1';
+
+    const openMenu = (e) => {
+      if (e.cancelable) e.preventDefault();
+      drawer.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+
+    const closeMenu = () => {
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+
+    /* Both click (desktop) and touchend (iOS/Android) */
+    trigger.addEventListener('click', openMenu);
+    trigger.addEventListener('touchend', (e) => {
+      e.preventDefault(); /* stops ghost click on iOS */
+      openMenu(e);
+    }, { passive: false });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeMenu);
+      closeBtn.addEventListener('touchend', (e) => { e.preventDefault(); closeMenu(); }, { passive: false });
+    }
+
+    overlay.addEventListener('click', closeMenu);
+    overlay.addEventListener('touchend', (e) => { e.preventDefault(); closeMenu(); }, { passive: false });
+
+    /* Close on any link tap inside the drawer */
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    /* Close on scroll (desktop) */
     window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const y = window.scrollY;
-          if (y > 120 && y > lastY + 4) {
-            header.classList.add('is-hidden');
-          } else if (y < lastY - 4 || y < 40) {
-            header.classList.remove('is-hidden');
-          }
-          header.classList.toggle('is-scrolled', y > 40);
-          lastY = y;
-          ticking = false;
-        });
-        ticking = true;
-      }
+      if (drawer.classList.contains('active')) closeMenu();
     }, { passive: true });
+
+    /* Close on Escape key */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('active')) closeMenu();
+    });
+
+    return true;
+  }
+
+  /* Try immediately (script runs after header HTML) */
+  if (!bind()) {
+    /* Fallback: wait for full DOM */
+    document.addEventListener('DOMContentLoaded', bind);
+  }
+})();
+
+/* ── Mobile accordion sub-menus ── */
+(function() {
+  function bindAccordions() {
+    document.querySelectorAll('.wingstone-menu-accordion-trigger').forEach(btn => {
+      if (btn.dataset.accordionBound) return;
+      btn.dataset.accordionBound = '1';
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        const submenu = btn.nextElementSibling;
+        if (submenu) submenu.classList.toggle('is-open', !expanded);
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAccordions);
+  } else {
+    bindAccordions();
   }
 })();
 </script>

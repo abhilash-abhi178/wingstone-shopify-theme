@@ -13,7 +13,7 @@
         {{ 'product-1' | placeholder_svg_tag: 'img-cover' }}
       {% endif %}
 
-      {% if product.images.size > 1 %}
+      {% if product.images and product.images.size | plus: 0 > 1 %}
         {{ product.images[1] | image_url: width: 720 | image_tag:
           loading: 'lazy',
           alt: product.title,
@@ -86,7 +86,7 @@
     </div>
 
     <!-- Color & Size Swatches — fixed multi-word parser -->
-    {%- if product.variants.size > 0 -%}
+    {%- if product.variants and product.variants.size | plus: 0 > 0 -%}
       <div class="product-card__variants">
         {%- for option in product.options_with_values -%}
           {%- assign option_name = option.name | downcase -%}
@@ -130,7 +130,7 @@
                   aria-label="{{ value }}"
                 ></span>
               {%- endfor -%}
-              {%- if option.values.size > 5 -%}
+              {%- if option.values and option.values.size | plus: 0 > 5 -%}
                 <span class="product-card__swatch-more" aria-label="{{ option.values.size | minus: 5 }} more colors">+{{ option.values.size | minus: 5 }}</span>
               {%- endif -%}
             </div>
@@ -140,7 +140,7 @@
               {%- for value in option.values limit: 4 -%}
                 <span class="product-card__swatch product-card__swatch--size" title="{{ value }}" role="listitem">{{ value }}</span>
               {%- endfor -%}
-              {%- if option.values.size > 4 -%}
+              {%- if option.values and option.values.size | plus: 0 > 4 -%}
                 <span class="product-card__swatch-more">+{{ option.values.size | minus: 4 }}</span>
               {%- endif -%}
             </div>

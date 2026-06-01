@@ -75,7 +75,7 @@
         {%- if collection.handle == 'all' or collection.handle == 'frontpage' -%}
           {%- continue -%}
         {%- endif -%}
-        {%- if collection.products_count == 0 -%}
+        {%- if collection.products_count | plus: 0 == 0 -%}
           {%- continue -%}
         {%- endif -%}
         {%- if collection_count >= section.settings.collections_to_show -%}

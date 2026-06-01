@@ -41,7 +41,7 @@
             <div class="site-nav__dropdown" aria-hidden="true">
               <a href="{{ routes.all_products_collection_url }}" class="site-nav__dropdown-link">All Products</a>
               <a href="{{ routes.all_products_collection_url }}?sort_by=created-descending" class="site-nav__dropdown-link">New Drops</a>
-              {%- if linklists['main-menu'].links.size > 0 -%}
+              {%- if linklists['main-menu'] and linklists['main-menu'].links.size | plus: 0 > 0 -%}
                 {%- for link in linklists['main-menu'].links -%}
                   <a href="{{ link.url }}" class="site-nav__dropdown-link">{{ link.title }}</a>
                 {%- endfor -%}
@@ -53,7 +53,7 @@
           </div>
 
           <!-- FOOTWEAR: links to sandals collection if it exists and has products -->
-          {%- if collections['sandals'] and collections['sandals'].products_count > 0 -%}
+          {%- if collections['sandals'] and collections['sandals'].products_count | plus: 0 > 0 -%}
             <a href="{{ collections['sandals'].url }}" class="site-nav__link">FOOTWEAR</a>
           {%- else -%}
             <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">FOOTWEAR</a>
@@ -138,7 +138,7 @@
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M3 6h18M16 10a4 4 0 01-8 0" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {% if cart.item_count > 0 %}
+          {% if cart.item_count | plus: 0 > 0 %}
             <span class="site-header__badge">{{ cart.item_count }}</span>
           {% endif %}
         </a>
@@ -173,19 +173,19 @@
         </button>
         <div class="wingstone-mobile-submenu" aria-hidden="true">
           <a href="{{ routes.all_products_collection_url }}" class="wingstone-mobile-submenu-link">All Products</a>
-          {%- if collections['fashion'] and collections['fashion'].products_count > 0 -%}
+          {%- if collections['fashion'] and collections['fashion'].products_count | plus: 0 > 0 -%}
             <a href="{{ collections['fashion'].url }}" class="wingstone-mobile-submenu-link">Fashion</a>
           {%- endif -%}
-          {%- if collections['hoodies'] and collections['hoodies'].products_count > 0 -%}
+          {%- if collections['hoodies'] and collections['hoodies'].products_count | plus: 0 > 0 -%}
             <a href="{{ collections['hoodies'].url }}" class="wingstone-mobile-submenu-link">Hoodies</a>
           {%- endif -%}
-          {%- if collections['t-shirts'] and collections['t-shirts'].products_count > 0 -%}
+          {%- if collections['t-shirts'] and collections['t-shirts'].products_count | plus: 0 > 0 -%}
             <a href="{{ collections['t-shirts'].url }}" class="wingstone-mobile-submenu-link">T-Shirts</a>
           {%- endif -%}
         </div>
       </div>
 
-      {%- if collections['sandals'] and collections['sandals'].products_count > 0 -%}
+      {%- if collections['sandals'] and collections['sandals'].products_count | plus: 0 > 0 -%}
         <a href="{{ collections['sandals'].url }}">FOOTWEAR</a>
       {%- else -%}
         <a href="{{ routes.all_products_collection_url }}">FOOTWEAR</a>

@@ -1,6 +1,0 @@
-# Shopify Theme Check configuration.
-# Keep the default rules enabled so CI can catch Liquid,
-# JSON, missing-template, accessibility, and performance issues.
-
-ignore:
-  - assets/*.map

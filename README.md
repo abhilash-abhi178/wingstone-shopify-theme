@@ -1,10 +1,10 @@
 # WINGSTONE — Premium Shopify Fashion Theme
 
-> A production-focused Shopify storefront theme for WINGSTONE, a premium streetwear brand. Built as a real e-commerce project and portfolio piece demonstrating Shopify Liquid, frontend engineering, responsive UI, e-commerce UX, and SEO.
+> A production-focused Shopify storefront theme for WINGSTONE, a premium streetwear brand. Built as a real e-commerce project and portfolio piece demonstrating Shopify Liquid, frontend engineering, responsive UI, e-commerce UX, SEO, and production maintenance.
 
 ## Overview
 
-WINGSTONE is a premium Shopify storefront built around a refined navy, ice, and muted-gold visual system. The theme combines editorial fashion design with practical e-commerce functionality and Shopify's native theme architecture.
+WINGSTONE is a premium Shopify storefront built around a refined navy, ice, and muted-gold visual system. The theme combines editorial fashion design with practical e-commerce functionality and Shopify's native Online Store 2.0 architecture.
 
 ## Features
 
@@ -22,6 +22,7 @@ WINGSTONE is a premium Shopify storefront built around a refined navy, ice, and 
 - Canonical, Open Graph, Twitter/X, and JSON-LD metadata
 - Product structured data
 - Smooth scrolling and micro-interactions
+- Custom 404 experience
 - Mobile-specific enhancements
 
 ## Tech Stack
@@ -33,23 +34,28 @@ WINGSTONE is a premium Shopify storefront built around a refined navy, ice, and 
 | CSS3 | Design system, responsive layouts, and animation |
 | JavaScript | Cart, search, wishlist, gallery, and UI interactions |
 | Shopify Theme Architecture | Configuration, templates, sections, snippets, assets, and locales |
+| GitHub Actions | Automated Shopify Theme Check on pushes and pull requests |
 | JSON-LD | Structured data for search engines |
 
 ## Project Structure
 
 ```text
 wingstone-shopify-theme/
+├── .github/workflows/   # CI validation
 ├── .gitattributes
 ├── .gitignore
 ├── README.md
-├── assets/
-├── config/
-├── layout/
-├── locales/
-├── sections/
-├── snippets/
-└── templates/
+├── docs/                # Maintainer documentation
+├── assets/              # CSS, JavaScript, images, and theme assets
+├── config/              # Shopify Theme Editor settings
+├── layout/              # Global theme layout
+├── locales/             # Translation/localization files
+├── sections/            # Reusable Shopify sections
+├── snippets/            # Reusable Liquid components
+└── templates/           # Shopify page/resource templates
 ```
+
+See [`docs/architecture.md`](docs/architecture.md) for the storefront and checkout architecture.
 
 ## Local Development
 
@@ -59,6 +65,12 @@ Requirements: Shopify store access, Shopify CLI, and a modern browser.
 shopify theme dev
 ```
 
+Run validation locally with:
+
+```bash
+shopify theme check
+```
+
 After testing locally:
 
 ```bash
@@ -66,6 +78,10 @@ shopify theme push
 ```
 
 Always review the target theme before publishing to the live store.
+
+## CI / Quality Gate
+
+Every push to `main` and every pull request targeting `main` runs Shopify Theme Check through GitHub Actions. The check is designed to catch Liquid/JSON errors, missing templates or snippets, invalid theme patterns, translation issues, and common performance problems. Shopify's maintained Theme Check Action is used for this workflow. urlShopify Theme Check Actionhttps://github.com/Shopify/theme-check-action
 
 ## Checkout Architecture
 
@@ -101,13 +117,13 @@ Before publishing a significant change, test desktop, mobile, products, collecti
 
 ## GitHub vs Shopify
 
-**GitHub:** source code, version history, documentation, and development.
+**GitHub:** source code, version history, documentation, CI, and development.
 
 **Shopify Admin:** products, collections, menus, customers, orders, checkout configuration, theme settings, and store data.
 
 ## Portfolio Value
 
-This project demonstrates practical skills in Shopify theme development, Liquid templating, frontend engineering, responsive UI/UX, e-commerce architecture, cart interactions, SEO, structured data, design systems, and production-oriented debugging.
+This project demonstrates practical skills in Shopify theme development, Liquid templating, frontend engineering, responsive UI/UX, e-commerce architecture, cart interactions, SEO, structured data, design systems, CI validation, and production-oriented debugging.
 
 ## Project Status
 

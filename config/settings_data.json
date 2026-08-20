@@ -1,31 +1,10 @@
 {
   "current": {
-    "color_ink": "#04102f",
-    "color_frost": "#f9f9ff",
-    "color_steel": "#5a6a8a",
-    "color_paper": "#ffffff",
-    "color_line": "#D5DDEA",
-    "color_accent": "#cba72f",
-    "free_shipping_threshold": 999,
-    "heading_font": "georgia_n4",
-    "body_font": "assistant_n4",
-    "favicon": "shopify://shop_images/ChatGPT_Image_May_19_2026_04_43_21_PM.png",
-    "brand_logo": "shopify://shop_images/wingstone-logo.png",
-    "sections": {
-      "header": {
-        "type": "header",
-        "settings": {
-          "logo": "shopify://shop_images/wingstone-logo.png",
-          "promo_text": "Extra 10% off with TFV10 / Free shipping on prepaid orders / New Wingstone drops live now"
-        }
-      },
-      "footer": {
-        "type": "footer",
-        "settings": {
-          "menu": "footer"
-        }
-      }
-    },
-    "content_for_index": []
+    "storefront_hostname": "wingstone.studio"
+  },
+  "presets": {
+    "Default": {
+      "storefront_hostname": "wingstone.studio"
+    }
   }
 }

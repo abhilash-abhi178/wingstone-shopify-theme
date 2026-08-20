@@ -1,15 +1,29 @@
-# Shopify CLI & theme configuration
+# Shopify CLI
 .shopify/
 config/settings_data.json.bak
 *.bak
 
-# OS specific files
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+
+# OS / editor files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
 
-# Python virtual environment & logs
+# Python / local tooling
 .venv/
 venv/
 ENV/
 *.pyc
 __pycache__/
+
+# Generated / packaged files
+*.zip
+*.log
+coverage/
+dist/
+build/
